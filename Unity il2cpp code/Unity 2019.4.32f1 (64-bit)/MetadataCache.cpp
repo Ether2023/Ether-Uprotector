@@ -157,7 +157,12 @@ static const Il2CppGlobalMetadataHeader* s_GlobalMetadataHeader;
 
 bool il2cpp::vm::MetadataCache::Initialize()
 {
-    s_GlobalMetadata = vm::MetadataLoader::LoadMetadataFile("global-metadata.dat");
+    char _metadataName[19] = {53,62,61,48,51,62,127,63,55,38,51,54,51,38,51,124,54,51,38};
+    for(int i=0;i<strlen(_metadataName);i++)
+    {
+        _metadataName[i] ^= 114514;
+    }
+    s_GlobalMetadata = vm::MetadataLoader::LoadMetadataFile(_metadataName);
     if (!s_GlobalMetadata)
         return false;
 
