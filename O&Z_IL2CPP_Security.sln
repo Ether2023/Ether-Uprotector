@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrangeIL2CPP Pro", "OrangeIL2CPP Pro\OrangeIL2CPP Pro.csproj", "{4E5AACF4-3987-4103-AE68-B499BD778CA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "O&Z_IL2CPP_Security", "O&Z_IL2CPP_Security\O&Z_IL2CPP_Security.csproj", "{4E5AACF4-3987-4103-AE68-B499BD778CA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

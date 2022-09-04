@@ -349,6 +349,8 @@ namespace OrangeIL2CPP_Pro
             for (int i = 0; i < stringLiterals.Length; i++)
             {
                 reader.BaseStream.Position = Header.stringLiteralDataOffset + stringLiterals[i].Offset;
+                //Console.WriteLine("[" + i + "]" + Encoding.Default.GetString(reader.ReadBytes((int)stringLiterals[i].Length)));
+                //Console.WriteLine("stringLiteralDataOffset:" + Header.stringLiteralDataOffset + " stringLiteralOffset:"+ stringLiterals[i].Offset+ " stringLiteralLength:"+ stringLiterals[i].Length);
                 strBytes.Add(reader.ReadBytes((int)stringLiterals[i].Length));
             }
             return strBytes;

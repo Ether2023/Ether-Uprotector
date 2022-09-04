@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "OrangeIL2CPP Pro": {
+    "O&Z_IL2CPP_Security": {
       "commandName": "Project",
       "commandLineArgs": "\"global-metadata.dat\" Test \"global-metadata.dat.crypted\""
     }
