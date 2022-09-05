@@ -360,13 +360,16 @@ namespace O_Z_IL2CPP_Security
             BinaryWriter writer = new BinaryWriter(File.Create(Outpath));
             metadatastream.Position = 0;
             metadatastream.CopyTo(writer.BaseStream);
-            for (int i = 0; i < stringLiterals.Length; i++)
+            for (int i = 0; i < stringLiterals.Length; i++) //加密StringLiteral
             {
                 writer.BaseStream.Position = Header.stringLiteralDataOffset + stringLiterals[i].Offset;
                 writer.Write(CryptedStringLiteralBytes[i]);
             }
             writer.BaseStream.Position = Header.stringOffset;
-            writer.Write(allString);
+            writer.Write(allString); //加密String
+            crypted_Header o_Header = new crypted_Header(GetHeader());
+            writer.BaseStream.Position = 0;
+            writer.Write(o_Header.cryptedHeader());
             return;
         }
         public List<byte[]> GetImageStringsFromImageDefinitions(ImageDefinition[] imageDefinitions)

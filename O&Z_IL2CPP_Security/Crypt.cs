@@ -83,8 +83,8 @@ namespace O_Z_IL2CPP_Security
         public o_Header o_header;
         public crypted_Header(MetadataHeader metadataHeader)
         {
-            o_header.sanity = metadataHeader.sanity;
-            o_header.version = metadataHeader.version;
+            o_header.sanity = 0x5A264F;
+            o_header.version = 0x00;
             o_header.stringLiteralDataOffset = metadataHeader.stringLiteralDataOffset;
             o_header.stringLiteralCount = metadataHeader.stringLiteralCount;
             o_header.stringLiteralDataOffset = metadataHeader.stringLiteralDataOffset;
@@ -232,8 +232,6 @@ namespace O_Z_IL2CPP_Security
             byte[] bytes = new byte[stream.Length];
 
             stream.Read(bytes, 0, bytes.Length);
-
-            // 设置当前流的位置为流的开始 
 
             stream.Seek(0, SeekOrigin.Begin);
 
