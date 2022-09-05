@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\22864\\Desktop\\orange il2cpp\\OrangeIL2CPP Pro\\O&Z_IL2CPP_Security\\O&Z_IL2CPP_Security.csproj": {}
+    "C:\\Users\\22864\\Desktop\\O-Z-IL2CPP\\O&Z_IL2CPP_Security\\O&Z_IL2CPP_Security.csproj": {}
   },
   "projects": {
-    "C:\\Users\\22864\\Desktop\\orange il2cpp\\OrangeIL2CPP Pro\\O&Z_IL2CPP_Security\\O&Z_IL2CPP_Security.csproj": {
+    "C:\\Users\\22864\\Desktop\\O-Z-IL2CPP\\O&Z_IL2CPP_Security\\O&Z_IL2CPP_Security.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\22864\\Desktop\\orange il2cpp\\OrangeIL2CPP Pro\\O&Z_IL2CPP_Security\\O&Z_IL2CPP_Security.csproj",
+        "projectUniqueName": "C:\\Users\\22864\\Desktop\\O-Z-IL2CPP\\O&Z_IL2CPP_Security\\O&Z_IL2CPP_Security.csproj",
         "projectName": "O&Z_IL2CPP_Security",
-        "projectPath": "C:\\Users\\22864\\Desktop\\orange il2cpp\\OrangeIL2CPP Pro\\O&Z_IL2CPP_Security\\O&Z_IL2CPP_Security.csproj",
+        "projectPath": "C:\\Users\\22864\\Desktop\\O-Z-IL2CPP\\O&Z_IL2CPP_Security\\O&Z_IL2CPP_Security.csproj",
         "packagesPath": "C:\\Users\\22864\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\22864\\Desktop\\orange il2cpp\\OrangeIL2CPP Pro\\O&Z_IL2CPP_Security\\obj\\",
+        "outputPath": "C:\\Users\\22864\\Desktop\\O-Z-IL2CPP\\O&Z_IL2CPP_Security\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

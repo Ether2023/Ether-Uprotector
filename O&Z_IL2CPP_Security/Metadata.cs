@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
-namespace OrangeIL2CPP_Pro
+namespace O_Z_IL2CPP_Security
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     class VersionAttribute : Attribute
