@@ -444,6 +444,7 @@ typedef struct Il2CppGlobalMetadataHeader
     int32_t exportedTypeDefinitionsCount;
 } Il2CppGlobalMetadataHeader;
 */
+
 //O_Header
 typedef struct Il2CppGlobalMetadataHeader
 {

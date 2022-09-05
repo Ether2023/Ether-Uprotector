@@ -371,6 +371,7 @@ namespace O_Z_IL2CPP_Security
             writer.BaseStream.Position = 0;
             byte[] bytes = o_Header.cryptedHeader();
             writer.Write(bytes);//混淆Header
+
             return;
         }
         public List<byte[]> GetImageStringsFromImageDefinitions(ImageDefinition[] imageDefinitions)

@@ -79,6 +79,7 @@ namespace O_Z_IL2CPP_Security
             public int unresolvedVirtualCallParameterRangesOffset; // Il2CppRange
             public int windowsRuntimeTypeNamesOffset; // Il2CppWindowsRuntimeTypeNamePair
             public int exportedTypeDefinitionsOffset; // TypeDefinitionIndex
+
         }
         public o_Header o_header;
         public crypted_Header(MetadataHeader metadataHeader)
