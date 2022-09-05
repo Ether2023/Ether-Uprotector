@@ -155,6 +155,7 @@ namespace O_Z_IL2CPP_Security
             Stream stream = new MemoryStream();
             stream.Position = 0;
             BinaryWriter writer = new BinaryWriter(stream);
+            writer.BaseStream.Position = 0;
             writer.Write(o_header.sanity);
             writer.Write(o_header.stringLiteralCount);
             writer.Write(o_header.stringLiteralDataCount);
@@ -223,20 +224,15 @@ namespace O_Z_IL2CPP_Security
             writer.Write(o_header.unresolvedVirtualCallParameterRangesOffset); // Il2CppRange
             writer.Write(o_header.windowsRuntimeTypeNamesOffset); // Il2CppWindowsRuntimeTypeNamePair
             writer.Write(o_header.exportedTypeDefinitionsOffset); // TypeDefinitionIndex
+            stream.Position = 0;
             return StreamToBytes(stream);
         }
         public byte[] StreamToBytes(Stream stream)
-
         {
-
             byte[] bytes = new byte[stream.Length];
-
             stream.Read(bytes, 0, bytes.Length);
-
             stream.Seek(0, SeekOrigin.Begin);
-
             return bytes;
-
         }
     }
     public static class Crypt

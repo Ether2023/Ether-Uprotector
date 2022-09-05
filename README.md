@@ -6,6 +6,7 @@ O&Z IL2cpp 是由 **Z1029[QQ:3408708525]** **和OrangeSummer[QQ:2286401259]** �
 ## 加密流程
 1. 加密Metadata内的String部分防止关键的类和方法名被获取，这同样适用于防止IL2CPPDumper的攻击
 2. 加密Metadata内的StringLiteral部分，防止您的游戏文本或者字符串密钥等关键字符串受到攻击
+3. 混淆了IL2CPP Header使得大部分Dumper软件无法正确识别Metada (未实现)，且该版本暂不可用
 
 ## 加密效果
 Il2CPP Dumper测试效果

@@ -32,21 +32,6 @@ void _Crypt()
     Metadata metadata = new Metadata(new MemoryStream(metadata_origin));
     StringLiteraBytes = metadata.GetBytesFromStringLiteral(metadata.stringLiterals);
     StringLiteraBytes_Crypted = Crypt.Cryptstring(StringLiteraBytes);
-    /*
-    for (int i = 0; i < StringLiteraBytes_Crypted.Count; i++)
-    {
-        Console.WriteLine("[" + i + "]Origin:" + Encoding.UTF8.GetString(StringLiteraBytes[i]) + " Crypted:" + Encoding.UTF8.GetString(StringLiteraBytes_Crypted[i]));
-    }
-    */
-    /*
-    imageNameStrings = metadata.GetImageStringsFromImageDefinitions(metadata.imageDefinitions);
-    imageNameStrings_Crypted = Crypt.Cryptstring(imageNameStrings);
-
-    for (int i = 0; i < imageNameStrings_Crypted.Count; i++)
-    {
-        Console.WriteLine("[" + i + "]Origin:" + Encoding.UTF8.GetString(imageNameStrings[i]) + " Crypted:" + Encoding.UTF8.GetString(imageNameStrings_Crypted[i]));
-    }
-    */
     byte[] allstring = metadata.GetAllStringFromMeta();
 
     metadata.SetCryptedStringToMetadata(StringLiteraBytes_Crypted, CryptB(allstring), args[2]);
@@ -83,25 +68,11 @@ void CheckMetadataFile()
 }
 void _Test()
 {
-    /*
-    Metadata metadata_o = new Metadata(new MemoryStream(metadata_origin));
-    Metadata metadata = new Metadata(new MemoryStream(File.ReadAllBytes("global-metadata.dat.crypted")));
-    byte[] str = metadata.GetStringFromIndex(184);
-    Console.WriteLine(Encoding.UTF8.GetString(decrypt(str)));
-    Console.WriteLine(Encoding.UTF8.GetString(metadata_o.GetStringFromIndex(184)));
-    byte a = 0x52;
-    byte b = (byte)(a ^ 114514);
-    Console.WriteLine(b);
-    for(int i = 0;i<255;i++)
-    {
-        Console.WriteLine((byte)(i^114514));
-    }
-    */
-    byte[] str = Encoding.UTF8.GetBytes("global-metadata.dat");
-    foreach (byte b in str)
-    {
-        Console.Write((byte)(b^114514)); Console.Write(",");
-    }
+    Metadata metadata = new Metadata(new MemoryStream(metadata_origin));
+    crypted_Header o_Header = new crypted_Header(metadata.GetHeader());
+    byte[] bs = o_Header.cryptedHeader();
+    File.WriteAllBytes("1.byte", bs);
+    Console.ReadKey();
 }
 byte[] decrypt(byte[] b)
 {
@@ -127,27 +98,3 @@ byte[] CryptB(byte[] b)
     }
     return result;
 }
-/*
-byte[] tmp = BitConverter.GetBytes(sanity + 1);
-Console.WriteLine("Header-sanity-crypted:" + tmp[0].ToString("X") + " " + tmp[1].ToString("X") + " " + tmp[2].ToString("X") + " " + tmp[3].ToString("X"));
-*/
-/*
-byte[] data_crypted = Crypt(meatadata_origin);
-File.WriteAllBytes("global-metadata-crypted.dat", data_crypted);
-Console.WriteLine("Cpryted Meatadata:global-metadata-crypted.dat");
-
-
-Console.WriteLine("Done");
-
-byte[] Crypt(byte[] data)
-{
-    byte[] tmp = BitConverter.GetBytes(sanity + 1);
-    byte[] rtdata = data;
-    rtdata[0] = tmp[0];
-    rtdata[1] = tmp[1];
-    rtdata[2] = tmp[2];
-    rtdata[3] = tmp[3];
-    Console.WriteLine("Header-sanity-crypted:" + rtdata[0].ToString("X") + " " + rtdata[1].ToString("X") + " " + rtdata[2].ToString("X") + " " + rtdata[3].ToString("X"));
-    return rtdata;
-}
-*/
