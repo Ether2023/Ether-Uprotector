@@ -370,10 +370,9 @@ typedef struct Il2CppWindowsRuntimeTypeNamePair
     StringIndex nameIndex;
     TypeIndex typeIndex;
 } Il2CppWindowsRuntimeTypeNamePair;
-
-#pragma pack(push, p1,4)
-//Origin_Header
 /*
+//Origin_Header
+#pragma pack(push, p1,4)
 typedef struct Il2CppGlobalMetadataHeader
 {
     int32_t sanity;
@@ -443,9 +442,10 @@ typedef struct Il2CppGlobalMetadataHeader
     int32_t exportedTypeDefinitionsOffset; // TypeDefinitionIndex
     int32_t exportedTypeDefinitionsCount;
 } Il2CppGlobalMetadataHeader;
+#pragma pack(pop, p1)
 */
-
 //O_Header
+#pragma pack(push, p1,4)
 typedef struct Il2CppGlobalMetadataHeader
 {
     int32_t sanity;
@@ -518,7 +518,6 @@ typedef struct Il2CppGlobalMetadataHeader
     int32_t exportedTypeDefinitionsOffset; // TypeDefinitionIndex
 } Il2CppGlobalMetadataHeader;
 #pragma pack(pop, p1)
-
 #if RUNTIME_MONO
 
 #pragma pack(push, p1,4)

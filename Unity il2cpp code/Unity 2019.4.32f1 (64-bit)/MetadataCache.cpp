@@ -45,7 +45,6 @@
 #include "mono-runtime/il2cpp-mapping.h"
 #include "vm-utils/NativeSymbol.h"
 #include "vm-utils/VmStringUtils.h"
-#include <Windows.h>
 typedef std::map<Il2CppClass*, Il2CppClass*> PointerTypeMap;
 typedef Il2CppHashMap<const char*, Il2CppClass*, il2cpp::utils::StringUtils::StringHasher<const char*>, il2cpp::utils::VmStringUtils::CaseSensitiveComparer> WindowsRuntimeTypeNameToClassMap;
 typedef Il2CppHashMap<const Il2CppClass*, const char*, il2cpp::utils::PointerHash<Il2CppClass> > ClassToWindowsRuntimeTypeNameMap;
@@ -169,6 +168,7 @@ bool il2cpp::vm::MetadataCache::Initialize()
     il2cpp::metadata::GenericMetadata::SetMaximumRuntimeGenericDepth(s_Il2CppCodeGenOptions->maximumRuntimeGenericDepth);
 
     s_GlobalMetadataHeader = (const Il2CppGlobalMetadataHeader*)s_GlobalMetadata;
+
     IL2CPP_ASSERT(s_GlobalMetadataHeader->sanity == 0xFAB11BAF);
     IL2CPP_ASSERT(s_GlobalMetadataHeader->version == 24);
 
@@ -1597,10 +1597,7 @@ Il2CppString* il2cpp::vm::MetadataCache::GetStringLiteralFromIndex(StringLiteral
 const char* il2cpp::vm::MetadataCache::GetStringFromIndex(StringIndex index)
 {
     IL2CPP_ASSERT(index <= s_GlobalMetadataHeader->stringCount);
-    //FILE *o = fopen("C:\\Users\\22864\\Desktop\\orange il2cpp\\Test proj\\1.txt","ab+");
     const char* strings = ((const char*)s_GlobalMetadata + s_GlobalMetadataHeader->stringOffset) + index;
-    //fprintf(o,"[%d]:%s\n",index,strings);
-    //fclose(o);
     //return strings;
     auto length = strlen(strings);
     auto buffer = (char*)IL2CPP_CALLOC(length + 1, sizeof(char));
@@ -1613,9 +1610,6 @@ const char* il2cpp::vm::MetadataCache::GetStringFromIndex(StringIndex index)
         else
         buffer[i] = strings[i];
 	}
-    //MessageBoxA(nullptr, buffer, "buffer", MB_OK);
-    //fprintf(o,"[%d]:%s\n",index,buffer);
-    //fclose(o);
     return buffer;
 }
 

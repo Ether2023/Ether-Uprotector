@@ -18,7 +18,9 @@ if (!File.Exists(args[0]))
     return;
 }
 byte[] metadata_origin = File.ReadAllBytes(args[0]);
-CheckMetadataFile();
+
+if(!CheckMetadataFile()) return;
+
 switch(args[1])
 {
     case "Crypt":_Crypt();break;
@@ -59,21 +61,18 @@ void _Read()
 
     return;
 }
-void CheckMetadataFile()
+bool CheckMetadataFile()
 {
     if (BitConverter.ToUInt32(metadata_origin, 0) != 4205910959)
     {
-        Console.WriteLine("File is not a Meatadata file!");
-        return;
+        return false;
     }
+    else
+        return true;
 }
 void _Test()
 {
-    Metadata metadata = new Metadata(new MemoryStream(metadata_origin));
-    crypted_Header o_Header = new crypted_Header(metadata.GetHeader());
-    byte[] bs = o_Header.cryptedHeader();
-    File.WriteAllBytes("1.byte", bs);
-    Console.ReadKey();
+
 }
 byte[] decrypt(byte[] b)
 {

@@ -54,6 +54,7 @@ namespace O_Z_IL2CPP_Security
             public uint propertiesOffset; // Il2CppPropertyDefinition
             public uint methodsOffset; // Il2CppMethodDefinition
             public uint parameterDefaultValuesOffset; // Il2CppParameterDefaultValue
+
             public uint fieldDefaultValuesOffset; // Il2CppFieldDefaultValue
             public uint fieldAndParameterDefaultValueDataOffset; // uint8_t
             public int fieldMarshaledSizesOffset; // Il2CppFieldMarshaledSize
@@ -86,7 +87,7 @@ namespace O_Z_IL2CPP_Security
         {
             o_header.sanity = 0x5A264F;
             o_header.version = 0x00;
-            o_header.stringLiteralDataOffset = metadataHeader.stringLiteralDataOffset;
+            o_header.stringLiteralOffset = metadataHeader.stringLiteralOffset;
             o_header.stringLiteralCount = metadataHeader.stringLiteralCount;
             o_header.stringLiteralDataOffset = metadataHeader.stringLiteralDataOffset;
             o_header.stringLiteralDataCount = metadataHeader.stringLiteralDataCount;
@@ -126,6 +127,7 @@ namespace O_Z_IL2CPP_Security
             o_header.interfaceOffsetsCount = metadataHeader.interfaceOffsetsCount;
             o_header.typeDefinitionsOffset = metadataHeader.typeDefinitionsOffset;
             o_header.typeDefinitionsCount = metadataHeader.typeDefinitionsCount;
+
             o_header.imagesOffset = metadataHeader.imagesOffset;
             o_header.imagesCount = metadataHeader.imagesCount;
             o_header.assembliesOffset = metadataHeader.assembliesOffset;

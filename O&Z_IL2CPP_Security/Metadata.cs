@@ -61,6 +61,8 @@ namespace O_Z_IL2CPP_Security
         public int interfaceOffsetsCount;
         public uint typeDefinitionsOffset; // Il2CppTypeDefinition
         public int typeDefinitionsCount;
+        public uint rgctxEntriesOffset; // *
+        public int rgctxEntriesCount; // *
         public uint imagesOffset; // Il2CppImageDefinition
         public int imagesCount;
         public uint assembliesOffset; // Il2CppAssemblyDefinition
@@ -251,6 +253,10 @@ namespace O_Z_IL2CPP_Security
             Header.interfaceOffsetsCount = Reader.ReadInt32();
             Header.typeDefinitionsOffset = Reader.ReadUInt32(); // Il2CppTypeDefinition
             Header.typeDefinitionsCount = Reader.ReadInt32();
+            /*
+            Header.rgctxEntriesOffset = Reader.ReadUInt32();
+            Header.rgctxEntriesCount = Reader.ReadInt32();
+            */
             Header.imagesOffset = Reader.ReadUInt32(); // Il2CppImageDefinition
             Header.imagesCount = Reader.ReadInt32();
             Header.assembliesOffset = Reader.ReadUInt32(); // Il2CppAssemblyDefinition
@@ -349,8 +355,6 @@ namespace O_Z_IL2CPP_Security
             for (int i = 0; i < stringLiterals.Length; i++)
             {
                 reader.BaseStream.Position = Header.stringLiteralDataOffset + stringLiterals[i].Offset;
-                //Console.WriteLine("[" + i + "]" + Encoding.Default.GetString(reader.ReadBytes((int)stringLiterals[i].Length)));
-                //Console.WriteLine("stringLiteralDataOffset:" + Header.stringLiteralDataOffset + " stringLiteralOffset:"+ stringLiterals[i].Offset+ " stringLiteralLength:"+ stringLiterals[i].Length);
                 strBytes.Add(reader.ReadBytes((int)stringLiterals[i].Length));
             }
             return strBytes;
@@ -358,8 +362,12 @@ namespace O_Z_IL2CPP_Security
         public void SetCryptedStringToMetadata(List<byte[]> CryptedStringLiteralBytes, byte[] allString,String Outpath)
         {
             BinaryWriter writer = new BinaryWriter(File.Create(Outpath));
+            crypted_Header o_Header = new crypted_Header(GetHeader());
             metadatastream.Position = 0;
             metadatastream.CopyTo(writer.BaseStream);
+            writer.BaseStream.Position = 0;
+            byte[] bytes = o_Header.cryptedHeader();
+            writer.Write(bytes);//混淆Header
             for (int i = 0; i < stringLiterals.Length; i++) //加密StringLiteral
             {
                 writer.BaseStream.Position = Header.stringLiteralDataOffset + stringLiterals[i].Offset;
@@ -367,10 +375,6 @@ namespace O_Z_IL2CPP_Security
             }
             writer.BaseStream.Position = Header.stringOffset;
             writer.Write(allString); //加密String
-            crypted_Header o_Header = new crypted_Header(GetHeader());
-            writer.BaseStream.Position = 0;
-            byte[] bytes = o_Header.cryptedHeader();
-            writer.Write(bytes);//混淆Header
 
             return;
         }
