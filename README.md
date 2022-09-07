@@ -40,8 +40,8 @@ Il2CPP Dumper测试效果
 
 例如 "O&Z_IL2CPP_Security" "global-metadata.dat" Crypt "global-metadata.dat.crypted"
 ~~~
-4. 使用 **\Unity il2cpp code\Unity 2019.4.32f1 (64-bit)\MetadataCache.cpp** 替换掉Unity安装目录下的同名文件 **\Unity 2019.4.32f1\Editor\Data\il2cpp\libil2cpp\vm\MetadataCache.cpp**
-5. 使用 **\Unity il2cpp code\Unity 2019.4.32f1 (64-bit)\il2cpp-metadata.h** 替换掉Unity安装目录下的同名文件 **\Unity 2019.4.32f1\Editor\Data\il2cpp\libil2cpp\il2cpp-metadata.h**
+4. 使用 [MetadataCache.cpp](https://raw.githubusercontent.com/Z1029-oRangeSumMer/O-Z-IL2CPP/main/Unity%20il2cpp%20code/Unity%202019.4.32f1%20(64-bit)/MetadataCache.cpp) 替换掉Unity安装目录下的同名文件 **\Unity 2019.4.32f1\Editor\Data\il2cpp\libil2cpp\vm\MetadataCache.cpp**
+5. 使用 [il2cpp-metadata.h](https://raw.githubusercontent.com/Z1029-oRangeSumMer/O-Z-IL2CPP/main/Unity%20il2cpp%20code/Unity%202019.4.32f1%20(64-bit)/il2cpp-metadata.h) 替换掉Unity安装目录下的同名文件 **\Unity 2019.4.32f1\Editor\Data\il2cpp\libil2cpp\il2cpp-metadata.h**
 6. 再次启动Unity，重新生成一遍需要加密的项目
 7. 使用加密后的 Metadata 文件替换掉新生成项目下的 **globa-metadata.dat**文件
 8. 享受**O&Z IL2cpp**给你带来的安全! :D
