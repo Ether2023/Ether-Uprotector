@@ -8,6 +8,8 @@ O&Z IL2cpp 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.bil
 1. 混淆了IL2CPP Header使得大部分Dumper软件无法正确识别Metadata
 2. 加密Metadata内的String部分防止关键的类和方法名被获取，这同样适用于防止IL2CPPDumper的攻击（即使头部的混淆失效，同样可以提供二次保护）
 3. 加密Metadata内的StringLiteral部分，防止您的游戏文本或者字符串密钥等关键字符串受到攻击
+4. 对Metadata整体进行加密，增加破解者的破解难度和破解成本（解密部分暂未实现，暂时不可用）
+5. 新增对AssetBundle的加密方法（解密部分暂未实现，暂时不可用）
 
 ## 加密效果
 Il2CPP Dumper测试效果
@@ -50,7 +52,8 @@ Il2CPP Dumper测试效果
 在下一个版本中，我们会做出如下更新（可能）
 1. 重定位Header在Metadata中的位置（甚至是重构Metadata Loader System）
 2. 将Metadata整体进行加密
-3. ......
+3. 对AssetBundle资源进行加密
+4. . . . . . .
 
 敬请期待 awa！
 
