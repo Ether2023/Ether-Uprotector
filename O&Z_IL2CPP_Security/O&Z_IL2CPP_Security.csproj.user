@@ -4,6 +4,6 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>Asset</ActiveDebugProfile>
+    <ActiveDebugProfile>O&amp;Z_IL2CPP_Security</ActiveDebugProfile>
   </PropertyGroup>
 </Project>
