@@ -6,7 +6,11 @@
     },
     "Test": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\22864\\Desktop\\orange il2cpp\\Test proj\\OrangeIL2CPP_Data\\il2cpp_data\\Metadata\\global-metadata.dat\" Crypt \"C:\\Users\\22864\\Desktop\\orange il2cpp\\Test proj\\OrangeIL2CPP_Data\\il2cpp_data\\Metadata\\global-metadata.dat.Crypted\""
+      "commandLineArgs": "\"C:\\Users\\22864\\Desktop\\orange il2cpp\\Test proj\\OrangeIL2CPP_Data\\il2cpp_data\\Metadata\\global-metadata.dat\" Test \"C:\\Users\\22864\\Desktop\\orange il2cpp\\Test proj\\OrangeIL2CPP_Data\\il2cpp_data\\Metadata\\global-metadata.dat.Crypted\""
+    },
+    "Asset": {
+      "commandName": "Project",
+      "commandLineArgs": "\"test.ab\" Test \"test.ab.encrypted\""
     }
   }
 }

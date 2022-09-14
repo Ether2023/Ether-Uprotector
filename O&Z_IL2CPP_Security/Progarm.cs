@@ -5,21 +5,10 @@ using System.Text;
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
 
-//imageName
-List<byte[]> imageNameStrings = new List<byte[]>();
-List<byte[]> imageNameStrings_Crypted = new List<byte[]>();
 //Test();
 Console.WriteLine("OrangeIL2CPP");
 Console.WriteLine("Loading Meatadata:" + args[0]);
-
-if (!File.Exists(args[0]))
-{
-    Console.WriteLine("File is not EXISTS!");
-    return;
-}
-byte[] metadata_origin = File.ReadAllBytes(args[0]);
-
-if(!CheckMetadataFile()) return;
+byte[]? metadata_origin = null;
 
 switch(args[1])
 {
@@ -32,13 +21,21 @@ switch(args[1])
 return;
 void _Crypt()
 {
+    if (!File.Exists(args[0]))
+    {
+        Console.WriteLine("File is not EXISTS!");
+        return;
+    }
+    metadata_origin = File.ReadAllBytes(args[0]);
+    if (!CheckMetadataFile()) return;
     Metadata metadata = new Metadata(new MemoryStream(metadata_origin));
     StringLiteraBytes = metadata.GetBytesFromStringLiteral(metadata.stringLiterals);
     StringLiteraBytes_Crypted = Crypt.Cryptstring(StringLiteraBytes);
     byte[] allstring = metadata.GetAllStringFromMeta();
 
-    metadata.SetCryptedStringToMetadata(StringLiteraBytes_Crypted, CryptB(allstring), args[2]);
-    
+    Stream stream = metadata.SetCryptedStreamToMetadata(StringLiteraBytes_Crypted, CryptB(allstring));
+    byte[] tmp = Tools.StreamToBytes(stream);
+    File.WriteAllBytes(args[2], Crypt.CryptMetadataBody(tmp)); //对整体进行加密
     return;
 }
 void _default()
@@ -48,6 +45,12 @@ void _default()
 }
 void _Read()
 {
+    if (!File.Exists(args[0]))
+    {
+        Console.WriteLine("File is not EXISTS!");
+        return;
+    }
+    metadata_origin = File.ReadAllBytes(args[0]);
     Metadata metadata = new Metadata(new MemoryStream(metadata_origin));
     MetadataHeader header = metadata.GetHeader();
     StringLiteraBytes = metadata.GetBytesFromStringLiteral(metadata.stringLiterals);
@@ -72,7 +75,9 @@ bool CheckMetadataFile()
 }
 void _Test()
 {
-
+    byte[] dat = File.ReadAllBytes(args[0]);
+    byte[] dat2 = AssetBundleCrypt.CryptAssetBundle(dat);
+    File.WriteAllBytes(args[2],dat2);
 }
 byte[] decrypt(byte[] b)
 {

@@ -359,9 +359,10 @@ namespace O_Z_IL2CPP_Security
             }
             return strBytes;
         }
-        public void SetCryptedStringToMetadata(List<byte[]> CryptedStringLiteralBytes, byte[] allString,String Outpath)
+        public Stream SetCryptedStreamToMetadata(List<byte[]> CryptedStringLiteralBytes, byte[] allString)
         {
-            BinaryWriter writer = new BinaryWriter(File.Create(Outpath));
+            Stream stream = new MemoryStream();
+            BinaryWriter writer = new BinaryWriter(stream);
             crypted_Header o_Header = new crypted_Header(GetHeader());
             metadatastream.Position = 0;
             metadatastream.CopyTo(writer.BaseStream);
@@ -375,8 +376,8 @@ namespace O_Z_IL2CPP_Security
             }
             writer.BaseStream.Position = Header.stringOffset;
             writer.Write(allString); //加密String
-
-            return;
+            stream.Position = 0;
+            return stream;
         }
         public List<byte[]> GetImageStringsFromImageDefinitions(ImageDefinition[] imageDefinitions)
         {

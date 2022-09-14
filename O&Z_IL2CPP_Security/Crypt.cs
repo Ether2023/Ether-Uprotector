@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xxtea;
 
 namespace O_Z_IL2CPP_Security
 {
@@ -257,6 +258,19 @@ namespace O_Z_IL2CPP_Security
                 result[i] = (byte)(b[i]^114514);
             }
             return result;
+        }
+        public static byte[] CryptMetadataBody(byte[] data)
+        {
+            byte[] sign = Encoding.UTF8.GetBytes("O&Z_IL2CPP");
+            return Tools.addBytes(sign, XXTEA.Encrypt(data, "114514"));
+        }
+    }
+    public static class AssetBundleCrypt
+    {
+        public static byte[] CryptAssetBundle(byte[] data)
+        {
+            byte[] sign = Encoding.UTF8.GetBytes("O&Z_ASSET");
+            return Tools.addBytes(sign, XXTEA.Encrypt(data, "114514"));
         }
     }
 }
