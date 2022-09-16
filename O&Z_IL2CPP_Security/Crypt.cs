@@ -84,7 +84,7 @@ namespace O_Z_IL2CPP_Security
 
         }
         public o_Header o_header;
-        public crypted_Header(MetadataHeader metadataHeader)
+        public crypted_Header(MetadataHeader_v24_5 metadataHeader)
         {
             o_header.sanity = 0x5A264F;
             o_header.version = 0x00;

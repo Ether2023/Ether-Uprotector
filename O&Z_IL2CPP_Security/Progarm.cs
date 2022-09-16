@@ -1,5 +1,6 @@
 ﻿//Unity IL2CPP Version 24.5
 using O_Z_IL2CPP_Security;
+using System.Reflection;
 using System.Text;
 //stringLiterals
 List<byte[]> StringLiteraBytes = new List<byte[]>();
@@ -28,6 +29,7 @@ void _Crypt()
     }
     metadata_origin = File.ReadAllBytes(args[0]);
     if (!CheckMetadataFile()) return;
+    /*
     Metadata metadata = new Metadata(new MemoryStream(metadata_origin));
     StringLiteraBytes = metadata.GetBytesFromStringLiteral(metadata.stringLiterals);
     StringLiteraBytes_Crypted = Crypt.Cryptstring(StringLiteraBytes);
@@ -37,6 +39,16 @@ void _Crypt()
     byte[] tmp = Tools.StreamToBytes(stream);
     File.WriteAllBytes(args[2], Crypt.CryptMetadataBody(tmp)); //对整体进行加密
     return;
+    */
+    LoadMetadata_v24_5 metadata_V24_5 = new LoadMetadata_v24_5(new MemoryStream(metadata_origin));
+    Test metadata = new Test(metadata_V24_5.metadatastream, metadata_V24_5.Header.GetType(), metadata_V24_5.Header,IL2CPP_Version.V24_5);
+    StringLiteraBytes = metadata.GetBytesFromStringLiteral(metadata.stringLiterals);
+    StringLiteraBytes_Crypted = Crypt.Cryptstring(StringLiteraBytes);
+    byte[] allstring = metadata.GetAllStringFromMeta();
+    Stream stream = metadata.SetCryptedStreamToMetadata(StringLiteraBytes_Crypted, CryptB(allstring));
+    byte[] tmp = Tools.StreamToBytes(stream);
+    File.WriteAllBytes(args[2], tmp); //对整体进行加密
+    
 }
 void _default()
 {
@@ -52,7 +64,7 @@ void _Read()
     }
     metadata_origin = File.ReadAllBytes(args[0]);
     Metadata metadata = new Metadata(new MemoryStream(metadata_origin));
-    MetadataHeader header = metadata.GetHeader();
+    MetadataHeader_v24_5 header = metadata.GetHeader();
     StringLiteraBytes = metadata.GetBytesFromStringLiteral(metadata.stringLiterals);
     byte[] allstring = metadata.GetAllStringFromMeta();
     Console.WriteLine("[StringLitera]Count:"+ StringLiteraBytes.Count+"Baseoffset:"+header.stringLiteralDataOffset);
@@ -75,9 +87,10 @@ bool CheckMetadataFile()
 }
 void _Test()
 {
-    byte[] dat = File.ReadAllBytes(args[0]);
-    byte[] dat2 = AssetBundleCrypt.CryptAssetBundle(dat);
-    File.WriteAllBytes(args[2],dat2);
+    metadata_origin = File.ReadAllBytes(args[0]);
+    Metadata metadata = new Metadata(new MemoryStream(metadata_origin));
+    MetadataHeader_v24_5 header = metadata.GetHeader();
+    Test test = new Test(new MemoryStream(metadata_origin), header.GetType(), header, IL2CPP_Version.V24_5);
 }
 byte[] decrypt(byte[] b)
 {

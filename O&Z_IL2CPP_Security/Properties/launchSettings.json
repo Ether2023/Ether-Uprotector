@@ -2,7 +2,7 @@
   "profiles": {
     "O&Z_IL2CPP_Security": {
       "commandName": "Project",
-      "commandLineArgs": "\"global-metadata.dat\" Test \"global-metadata.dat.crypted\""
+      "commandLineArgs": "\"global-metadata.dat\" Crypt \"global-metadata.dat.crypted\""
     },
     "Test": {
       "commandName": "Project",
