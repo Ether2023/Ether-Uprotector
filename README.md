@@ -5,7 +5,6 @@ O&Z IL2cpp 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.bil
 
 同时并非Unity版本与我们的版本不同就无法使用，只需要您使用的Unity的IL2CPP版本与我们的版本相同即可使用，如果需要了解您使用的unity IL2CPP版本，可以使用il2cpp dumper等工具对您的原始demo进行dump测试即可得知您的IL2CPP版本
 
-
 ![Version](Asset/il2cpp_Ver.png "IL2CPP版本")
 
 交流群：957552913（QQ）
