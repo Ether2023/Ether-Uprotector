@@ -269,306 +269,6 @@ namespace O_Z_IL2CPP_Security
         public byte[]? name;
         public byte[]? namespaze;
     }
-    public class Metadata : BinaryStream
-    {
-        public byte[] scrdata;
-        MetadataHeader_v24_5 Header;
-        public StringLiteral[] stringLiterals;
-        public ImageDefinition[] imageDefinitions;
-        public Il2CppAssemblyDefinition[] assemblyDefs;
-        public Il2CppWindowsRuntimeTypeNamePair[] il2CppWindowsRuntimeTypeNamePairs;
-        public Il2CppTypeDefinition[] il2CppTypeDefinitions;
-        Stream metadatastream;
-        public Metadata(Stream i_metadatastream) : base(i_metadatastream)
-        {
-            metadatastream = i_metadatastream;
-            BinaryReader Reader = new BinaryReader(metadatastream);
-            Header.sanity = Reader.ReadUInt32();
-            Header.version = Reader.ReadInt32();
-            Header.stringLiteralOffset = Reader.ReadUInt32(); // string data for managed code
-            Header.stringLiteralCount = Reader.ReadInt32();
-            Header.stringLiteralDataOffset = Reader.ReadUInt32();
-            Header.stringLiteralDataCount = Reader.ReadInt32();
-            Header.stringOffset = Reader.ReadUInt32(); // string data for metadata
-            Header.stringCount = Reader.ReadInt32();
-            Header.eventsOffset = Reader.ReadUInt32(); // Il2CppEventDefinition
-            Header.eventsCount = Reader.ReadInt32();
-            Header.propertiesOffset = Reader.ReadUInt32(); // Il2CppPropertyDefinition
-            Header.propertiesCount = Reader.ReadInt32();
-            Header.methodsOffset = Reader.ReadUInt32(); // Il2CppMethodDefinition
-            Header.methodsCount = Reader.ReadInt32();
-            Header.parameterDefaultValuesOffset = Reader.ReadUInt32(); // Il2CppParameterDefaultValue
-            Header.parameterDefaultValuesCount = Reader.ReadInt32();
-            Header.fieldDefaultValuesOffset = Reader.ReadUInt32(); // Il2CppFieldDefaultValue
-            Header.fieldDefaultValuesCount = Reader.ReadInt32();
-            Header.fieldAndParameterDefaultValueDataOffset = Reader.ReadUInt32(); // uint8_t
-            Header.fieldAndParameterDefaultValueDataCount = Reader.ReadInt32();
-            Header.fieldMarshaledSizesOffset = Reader.ReadInt32(); // Il2CppFieldMarshaledSize
-            Header.fieldMarshaledSizesCount = Reader.ReadInt32();
-            Header.parametersOffset = Reader.ReadUInt32(); // Il2CppParameterDefinition
-            Header.parametersCount = Reader.ReadInt32();
-            Header.fieldsOffset = Reader.ReadUInt32(); // Il2CppFieldDefinition
-            Header.fieldsCount = Reader.ReadInt32();
-            Header.genericParametersOffset = Reader.ReadUInt32(); // Il2CppGenericParameter
-            Header.genericParametersCount = Reader.ReadInt32();
-            Header.genericParameterConstraintsOffset = Reader.ReadUInt32(); // TypeIndex
-            Header.genericParameterConstraintsCount = Reader.ReadInt32();
-            Header.genericContainersOffset = Reader.ReadUInt32(); // Il2CppGenericContainer
-            Header.genericContainersCount = Reader.ReadInt32();
-            Header.nestedTypesOffset = Reader.ReadUInt32(); // TypeDefinitionIndex
-            Header.nestedTypesCount = Reader.ReadInt32();
-            Header.interfacesOffset = Reader.ReadUInt32(); // TypeIndex
-            Header.interfacesCount = Reader.ReadInt32();
-            Header.vtableMethodsOffset = Reader.ReadUInt32(); // EncodedMethodIndex
-            Header.vtableMethodsCount = Reader.ReadInt32();
-            Header.interfaceOffsetsOffset = Reader.ReadUInt32(); // Il2CppInterfaceOffsetPair
-            Header.interfaceOffsetsCount = Reader.ReadInt32();
-            Header.typeDefinitionsOffset = Reader.ReadUInt32(); // Il2CppTypeDefinition
-            Header.typeDefinitionsCount = Reader.ReadInt32();
-            /*
-            Header.rgctxEntriesOffset = Reader.ReadUInt32();
-            Header.rgctxEntriesCount = Reader.ReadInt32();
-            */
-            Header.imagesOffset = Reader.ReadUInt32(); // Il2CppImageDefinition
-            Header.imagesCount = Reader.ReadInt32();
-            Header.assembliesOffset = Reader.ReadUInt32(); // Il2CppAssemblyDefinition
-            Header.assembliesCount = Reader.ReadInt32();
-            Header.metadataUsageListsOffset = Reader.ReadUInt32(); // Il2CppMetadataUsageList
-            Header.metadataUsageListsCount = Reader.ReadInt32();
-            Header.metadataUsagePairsOffset = Reader.ReadUInt32(); // Il2CppMetadataUsagePair
-            Header.metadataUsagePairsCount = Reader.ReadInt32();
-            Header.fieldRefsOffset = Reader.ReadUInt32(); // Il2CppFieldRef
-            Header.fieldRefsCount = Reader.ReadInt32();
-            Header.referencedAssembliesOffset = Reader.ReadInt32(); // int32
-            Header.referencedAssembliesCount = Reader.ReadInt32();
-            Header.attributesInfoOffset = Reader.ReadUInt32(); // Il2CppCustomAttributeTypeRange
-            Header.attributesInfoCount = Reader.ReadInt32();
-            Header.attributeTypesOffset = Reader.ReadUInt32(); // TypeIndex
-            Header.attributeTypesCount = Reader.ReadInt32();
-            Header.unresolvedVirtualCallParameterTypesOffset = Reader.ReadInt32(); // TypeIndex
-            Header.unresolvedVirtualCallParameterTypesCount = Reader.ReadInt32();
-            Header.unresolvedVirtualCallParameterRangesOffset = Reader.ReadInt32(); // Il2CppRange
-            Header.unresolvedVirtualCallParameterRangesCount = Reader.ReadInt32();
-            Header.windowsRuntimeTypeNamesOffset = Reader.ReadInt32(); // Il2CppWindowsRuntimeTypeNamePair
-            Header.windowsRuntimeTypeNamesSize = Reader.ReadInt32();
-            Header.exportedTypeDefinitionsOffset = Reader.ReadInt32(); // TypeDefinitionIndex
-            Header.exportedTypeDefinitionsCount = Reader.ReadInt32();
-
-            stringLiterals = GetLiterals();
-            imageDefinitions = GetImageDefinitions();
-            assemblyDefs = GetIl2CppAssemblyDefinitions();
-            il2CppWindowsRuntimeTypeNamePairs = GetCppWindowsRuntimeTypeNamePairs();
-            il2CppTypeDefinitions = GetIl2CppTypeDefinitions();
-        }
-        public MetadataHeader_v24_5 GetHeader()
-        {
-            return Header;
-        }
-        StringLiteral[] GetLiterals()
-        {
-            List<StringLiteral> stringLiterals = new List<StringLiteral>();
-            BinaryReader reader = new BinaryReader(metadatastream);
-            uint stringLiteralOffset = Header.stringLiteralOffset;
-            int stringLiteralCount = Header.stringLiteralCount;
-
-            reader.BaseStream.Position = stringLiteralOffset;
-            for (int i = 0; i < stringLiteralCount / SizeOf(typeof(StringLiteral)); i++) // 8 = sizeof(Il2CppStringLiteral)
-            {
-                stringLiterals.Add(new StringLiteral
-                {
-                    Length = reader.ReadUInt32(),
-                    Offset = reader.ReadUInt32()
-                });
-            }
-            return stringLiterals.ToArray();
-        }
-        ImageDefinition[] GetImageDefinitions()
-        {
-            List<ImageDefinition> ImageDefinitions = new List<ImageDefinition>();
-            BinaryReader reader = new BinaryReader(metadatastream);
-            uint imagesOffset = Header.imagesOffset;
-            int imagesCount = Header.imagesCount;
-            reader.BaseStream.Position = imagesOffset;
-            for (int i = 0; i < imagesCount / SizeOf(typeof(ImageDefinition)); i++) // 40 = sizeof(ImageDefinition)
-            {
-                ImageDefinitions.Add(new ImageDefinition
-                {
-                    nameIndex = reader.ReadUInt32(),
-                    assemblyIndex = reader.ReadInt32(),
-                    typeStart = reader.ReadInt32(),
-                    typeCount = reader.ReadUInt32(),
-                    exportedTypeStart = reader.ReadInt32(),
-                    exportedTypeCount = reader.ReadUInt32(),
-                    entryPointIndex = reader.ReadInt32(),
-                    token = reader.ReadUInt32(),
-                    customAttributeStart = reader.ReadInt32(),
-                    customAttributeCount = reader.ReadUInt32(),
-                });
-            }
-            return ImageDefinitions.ToArray();
-        }
-        Il2CppAssemblyDefinition[] GetIl2CppAssemblyDefinitions()
-        {
-            return ReadMetadataClassArray<Il2CppAssemblyDefinition>(Header.assembliesOffset, Header.assembliesCount);
-        }
-        Il2CppWindowsRuntimeTypeNamePair[] GetCppWindowsRuntimeTypeNamePairs()
-        {
-            return ReadMetadataClassArray<Il2CppWindowsRuntimeTypeNamePair>((uint)Header.windowsRuntimeTypeNamesOffset, Header.windowsRuntimeTypeNamesSize);
-        }
-        Il2CppTypeDefinition[] GetIl2CppTypeDefinitions()
-        {
-            return ReadMetadataClassArray<Il2CppTypeDefinition>(Header.typeDefinitionsOffset, Header.typeDefinitionsCount);
-        }
-
-        public List<byte[]> GetBytesFromStringLiteral(StringLiteral[] stringLiterals)
-        {
-            List<byte[]> strBytes = new List<byte[]>();
-            BinaryReader reader = new BinaryReader(metadatastream);
-            for (int i = 0; i < stringLiterals.Length; i++)
-            {
-                reader.BaseStream.Position = Header.stringLiteralDataOffset + stringLiterals[i].Offset;
-                strBytes.Add(reader.ReadBytes((int)stringLiterals[i].Length));
-            }
-            return strBytes;
-        }
-        public Stream SetCryptedStreamToMetadata(List<byte[]> CryptedStringLiteralBytes, byte[] allString)
-        {
-            Stream stream = new MemoryStream();
-            BinaryWriter writer = new BinaryWriter(stream);
-            crypted_Header o_Header = new crypted_Header(GetHeader());
-            metadatastream.Position = 0;
-            metadatastream.CopyTo(writer.BaseStream);
-            writer.BaseStream.Position = 0;
-            byte[] bytes = o_Header.cryptedHeader();
-            writer.Write(bytes);//混淆Header
-            for (int i = 0; i < stringLiterals.Length; i++) //加密StringLiteral
-            {
-                writer.BaseStream.Position = Header.stringLiteralDataOffset + stringLiterals[i].Offset;
-                writer.Write(CryptedStringLiteralBytes[i]);
-            }
-            writer.BaseStream.Position = Header.stringOffset;
-            writer.Write(allString); //加密String
-            stream.Position = 0;
-            return stream;
-        }
-        public List<byte[]> GetImageStringsFromImageDefinitions(ImageDefinition[] imageDefinitions)
-        {
-            List<byte[]> strings = new List<byte[]>();
-            BinaryReader reader = new BinaryReader(metadatastream);
-            for (int i = 0; i < imageDefinitions.Length; i++)
-            {
-                strings.Add(GetStringFromIndex(imageDefinitions[i].nameIndex));
-            }
-            return strings;
-        }
-        public List<AssemblyString> GetAssemblyStringsFromIl2CppAssemblyDefinition(Il2CppAssemblyDefinition[] il2CppAssemblyDefinitions)
-        {
-            List<byte[]> strings = new List<byte[]>();
-            List<AssemblyString> assemblyStrings = new List<AssemblyString>();
-            BinaryReader reader = new BinaryReader(metadatastream);
-            for (int i = 0; i < il2CppAssemblyDefinitions.Length; i++)
-            {
-                assemblyStrings.Add(new AssemblyString
-                {
-                    name = GetStringFromIndex((ulong)il2CppAssemblyDefinitions[i].aname.nameIndex),
-                    culture = GetStringFromIndex((ulong)il2CppAssemblyDefinitions[i].aname.cultureIndex),
-                    public_key = GetStringFromIndex((ulong)il2CppAssemblyDefinitions[i].aname.publicKeyIndex)
-                });
-            }
-            return assemblyStrings;
-        }
-        public List<TypeString> GetTypeStringFromIl2CppTypeDefinition(Il2CppTypeDefinition[] il2CppTypeDefinitions)
-        {
-            List<TypeString> strings = new List<TypeString>();
-            BinaryReader reader = new BinaryReader(metadatastream);
-            for (int i = 0; i < il2CppTypeDefinitions.Length; i++)
-            {
-                strings.Add(new TypeString
-                {
-                    name = GetStringFromIndex((ulong)il2CppTypeDefinitions[i].nameIndex),
-                    namespaze = GetStringFromIndex((ulong)il2CppTypeDefinitions[i].namespaceIndex)
-                });
-            }
-            return strings;
-        }
-        public byte[] GetStringFromIndex(ulong index)
-        {
-            return (ReadStringToNull(Header.stringOffset + index));
-        }
-        byte[] ReadStringToNull(ulong addr)
-        {
-            BinaryReader reader = new BinaryReader(metadatastream);
-            reader.BaseStream.Position = (long)addr;
-            var bytes = new List<byte>();
-            byte b;
-            while ((b = reader.ReadByte()) != 0)
-                bytes.Add(b);
-            return bytes.ToArray();
-        }
-        public int SizeOf(Type type)
-        {
-            var size = 0;
-            foreach (var i in type.GetFields())
-            {
-                var attr = (VersionAttribute)Attribute.GetCustomAttribute(i, typeof(VersionAttribute));
-                if (attr != null)
-                {
-                    if (Header.version < attr.Min || Header.version > attr.Max)
-                        continue;
-                }
-                var fieldType = i.FieldType;
-                if (fieldType.IsPrimitive)
-                {
-                    size += GetPrimitiveTypeSize(fieldType.Name);
-                }
-                else if (fieldType.IsEnum)
-                {
-                    var e = fieldType.GetField("value__").FieldType;
-                    size += GetPrimitiveTypeSize(e.Name);
-                }
-                else if (fieldType.IsArray)
-                {
-                    var arrayLengthAttribute = i.GetCustomAttribute<ArrayLengthAttribute>();
-                    size += arrayLengthAttribute.Length;
-                }
-                else
-                {
-                    size += SizeOf(fieldType);
-                }
-            }
-            return size;
-
-            int GetPrimitiveTypeSize(string name)
-            {
-                switch (name)
-                {
-                    case "Int32":
-                    case "UInt32":
-                        return 4;
-                    case "Int16":
-                    case "UInt16":
-                        return 2;
-                    default:
-                        return 0;
-                }
-            }
-        }
-        private T[] ReadMetadataClassArray<T>(uint addr, int count) where T : new()
-        {
-            return ReadClassArray<T>(addr, count / SizeOf(typeof(T)));
-        }
-        public byte[] GetAllStringFromMeta()
-        {
-            BinaryReader reader = new BinaryReader(metadatastream);
-            reader.BaseStream.Position = Header.stringOffset;
-            List<byte> bytes = new List<byte>();
-            for(int i = 0; i < Header.stringCount; i++)
-            {
-                bytes.Add(reader.ReadByte());
-            }
-            return bytes.ToArray();
-        }
-    }
     public class Tmp
     {
         public Tmp(Type type,object Header)
@@ -662,7 +362,7 @@ namespace O_Z_IL2CPP_Security
             metadatastream.Position = 0;
         }
     }
-    public class Test : BinaryStream
+    public class Metadata : BinaryStream
     {
         public object header;
 
@@ -690,7 +390,7 @@ namespace O_Z_IL2CPP_Security
         public Il2CppWindowsRuntimeTypeNamePair[] il2CppWindowsRuntimeTypeNamePairs;
         public Il2CppTypeDefinition[] il2CppTypeDefinitions;
         Stream metadatastream;
-        public Test(Stream i_metadatastream,Type HeaderType,object Header, IL2CPP_Version Version) : base(i_metadatastream)
+        public Metadata(Stream i_metadatastream,Type HeaderType,object Header, IL2CPP_Version Version) : base(i_metadatastream)
         {
             InVersion = Version;
             metadatastream = i_metadatastream;
@@ -785,11 +485,15 @@ namespace O_Z_IL2CPP_Security
         {
             Stream stream = new MemoryStream();
             BinaryWriter writer = new BinaryWriter(stream);
-            crypted_Header o_Header = new crypted_Header((MetadataHeader_v24_5)header);
+            object o_Header;
+            if (InVersion == IL2CPP_Version.V24_5)
+                o_Header = new CryptedHeader_2019_4_32_f1((MetadataHeader_v24_5)header);
+            else
+                o_Header = new CryptedHeader_2019_4_32_f1((MetadataHeader_v24_5)header);
             metadatastream.Position = 0;
             metadatastream.CopyTo(writer.BaseStream);
             writer.BaseStream.Position = 0;
-            byte[] bytes = o_Header.cryptedHeader();
+            byte[]? bytes = o_Header.GetType().GetMethod("cryptedHeader").Invoke(o_Header, null) as byte[];
             writer.Write(bytes);//混淆Header
             for (int i = 0; i < stringLiterals.Length; i++) //加密StringLiteral
             {

@@ -3,7 +3,14 @@ O&Z IL2cpp 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.bil
 
 本项目目前只针对 **Unity 2019.4.32f1 (64-bit)** (IL2CPP Version:24.4)起作用，之后会逐步适配其他版本的unity engine
 
+同时并非Unity版本与我们的版本不同就无法使用，只需要您使用的Unity的IL2CPP版本与我们的版本相同即可使用，如果需要了解您使用的unity IL2CPP版本，可以使用il2cpp dumper等工具对您的原始demo进行dump测试即可得知您的IL2CPP版本
+![Version](Asset/il2cpp_Ver.png "IL2CPP版本")
+
 交流群：957552913（QQ）
+## 预告
+1. 我们会在之后的版本中提供检测您的IL2CPP_Version的功能
+2. 目前已对整体的Core进行了优化与独立，为兼容其他的unity版本作了重要铺垫，我们将会在下一个版本中提供对**Unity 2021.3.6f1(IL2CPP Version:29)**的支持，我们欢迎你加入我们的群聊或者联系作者QQ提出宝贵的建议或者提出对你正在使用的unity版本的适配
+
 ## 加密流程
 1. 混淆了IL2CPP Header使得大部分Dumper软件无法正确识别Metadata
 2. 加密Metadata内的String部分防止关键的类和方法名被获取，这同样适用于防止IL2CPPDumper的攻击（即使头部的混淆失效，同样可以提供二次保护）

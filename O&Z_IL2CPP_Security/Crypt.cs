@@ -7,7 +7,7 @@ using Xxtea;
 
 namespace O_Z_IL2CPP_Security
 {
-    public class crypted_Header
+    public class CryptedHeader_2019_4_32_f1
     {
         public struct o_Header
         {
@@ -84,7 +84,7 @@ namespace O_Z_IL2CPP_Security
 
         }
         public o_Header o_header;
-        public crypted_Header(MetadataHeader_v24_5 metadataHeader)
+        public CryptedHeader_2019_4_32_f1(MetadataHeader_v24_5 metadataHeader)
         {
             o_header.sanity = 0x5A264F;
             o_header.version = 0x00;
@@ -229,14 +229,7 @@ namespace O_Z_IL2CPP_Security
             writer.Write(o_header.windowsRuntimeTypeNamesOffset); // Il2CppWindowsRuntimeTypeNamePair
             writer.Write(o_header.exportedTypeDefinitionsOffset); // TypeDefinitionIndex
             stream.Position = 0;
-            return StreamToBytes(stream);
-        }
-        public byte[] StreamToBytes(Stream stream)
-        {
-            byte[] bytes = new byte[stream.Length];
-            stream.Read(bytes, 0, bytes.Length);
-            stream.Seek(0, SeekOrigin.Begin);
-            return bytes;
+            return Tools.StreamToBytes(stream);
         }
     }
     public static class Crypt

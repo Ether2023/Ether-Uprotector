@@ -29,25 +29,16 @@ void _Crypt()
     }
     metadata_origin = File.ReadAllBytes(args[0]);
     if (!CheckMetadataFile()) return;
-    /*
-    Metadata metadata = new Metadata(new MemoryStream(metadata_origin));
-    StringLiteraBytes = metadata.GetBytesFromStringLiteral(metadata.stringLiterals);
-    StringLiteraBytes_Crypted = Crypt.Cryptstring(StringLiteraBytes);
-    byte[] allstring = metadata.GetAllStringFromMeta();
-
-    Stream stream = metadata.SetCryptedStreamToMetadata(StringLiteraBytes_Crypted, CryptB(allstring));
-    byte[] tmp = Tools.StreamToBytes(stream);
-    File.WriteAllBytes(args[2], Crypt.CryptMetadataBody(tmp)); //对整体进行加密
-    return;
-    */
+    
     LoadMetadata_v24_5 metadata_V24_5 = new LoadMetadata_v24_5(new MemoryStream(metadata_origin));
-    Test metadata = new Test(metadata_V24_5.metadatastream, metadata_V24_5.Header.GetType(), metadata_V24_5.Header,IL2CPP_Version.V24_5);
+    Metadata metadata = new Metadata(metadata_V24_5.metadatastream, metadata_V24_5.Header.GetType(), metadata_V24_5.Header,IL2CPP_Version.V24_5);
     StringLiteraBytes = metadata.GetBytesFromStringLiteral(metadata.stringLiterals);
     StringLiteraBytes_Crypted = Crypt.Cryptstring(StringLiteraBytes);
     byte[] allstring = metadata.GetAllStringFromMeta();
     Stream stream = metadata.SetCryptedStreamToMetadata(StringLiteraBytes_Crypted, CryptB(allstring));
     byte[] tmp = Tools.StreamToBytes(stream);
     File.WriteAllBytes(args[2], tmp); //对整体进行加密
+    
     
 }
 void _default()
@@ -57,6 +48,7 @@ void _default()
 }
 void _Read()
 {
+    /*
     if (!File.Exists(args[0]))
     {
         Console.WriteLine("File is not EXISTS!");
@@ -73,7 +65,7 @@ void _Read()
         Console.WriteLine("[" +  i + "]" + Encoding.Default.GetString(StringLiteraBytes[i]));
     }
     Console.WriteLine(Encoding.UTF8.GetString(allstring));
-
+    */
     return;
 }
 bool CheckMetadataFile()
@@ -87,10 +79,7 @@ bool CheckMetadataFile()
 }
 void _Test()
 {
-    metadata_origin = File.ReadAllBytes(args[0]);
-    Metadata metadata = new Metadata(new MemoryStream(metadata_origin));
-    MetadataHeader_v24_5 header = metadata.GetHeader();
-    Test test = new Test(new MemoryStream(metadata_origin), header.GetType(), header, IL2CPP_Version.V24_5);
+    
 }
 byte[] decrypt(byte[] b)
 {
