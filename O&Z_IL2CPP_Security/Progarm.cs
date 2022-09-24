@@ -2,6 +2,7 @@
 using O_Z_IL2CPP_Security;
 using System.Reflection;
 using System.Text;
+using System.Security.Cryptography;
 //stringLiterals
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
@@ -79,7 +80,7 @@ bool CheckMetadataFile()
 }
 void _Test()
 {
-    
+
 }
 byte[] decrypt(byte[] b)
 {

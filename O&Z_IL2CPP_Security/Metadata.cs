@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Security.Cryptography;
+
 namespace O_Z_IL2CPP_Security
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
@@ -493,8 +495,18 @@ namespace O_Z_IL2CPP_Security
             metadatastream.Position = 0;
             metadatastream.CopyTo(writer.BaseStream);
             writer.BaseStream.Position = 0;
-            byte[]? bytes = o_Header.GetType().GetMethod("cryptedHeader").Invoke(o_Header, null) as byte[];
-            writer.Write(bytes);//混淆Header
+            CryptHeader cryptHeader = new CryptHeader(header,IL2CPP_Version.V24_5, metadatastream.Length);
+            writer.Write(cryptHeader.frontHeader.sign); // 24
+            //Console.WriteLine("sign: " + Encoding.UTF8.GetString(cryptHeader.frontHeader.sign));
+            writer.Write(cryptHeader.frontHeader.offset); // 8
+            //Console.WriteLine("offset: " + cryptHeader.frontHeader.offset);
+            writer.Write(cryptHeader.frontHeader.length); // 4
+            //Console.WriteLine("length: " + cryptHeader.frontHeader.length);
+            writer.Write(cryptHeader.frontHeader.key); // 32             all:68
+            //Console.WriteLine("key: " + BitConverter.ToString(cryptHeader.frontHeader.key));
+            writer.Write(RandomNumberGenerator.GetBytes(cryptHeader.frontHeader.OriginLegnth - 68)); //使用随机数填充Header直至原始大小
+            //byte[]? bytes = o_Header.GetType().GetMethod("cryptedHeader").Invoke(o_Header, null) as byte[];
+            //writer.Write(bytes);//混淆Header
             for (int i = 0; i < stringLiterals.Length; i++) //加密StringLiteral
             {
                 writer.BaseStream.Position = stringLiteralDataOffset + stringLiterals[i].Offset;
@@ -502,6 +514,8 @@ namespace O_Z_IL2CPP_Security
             }
             writer.BaseStream.Position = stringOffset;
             writer.Write(allString); //加密String
+            writer.BaseStream.Position = writer.BaseStream.Length;
+            writer.Write(cryptHeader.Crypted_Header); //将混淆后的Header写入文件末尾
             stream.Position = 0;
             return stream;
         }

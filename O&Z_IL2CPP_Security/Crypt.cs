@@ -2,13 +2,49 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Security.Cryptography;
 using Xxtea;
 
 namespace O_Z_IL2CPP_Security
 {
+    public struct FrontHeader //68
+    {
+        public byte[] sign; //24
+        public long offset; //8
+        public int length; //4
+        public byte[] key; //32
+        public int OriginLegnth; //原始Header大小
+    }
+    public class CryptHeader
+    {
+        public FrontHeader frontHeader; //前置Header
+        object cryptHeader; //加密Header类
+        byte[] o_Header; //打乱后Header
+        public byte[] Crypted_Header; //加密后Header
+        public CryptHeader(object Header,IL2CPP_Version ver,long offset)
+        {
+            if (ver == IL2CPP_Version.V24_5)
+                cryptHeader = new CryptedHeader_2019_4_32_f1((MetadataHeader_v24_5)Header);
+            else
+                cryptHeader = new CryptedHeader_2019_4_32_f1((MetadataHeader_v24_5)Header);
+            o_Header = cryptHeader.GetType().GetMethod("cryptedHeader").Invoke(cryptHeader, null) as byte[];
+            frontHeader.key = GetKey(o_Header);
+            Crypted_Header = XXTEA.Encrypt(o_Header, frontHeader.key);
+
+            frontHeader.sign = new byte[]{0x4F,0x26,0x5A,0x5F,0x49,0x4C,0x32,0x43,0x50,0x50,0x5F,0x53,0x65,0x63,0x75,0x72,0x69,0x74,0x79,0x00,0x00,0x00,0x00,0x00};
+            frontHeader.length = Crypted_Header.Length;
+            frontHeader.offset = offset;
+            frontHeader.OriginLegnth = (int)cryptHeader.GetType().GetField("Length").GetValue(cryptHeader);
+        }
+        byte[] GetKey(byte[] bytes)
+        {
+            SHA256 sha256 = SHA256.Create();
+            return sha256.ComputeHash(bytes);
+        }
+    }
     public class CryptedHeader_2019_4_32_f1
     {
+        public readonly int Length = 264;
         public struct o_Header
         {
             public uint sanity;
@@ -256,6 +292,15 @@ namespace O_Z_IL2CPP_Security
         {
             byte[] sign = Encoding.UTF8.GetBytes("O&Z_IL2CPP");
             return Tools.addBytes(sign, XXTEA.Encrypt(data, "114514"));
+        }
+        public static byte[] CryptHeader(byte[] data,IL2CPP_Version ver)
+        {
+            byte[] ret = XXTEA.Encrypt(data, "114514");
+            Stream stream = new MemoryStream();
+            BinaryWriter writer = new BinaryWriter(stream);
+            writer.Write(ret.Length);
+            writer.Write(ret);
+            return Tools.StreamToBytes(stream);
         }
     }
     public static class AssetBundleCrypt
