@@ -1,13 +1,10 @@
-﻿//Unity IL2CPP Version 24.5
-using O_Z_IL2CPP_Security;
+﻿using O_Z_IL2CPP_Security;
 using System.Reflection;
 using System.Text;
 using System.Security.Cryptography;
-//stringLiterals
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
 
-//Test();
 Console.WriteLine("OrangeIL2CPP");
 Console.WriteLine("Loading Meatadata:" + args[0]);
 byte[]? metadata_origin = null;
