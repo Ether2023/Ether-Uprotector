@@ -23,6 +23,7 @@ switch(args[1])
 return;
 void _Crypt()
 {
+    IL2CPP_Version ver;
     if (!File.Exists(args[0]))
     {
         Console.WriteLine("File is not EXISTS!");
@@ -30,15 +31,31 @@ void _Crypt()
     }
     metadata_origin = File.ReadAllBytes(args[0]);
     if (!CheckMetadataFile()) return;
-    
-    LoadMetadata_v24_5 metadata_V24_5 = new LoadMetadata_v24_5(new MemoryStream(metadata_origin));
-    Metadata metadata = new Metadata(metadata_V24_5.metadatastream, metadata_V24_5.Header.GetType(), metadata_V24_5.Header,IL2CPP_Version.V24_5);
+    Console.WriteLine("Please input your il2cpp version(v24.5/v29):");
+    string _Read = Console.ReadLine();
+    switch(_Read)
+    {
+        case "v24.5": ver = IL2CPP_Version.V24_5; break;
+        case "v29": ver = IL2CPP_Version.V29; break;
+        default: Console.WriteLine("Error!"); return;
+    }
+    object Loader;
+    if (ver == IL2CPP_Version.V24_5)
+        Loader = new LoadMetadata_v24_5(new MemoryStream(metadata_origin));
+    else if (ver == IL2CPP_Version.V29)
+        Loader = new LoadMetadata_v29(new MemoryStream(metadata_origin));
+    else
+    {
+        Console.WriteLine("Input version Error!");
+        return;
+    }
+    Metadata metadata = new Metadata(Loader.GetType().GetField("metadatastream").GetValue(Loader) as Stream, Loader.GetType().GetField("Header").GetValue(Loader).GetType(), Loader.GetType().GetField("Header").GetValue(Loader), ver);
     StringLiteraBytes = metadata.GetBytesFromStringLiteral(metadata.stringLiterals);
     StringLiteraBytes_Crypted = Crypt.Cryptstring(StringLiteraBytes);
     byte[] allstring = metadata.GetAllStringFromMeta();
-    Stream stream = metadata.SetCryptedStreamToMetadata(StringLiteraBytes_Crypted, CryptB(allstring));
+    Stream stream = metadata.SetCryptedStreamToMetadata(StringLiteraBytes_Crypted, CryptB(allstring),ver);
     byte[] tmp = Tools.StreamToBytes(stream);
-    File.WriteAllBytes(args[2], tmp); //对整体进行加密
+    File.WriteAllBytes(args[2], tmp); 
     
     
 }
@@ -49,24 +66,6 @@ void _default()
 }
 void _Read()
 {
-    /*
-    if (!File.Exists(args[0]))
-    {
-        Console.WriteLine("File is not EXISTS!");
-        return;
-    }
-    metadata_origin = File.ReadAllBytes(args[0]);
-    Metadata metadata = new Metadata(new MemoryStream(metadata_origin));
-    MetadataHeader_v24_5 header = metadata.GetHeader();
-    StringLiteraBytes = metadata.GetBytesFromStringLiteral(metadata.stringLiterals);
-    byte[] allstring = metadata.GetAllStringFromMeta();
-    Console.WriteLine("[StringLitera]Count:"+ StringLiteraBytes.Count+"Baseoffset:"+header.stringLiteralDataOffset);
-    for (int i = 0;i<StringLiteraBytes.Count; i++)
-    {
-        Console.WriteLine("[" +  i + "]" + Encoding.Default.GetString(StringLiteraBytes[i]));
-    }
-    Console.WriteLine(Encoding.UTF8.GetString(allstring));
-    */
     return;
 }
 bool CheckMetadataFile()

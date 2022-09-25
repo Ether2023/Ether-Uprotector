@@ -17,21 +17,23 @@ namespace O_Z_IL2CPP_Security
     }
     public class CryptHeader
     {
-        public FrontHeader frontHeader; //前置Header
+        public FrontHeader frontHeader; 
         object cryptHeader; //加密Header类
-        byte[] o_Header; //打乱后Header
+        byte[] o_Header; //混淆后Header
         public byte[] Crypted_Header; //加密后Header
-        public CryptHeader(object Header,IL2CPP_Version ver,long offset)
+        public CryptHeader(object Header, IL2CPP_Version ver, long offset)
         {
             if (ver == IL2CPP_Version.V24_5)
                 cryptHeader = new CryptedHeader_2019_4_32_f1((MetadataHeader_v24_5)Header);
+            else if (ver == IL2CPP_Version.V29)
+                cryptHeader = new CryptedHeader_2021_3_6_f1((MetadataHeader_v29)Header);
             else
-                cryptHeader = new CryptedHeader_2019_4_32_f1((MetadataHeader_v24_5)Header);
+                throw new Exception("Error!");
             o_Header = cryptHeader.GetType().GetMethod("cryptedHeader").Invoke(cryptHeader, null) as byte[];
             frontHeader.key = GetKey(o_Header);
             Crypted_Header = XXTEA.Encrypt(o_Header, frontHeader.key);
 
-            frontHeader.sign = new byte[]{0x4F,0x26,0x5A,0x5F,0x49,0x4C,0x32,0x43,0x50,0x50,0x5F,0x53,0x65,0x63,0x75,0x72,0x69,0x74,0x79,0x00,0x00,0x00,0x00,0x00};
+            frontHeader.sign = new byte[] { 0x4F, 0x26, 0x5A, 0x5F, 0x49, 0x4C, 0x32, 0x43, 0x50, 0x50, 0x5F, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x00, 0x00, 0x00, 0x00, 0x00 };
             frontHeader.length = Crypted_Header.Length;
             frontHeader.offset = offset;
             frontHeader.OriginLegnth = (int)cryptHeader.GetType().GetField("Length").GetValue(cryptHeader);
@@ -268,6 +270,225 @@ namespace O_Z_IL2CPP_Security
             return Tools.StreamToBytes(stream);
         }
     }
+    public class CryptedHeader_2021_3_6_f1
+    {
+        public readonly int Length = 256;
+        public struct o_Header
+        {
+            public uint sanity;
+
+            public uint stringLiteralOffset; // string data for managed code
+            public uint interfacesOffset; // TypeIndex
+            public uint stringLiteralDataOffset;
+            public uint stringOffset; // string data for metadata
+            public uint vtableMethodsOffset; // EncodedMethodIndex
+            public uint eventsOffset; // Il2CppEventDefinition
+            public uint interfaceOffsetsOffset; // Il2CppInterfaceOffsetPair
+            public uint propertiesOffset; // Il2CppPropertyDefinition
+            public uint assembliesOffset; // Il2CppAssemblyDefinition
+            public uint methodsOffset; // Il2CppMethodDefinition
+            public uint fieldRefsOffset; // Il2CppFieldRef
+            public uint parameterDefaultValuesOffset; // Il2CppParameterDefaultValue
+            public uint typeDefinitionsOffset; // Il2CppTypeDefinition
+            public uint fieldDefaultValuesOffset; // Il2CppFieldDefaultValue
+            public uint imagesOffset; // Il2CppImageDefinition
+            public uint fieldAndParameterDefaultValueDataOffset; // uint8_t
+            public uint referencedAssembliesOffset; // int32_t
+            public uint fieldMarshaledSizesOffset; // Il2CppFieldMarshaledSize
+            public uint unresolvedVirtualCallParameterTypesOffset; // TypeIndex
+            public uint parametersOffset; // Il2CppParameterDefinition
+            public uint unresolvedVirtualCallParameterRangesOffset; // Il2CppMetadataRange
+            public uint fieldsOffset; // Il2CppFieldDefinition
+            public uint windowsRuntimeTypeNamesOffset; // Il2CppWindowsRuntimeTypeNamePair
+            public uint genericParametersOffset; // Il2CppGenericParameter
+            public uint windowsRuntimeStringsOffset; // const char*
+            public uint genericParameterConstraintsOffset; // TypeIndex
+            public uint exportedTypeDefinitionsOffset; // TypeDefinitionIndex
+            public uint genericContainersOffset; // Il2CppGenericContainer
+            public uint nestedTypesOffset; // TypeDefinitionIndex
+
+            public int version;
+            public int genericContainersSize;
+            public int stringLiteralSize;
+            public int nestedTypesSize;
+            public int interfacesSize;
+            public int stringLiteralDataSize;
+            public int vtableMethodsSize;
+            public int stringSize;
+            public int interfaceOffsetsSize;
+            public int eventsSize;
+            public int typeDefinitionsSize;
+            public int parameterDefaultValuesSize;
+            public int imagesSize;
+            public int fieldDefaultValuesSize;
+            public int assembliesSize;
+            public int propertiesSize;
+            public int fieldRefsSize;
+            public int methodsSize;
+            public int referencedAssembliesSize;
+            public uint attributeDataOffset;
+            public int attributeDataSize;
+            public uint attributeDataRangeOffset;
+            public int attributeDataRangeSize;
+            public int fieldAndParameterDefaultValueDataSize;
+            public int unresolvedVirtualCallParameterTypesSize;
+            public int fieldMarshaledSizesSize;
+            public int unresolvedVirtualCallParameterRangesSize;
+            public int parametersSize;
+            public int windowsRuntimeTypeNamesSize;
+            public int fieldsSize;
+            public int windowsRuntimeStringsSize;
+            public int genericParametersSize;
+            public int exportedTypeDefinitionsSize;
+            public int genericParameterConstraintsSize;
+        }
+        public o_Header o_header;
+        public CryptedHeader_2021_3_6_f1(MetadataHeader_v29 metadataHeader)
+        {
+            o_header.sanity = 0x5A264F;
+            o_header.version = 0x00;
+            o_header.stringLiteralOffset = metadataHeader.stringLiteralOffset; // string data for managed code
+            o_header.stringLiteralSize = metadataHeader.stringLiteralSize;
+            o_header.stringLiteralDataOffset = metadataHeader.stringLiteralDataOffset;
+            o_header.stringLiteralDataSize = metadataHeader.stringLiteralDataSize;
+            o_header.stringOffset = metadataHeader.stringOffset; // string data for metadata
+            o_header.stringSize = metadataHeader.stringSize;
+            o_header.eventsOffset = metadataHeader.eventsOffset; // Il2CppEventDefinition
+            o_header.eventsSize = metadataHeader.eventsSize;
+            o_header.propertiesOffset = metadataHeader.propertiesOffset; // Il2CppPropertyDefinition
+            o_header.propertiesSize = metadataHeader.propertiesSize;
+            o_header.methodsOffset = metadataHeader.methodsOffset; // Il2CppMethodDefinition
+            o_header.methodsSize = metadataHeader.methodsSize;
+            o_header.parameterDefaultValuesOffset = metadataHeader.parameterDefaultValuesOffset; // Il2CppParameterDefaultValue
+            o_header.parameterDefaultValuesSize = metadataHeader.parameterDefaultValuesSize;
+            o_header.fieldDefaultValuesOffset = metadataHeader.fieldDefaultValuesOffset;// Il2CppFieldDefaultValue
+            o_header.fieldDefaultValuesSize = metadataHeader.fieldDefaultValuesSize;
+            o_header.fieldAndParameterDefaultValueDataOffset = metadataHeader.fieldAndParameterDefaultValueDataOffset; // uint8_t
+            o_header.fieldAndParameterDefaultValueDataSize = metadataHeader.fieldAndParameterDefaultValueDataSize;
+            o_header.fieldMarshaledSizesOffset = metadataHeader.fieldMarshaledSizesOffset;// Il2CppFieldMarshaledSize
+            o_header.fieldMarshaledSizesSize = metadataHeader.fieldMarshaledSizesSize;
+            o_header.parametersOffset = metadataHeader.parametersOffset; // Il2CppParameterDefinition
+            o_header.parametersSize = metadataHeader.parametersSize;
+            o_header.parametersSize = metadataHeader.parametersSize;
+            o_header.fieldsOffset = metadataHeader.fieldsOffset; // Il2CppFieldDefinition
+            o_header.fieldsSize = metadataHeader.fieldsSize;
+            o_header.genericParametersOffset = metadataHeader.genericParametersOffset; // Il2CppGenericParameter
+            o_header.genericParametersSize = metadataHeader.genericParametersSize;
+            o_header.genericParameterConstraintsOffset = metadataHeader.genericParameterConstraintsOffset; // TypeIndex
+            o_header.genericParameterConstraintsSize = metadataHeader.genericParameterConstraintsSize;
+            o_header.genericContainersOffset = metadataHeader.genericContainersOffset; // Il2CppGenericContainer
+            o_header.genericContainersSize = metadataHeader.genericContainersSize;
+            o_header.nestedTypesOffset = metadataHeader.nestedTypesOffset; // TypeDefinitionIndex
+            o_header.nestedTypesSize = metadataHeader.nestedTypesSize;
+            o_header.interfacesOffset = metadataHeader.interfacesOffset;// TypeIndex
+            o_header.interfacesSize = metadataHeader.interfacesSize;
+            o_header.vtableMethodsOffset = metadataHeader.vtableMethodsOffset; // EncodedMethodIndex
+            o_header.vtableMethodsSize = metadataHeader.vtableMethodsSize;
+            o_header.interfaceOffsetsOffset = metadataHeader.interfaceOffsetsOffset; // Il2CppInterfaceOffsetPair
+            o_header.interfaceOffsetsSize = metadataHeader.interfaceOffsetsSize;
+            o_header.typeDefinitionsOffset = metadataHeader.typeDefinitionsOffset; // Il2CppTypeDefinition
+            o_header.typeDefinitionsSize = metadataHeader.typeDefinitionsSize;
+            o_header.imagesOffset = metadataHeader.imagesOffset; // Il2CppImageDefinition
+            o_header.imagesSize = metadataHeader.imagesSize;
+            o_header.assembliesOffset = metadataHeader.assembliesOffset; // Il2CppAssemblyDefinition
+            o_header.assembliesSize = metadataHeader.assembliesSize;
+            o_header.fieldRefsOffset = metadataHeader.fieldRefsOffset; // Il2CppFieldRef
+            o_header.fieldRefsSize = metadataHeader.fieldRefsSize;
+            o_header.referencedAssembliesOffset = metadataHeader.referencedAssembliesOffset; // int32_t
+            o_header.referencedAssembliesSize = metadataHeader.referencedAssembliesSize;
+            o_header.attributeDataOffset = metadataHeader.attributeDataOffset;
+            o_header.attributeDataSize = metadataHeader.attributeDataSize;
+            o_header.attributeDataRangeOffset = metadataHeader.attributeDataRangeOffset;
+            o_header.attributeDataRangeSize = metadataHeader.attributeDataRangeSize;
+            o_header.unresolvedVirtualCallParameterTypesOffset = metadataHeader.unresolvedVirtualCallParameterTypesOffset; // TypeIndex
+            o_header.unresolvedVirtualCallParameterTypesSize = metadataHeader.unresolvedVirtualCallParameterTypesSize;
+            o_header.unresolvedVirtualCallParameterRangesOffset = metadataHeader.unresolvedVirtualCallParameterRangesOffset; // Il2CppMetadataRange
+            o_header.unresolvedVirtualCallParameterRangesSize = metadataHeader.unresolvedVirtualCallParameterRangesSize;
+            o_header.windowsRuntimeTypeNamesOffset = metadataHeader.windowsRuntimeTypeNamesOffset; // Il2CppWindowsRuntimeTypeNamePair
+            o_header.windowsRuntimeTypeNamesSize = metadataHeader.windowsRuntimeTypeNamesSize;
+            o_header.windowsRuntimeStringsOffset = metadataHeader.windowsRuntimeStringsOffset; // const char*
+            o_header.windowsRuntimeStringsSize = metadataHeader.windowsRuntimeStringsSize;
+            o_header.exportedTypeDefinitionsOffset = metadataHeader.exportedTypeDefinitionsOffset; // TypeDefinitionIndex
+            o_header.exportedTypeDefinitionsSize = metadataHeader.exportedTypeDefinitionsSize;
+        }
+        public byte[] cryptedHeader()
+        {
+            Stream stream = new MemoryStream();
+            stream.Position = 0;
+            BinaryWriter writer = new BinaryWriter(stream);
+            writer.BaseStream.Position = 0;
+
+            writer.Write(o_header.sanity);
+
+            writer.Write(o_header.stringLiteralOffset); // string data for managed code
+            writer.Write(o_header.interfacesOffset); // TypeIndex
+            writer.Write(o_header.stringLiteralDataOffset);
+            writer.Write(o_header.stringOffset); // string data for metadata
+            writer.Write(o_header.vtableMethodsOffset); // EncodedMethodIndex
+            writer.Write(o_header.eventsOffset); // Il2CppEventDefinition
+            writer.Write(o_header.interfaceOffsetsOffset); // Il2CppInterfaceOffsetPair
+            writer.Write(o_header.propertiesOffset); // Il2CppPropertyDefinition
+            writer.Write(o_header.assembliesOffset); // Il2CppAssemblyDefinition
+            writer.Write(o_header.methodsOffset); // Il2CppMethodDefinition
+            writer.Write(o_header.fieldRefsOffset); // Il2CppFieldRef
+            writer.Write(o_header.parameterDefaultValuesOffset); // Il2CppParameterDefaultValue
+            writer.Write(o_header.typeDefinitionsOffset); // Il2CppTypeDefinition
+            writer.Write(o_header.fieldDefaultValuesOffset); // Il2CppFieldDefaultValue
+            writer.Write(o_header.imagesOffset); // Il2CppImageDefinition
+            writer.Write(o_header.fieldAndParameterDefaultValueDataOffset); // uint8_t
+            writer.Write(o_header.referencedAssembliesOffset); // int32_t
+            writer.Write(o_header.fieldMarshaledSizesOffset); // Il2CppFieldMarshaledSize
+            writer.Write(o_header.unresolvedVirtualCallParameterTypesOffset); // TypeIndex
+            writer.Write(o_header.parametersOffset); // Il2CppParameterDefinition
+            writer.Write(o_header.unresolvedVirtualCallParameterRangesOffset); // Il2CppMetadataRange
+            writer.Write(o_header.fieldsOffset); // Il2CppFieldDefinition
+            writer.Write(o_header.windowsRuntimeTypeNamesOffset); // Il2CppWindowsRuntimeTypeNamePair
+            writer.Write(o_header.genericParametersOffset); // Il2CppGenericParameter
+            writer.Write(o_header.windowsRuntimeStringsOffset); // const char*
+            writer.Write(o_header.genericParameterConstraintsOffset); // TypeIndex
+            writer.Write(o_header.exportedTypeDefinitionsOffset); // TypeDefinitionIndex
+            writer.Write(o_header.genericContainersOffset); // Il2CppGenericContainer
+            writer.Write(o_header.nestedTypesOffset); // TypeDefinitionIndex
+
+            writer.Write(o_header.version);
+            writer.Write(o_header.genericContainersSize);
+            writer.Write(o_header.stringLiteralSize);
+            writer.Write(o_header.nestedTypesSize);
+            writer.Write(o_header.interfacesSize);
+            writer.Write(o_header.stringLiteralDataSize);
+            writer.Write(o_header.vtableMethodsSize);
+            writer.Write(o_header.stringSize);
+            writer.Write(o_header.interfaceOffsetsSize);
+            writer.Write(o_header.eventsSize);
+            writer.Write(o_header.typeDefinitionsSize);
+            writer.Write(o_header.parameterDefaultValuesSize);
+            writer.Write(o_header.imagesSize);
+            writer.Write(o_header.fieldDefaultValuesSize);
+            writer.Write(o_header.assembliesSize);
+            writer.Write(o_header.propertiesSize);
+            writer.Write(o_header.fieldRefsSize);
+            writer.Write(o_header.methodsSize);
+            writer.Write(o_header.referencedAssembliesSize);
+            writer.Write(o_header.attributeDataOffset);
+            writer.Write(o_header.attributeDataSize);
+            writer.Write(o_header.attributeDataRangeOffset);
+            writer.Write(o_header.attributeDataRangeSize);
+            writer.Write(o_header.fieldAndParameterDefaultValueDataSize);
+            writer.Write(o_header.unresolvedVirtualCallParameterTypesSize);
+            writer.Write(o_header.fieldMarshaledSizesSize);
+            writer.Write(o_header.unresolvedVirtualCallParameterRangesSize);
+            writer.Write(o_header.parametersSize);
+            writer.Write(o_header.windowsRuntimeTypeNamesSize);
+            writer.Write(o_header.fieldsSize);
+            writer.Write(o_header.windowsRuntimeStringsSize);
+            writer.Write(o_header.genericParametersSize);
+            writer.Write(o_header.exportedTypeDefinitionsSize);
+            writer.Write(o_header.genericParameterConstraintsSize);
+            stream.Position = 0;
+            return Tools.StreamToBytes(stream);
+        }
+    }
+        
     public static class Crypt
     {
         public static List<byte[]> Cryptstring(List<byte[]> bytes)
