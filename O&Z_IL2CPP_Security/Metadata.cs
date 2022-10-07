@@ -292,6 +292,14 @@ namespace O_Z_IL2CPP_Security
             }
             writer.BaseStream.Position = stringOffset;
             writer.Write(allString); //加密String
+
+            writer.BaseStream.Position = stringLiteralOffset;
+            for (int i = 0; i < stringLiterals.Length; i++) // 倒置StringLiteral
+            {
+                writer.Write(stringLiterals[i].Offset);
+                writer.Write(stringLiterals[i].Length);
+            }
+
             writer.BaseStream.Position = writer.BaseStream.Length;
             writer.Write(cryptHeader.Crypted_Header);
             stream.Position = 0;

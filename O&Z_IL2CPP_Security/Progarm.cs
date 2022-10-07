@@ -3,7 +3,7 @@ using O_Z_IL2CPP_Security;
 using System.Reflection;
 using System.Text;
 using System.Security.Cryptography;
-//stringLiterals
+using LitJson;
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
 
