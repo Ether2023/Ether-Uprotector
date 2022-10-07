@@ -3,13 +3,33 @@ using O_Z_IL2CPP_Security;
 using System.Reflection;
 using System.Text;
 using System.Security.Cryptography;
-//stringLiterals
+using LitJson;
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
-
-//Test();
-Console.WriteLine("OrangeIL2CPP");
-Console.WriteLine("Loading Meatadata:" + args[0]);
+string OpenFilePath;
+/*
+if (!File.Exists("Config.json"))
+{
+    Json_Config json_Config = new Json_Config();
+    json_Config.LastOpenFolder = "";
+    json_Config.LastSaveFolder = "";
+    json_Config.LastOpenFileName = "";
+    json_Config.LastSaveFileName = "";
+    File.WriteAllText("Config.json", JsonMapper.ToJson(json_Config));
+}
+return;
+*/
+if (args.Length == 0)
+{
+    
+    return;
+}
+else
+{
+    OpenFilePath = args[0];
+}
+Console.WriteLine("O&Z_IL2CPP_Security");
+Console.WriteLine("Loading Meatadata:" + OpenFilePath);
 byte[]? metadata_origin = null;
 
 switch(args[1])
@@ -18,18 +38,19 @@ switch(args[1])
     case "Decrypt":return;
     case "Read":_Read();break;
     case "Test":_Test();break;
+    case "CheckVersion": CheckVersion(); break;
     default:_default();break;
 }
 return;
 void _Crypt()
 {
     IL2CPP_Version ver;
-    if (!File.Exists(args[0]))
+    if (!File.Exists(OpenFilePath))
     {
         Console.WriteLine("File is not EXISTS!");
         return;
     }
-    metadata_origin = File.ReadAllBytes(args[0]);
+    metadata_origin = File.ReadAllBytes(OpenFilePath);
     if (!CheckMetadataFile()) return;
     Console.WriteLine("Please input your il2cpp version(v24.5/v29):");
     string _Read = Console.ReadLine();
@@ -80,6 +101,13 @@ bool CheckMetadataFile()
 void _Test()
 {
 
+}
+void CheckVersion()
+{
+    metadata_origin = File.ReadAllBytes(OpenFilePath);
+    if (!CheckMetadataFile()) return;
+    MetadataCheck metadataCheck = new MetadataCheck(new MemoryStream(metadata_origin));
+    Console.WriteLine("Your Metadata Version:" + metadataCheck.Version);
 }
 byte[] decrypt(byte[] b)
 {

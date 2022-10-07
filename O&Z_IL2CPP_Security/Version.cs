@@ -77,7 +77,7 @@ namespace O_Z_IL2CPP_Security
         public int unresolvedVirtualCallParameterTypesCount;
         public int unresolvedVirtualCallParameterRangesOffset; // Il2CppRange
         public int unresolvedVirtualCallParameterRangesCount;
-        public int windowsRuntimeTypeNamesOffset; // Il2CppWindowsRuntimeTypeNamePair
+        public uint windowsRuntimeTypeNamesOffset; // Il2CppWindowsRuntimeTypeNamePair
         public int windowsRuntimeTypeNamesSize;
         public int exportedTypeDefinitionsOffset; // TypeDefinitionIndex
         public int exportedTypeDefinitionsCount;
@@ -219,7 +219,7 @@ namespace O_Z_IL2CPP_Security
             Header.unresolvedVirtualCallParameterTypesCount = Reader.ReadInt32();
             Header.unresolvedVirtualCallParameterRangesOffset = Reader.ReadInt32(); // Il2CppRange
             Header.unresolvedVirtualCallParameterRangesCount = Reader.ReadInt32();
-            Header.windowsRuntimeTypeNamesOffset = Reader.ReadInt32(); // Il2CppWindowsRuntimeTypeNamePair
+            Header.windowsRuntimeTypeNamesOffset = Reader.ReadUInt32(); // Il2CppWindowsRuntimeTypeNamePair
             Header.windowsRuntimeTypeNamesSize = Reader.ReadInt32();
             Header.exportedTypeDefinitionsOffset = Reader.ReadInt32(); // TypeDefinitionIndex
             Header.exportedTypeDefinitionsCount = Reader.ReadInt32();

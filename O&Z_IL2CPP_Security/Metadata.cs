@@ -143,7 +143,6 @@ namespace O_Z_IL2CPP_Security
     public class Metadata : BinaryStream
     {
         public object header;
-
         public IL2CPP_Version InVersion;
         
         public int version;
@@ -292,6 +291,14 @@ namespace O_Z_IL2CPP_Security
             }
             writer.BaseStream.Position = stringOffset;
             writer.Write(allString); //加密String
+
+            writer.BaseStream.Position = stringLiteralOffset;
+            for (int i = 0; i < stringLiterals.Length; i++) // 倒置StringLiteral
+            {
+                writer.Write(stringLiterals[i].Offset);
+                writer.Write(stringLiterals[i].Length);
+            }
+
             writer.BaseStream.Position = writer.BaseStream.Length;
             writer.Write(cryptHeader.Crypted_Header);
             stream.Position = 0;
@@ -413,6 +420,118 @@ namespace O_Z_IL2CPP_Security
                 bytes.Add(reader.ReadByte());
             }
             return bytes.ToArray();
+        }
+    }
+    public class MetadataCheck : BinaryStream
+    {
+        public Il2CppGlobalMetadataHeader header;
+        public Il2CppImageDefinition[] imageDefs;
+        public Il2CppAssemblyDef[] assemblyDefs;
+        public MetadataCheck(Stream stream) : base(stream)
+        {
+            var sanity = ReadUInt32();
+            if (sanity != 0xFAB11BAF)
+            {
+                throw new InvalidDataException("ERROR: Metadata file supplied is not valid metadata file.");
+            }
+            var version = ReadInt32();
+            if (version < 0 || version > 1000)
+            {
+                throw new InvalidDataException("ERROR: Metadata file supplied is not valid metadata file.");
+            }
+            if (version < 16 || version > 29)
+            {
+                throw new NotSupportedException($"ERROR: Metadata file supplied is not a supported version[{version}].");
+            }
+            Version = version;
+            header = ReadClass<Il2CppGlobalMetadataHeader>(0);
+            if (version == 24)
+            {
+                if (header.stringLiteralOffset == 264)
+                {
+                    Version = 24.2;
+                    header = ReadClass<Il2CppGlobalMetadataHeader>(0);
+                }
+                else
+                {
+                    imageDefs = ReadMetadataClassArray<Il2CppImageDefinition>(header.imagesOffset, header.imagesSize);
+                    if (imageDefs.Any(x => x.token != 1))
+                    {
+                        Version = 24.1;
+                    }
+                }
+            }
+            imageDefs = ReadMetadataClassArray<Il2CppImageDefinition>(header.imagesOffset, header.imagesSize);
+            if (Version == 24.2 && header.assembliesSize / 68 < imageDefs.Length)
+            {
+                Version = 24.4;
+            }
+            var v241Plus = false;
+            if (Version == 24.1 && header.assembliesSize / 64 == imageDefs.Length)
+            {
+                v241Plus = true;
+            }
+            if (v241Plus)
+            {
+                Version = 24.4;
+            }
+            assemblyDefs = ReadMetadataClassArray<Il2CppAssemblyDef>(header.assembliesOffset, header.assembliesSize);
+            if (v241Plus)
+            {
+                Version = 24.1;
+            }
+        }
+        private T[] ReadMetadataClassArray<T>(uint addr, int count) where T : new()
+        {
+            return ReadClassArray<T>(addr, count / SizeOf(typeof(T)));
+        }
+        private int SizeOf(Type type)
+        {
+            var size = 0;
+            foreach (var i in type.GetFields())
+            {
+                var attr = (VersionAttribute)Attribute.GetCustomAttribute(i, typeof(VersionAttribute));
+                if (attr != null)
+                {
+                    if (Version < attr.Min || Version > attr.Max)
+                        continue;
+                }
+                var fieldType = i.FieldType;
+                if (fieldType.IsPrimitive)
+                {
+                    size += GetPrimitiveTypeSize(fieldType.Name);
+                }
+                else if (fieldType.IsEnum)
+                {
+                    var e = fieldType.GetField("value__").FieldType;
+                    size += GetPrimitiveTypeSize(e.Name);
+                }
+                else if (fieldType.IsArray)
+                {
+                    var arrayLengthAttribute = i.GetCustomAttribute<ArrayLengthAttribute>();
+                    size += arrayLengthAttribute.Length;
+                }
+                else
+                {
+                    size += SizeOf(fieldType);
+                }
+            }
+            return size;
+
+            int GetPrimitiveTypeSize(string name)
+            {
+                switch (name)
+                {
+                    case "Int32":
+                    case "UInt32":
+                        return 4;
+                    case "Int16":
+                    case "UInt16":
+                        return 2;
+                    default:
+                        return 0;
+                }
+            }
         }
     }
     public class BinaryStream : IDisposable

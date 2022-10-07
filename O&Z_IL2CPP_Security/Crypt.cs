@@ -117,7 +117,7 @@ namespace O_Z_IL2CPP_Security
             public uint attributeTypesOffset; // TypeIndex
             public int unresolvedVirtualCallParameterTypesOffset; // TypeIndex
             public int unresolvedVirtualCallParameterRangesOffset; // Il2CppRange
-            public int windowsRuntimeTypeNamesOffset; // Il2CppWindowsRuntimeTypeNamePair
+            public uint windowsRuntimeTypeNamesOffset; // Il2CppWindowsRuntimeTypeNamePair
             public int exportedTypeDefinitionsOffset; // TypeDefinitionIndex
 
         }
