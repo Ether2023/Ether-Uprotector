@@ -1,32 +1,43 @@
 # O-Z-IL2CPP
 O&Z IL2cpp 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.bilibili.com/79045701)[QQ:2286401259]** 共同制作的针对Unity IL2CPP编译进行的客制化和加密
 
-~~本项目目前只针对 **Unity 2019.4.32f1 (64-bit)** (IL2CPP Version:24.4)起作用，之后会逐步适配其他版本的unity engine~~
-
-> 支持的Unity版本: 
-> - **Unity 2019.4.32f1 (64-bit)** 及其同期使用 **IL2CPP V24.5** 的Unity版本
-> - **Unity 2021.3.6f1** 及其同期使用 **IL2CPP V29** 的Unity版本
-
-
-同时并非Unity版本与我们的版本不同就无法使用，只需要您使用的Unity的IL2CPP版本与我们的版本相同即可使用，如果需要了解您使用的unity IL2CPP版本，可以使用il2cpp dumper等工具对您的原始demo进行dump测试即可得知您的IL2CPP版本
-
-![Version](Asset/il2cpp_Ver.png "IL2CPP版本")
-
 交流群：957552913（QQ）
+# Support Unity Version
 
-## What's New
-1. ~~此次更新为正式版本最后一次预更新，我们对代码的结构和核心功能进行了二次优化了调整，对于其他IL2CPPVersion的兼容也在进行中，敬请期待！~~
-2. 我们添加了对 **Unity 2021.3.6f1(IL2CPP v29)** 的正式支持！
-3. 将Header部分替换为我们提供的Header，并且将原始的Header加密后隐藏在文件中，使破解者寻找到原始Header的过程变得困难
-4. 优化和独立核心代码，你也可以仿照我们的方式对proj进行修改，自行添加对您的unity version的支持！
+| Il2Cpp Version | Unity Version                | Support        |
+| -------------- | ---------------------------- |--------------  |   
+| 24.0           | 2017.x - 2018.2.x            |                |
+| 24.1           | 2018.3.x - 2018.4.x          |                |
+| 24.2           | 2019.1.x - 2019.2.x          |                |
+| 24.3           | 2019.3.x, 2019.4.x, 2020.1.x |✔️             |
+| 24.4           | 2019.4.x and 2020.1.x        |✔️             |
+| 27.0           | 2021.2.x                     |                |
+| 27.1           | 2020.2.x - 2020.3.x          |                |
+| 27.2           | 2021.1.x, 2021.2.x           |                |
+| 28             | 2021.3.x, 2022.1.x           |✔️             |
+
+如果需要了解您使用的unity Metadata版本，可以使用CheckVersion参数来查看您的Metadata版本
 
 ***如果你想让我们添加对您使用的Unity版本的支持，可以联系作者QQ哦***
 
+~~~
+O&Z_IL2CPP_Security InputMetadataFilePath CheckVersion
+
+例如:
+O&Z_IL2CPP_Security global-metadata.dat CheckVersion
+~~~
+
+![Version](Asset/CheckVersion.png "IL2CPP版本")
+
+
+## What's New
+1.新增了对Metadata版本检测功能
+
+
 ## 预告
-1. 我们会在之后的版本中提供检测您的IL2CPP_Version的功能（coming soon！）
+1. ~~我们会在之后的版本中提供检测您的IL2CPP_Version的功能（coming soon！）~~
 2. 我们会在近期更新中重构IL2CPP的结构体
-3. ~~目前已对整体的Core进行了优化与独立，为兼容其他的unity版本作了重要铺垫，我们将会在下一个版本中提供对 **Unity 2021.3.6f1(IL2CPP Version:29)** 的支持，我们欢迎你加入我们的群聊或者联系作者QQ提出宝贵的建议或者提出对你正在使用的unity版本的适配~~
-4. ***我们正在开发UI版本以及Json配置等功能(可以自定义加密流程，以及密钥等)***
+3. ***我们正在开发UI版本以及Json配置等功能(可以自定义加密流程，以及密钥等)(coming soon!)***
 
 预告指的是在近期版本会更新的条目，更多长期目标可以查看下文的未来规划 ***qwq***
 ## 加密流程
@@ -34,8 +45,7 @@ O&Z IL2cpp 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.bil
 2. 加密Metadata内的String部分防止关键的类和方法名被获取，这同样适用于防止IL2CPPDumper的攻击（即使头部的混淆失效，同样可以提供二次保护）
 3. 加密Metadata内的StringLiteral部分，防止您的游戏文本或者字符串密钥等关键字符串受到攻击
 4. 我们混淆了Header并且隐藏了sanity和verison等关键参数，使得IL2CPPDumper等软件无法正确识别Metadata文件
-5. ~~对Metadata整体进行加密，增加破解者的破解难度和破解成本（解密部分暂未实现，暂时不可用）~~
-6. ~~新增对AssetBundle的加密方法（解密部分暂未实现，暂时不可用）~~
+
 
 ## 加密效果
 Il2CPP Dumper测试效果
