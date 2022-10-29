@@ -4,13 +4,13 @@
       "commandName": "Project",
       "commandLineArgs": "\"global-metadata.dat\" Crypt \"global-metadata.dat.crypted\""
     },
-    "Asset": {
-      "commandName": "Project",
-      "commandLineArgs": "\"test.ab\" Test \"test.ab.encrypted\""
-    },
     "CheckVersion": {
       "commandName": "Project",
       "commandLineArgs": "\"global-metadata.dat\" CheckVersion"
+    },
+    "Test": {
+      "commandName": "Project",
+      "commandLineArgs": "\"global-metadata.dat\" Test"
     }
   }
 }

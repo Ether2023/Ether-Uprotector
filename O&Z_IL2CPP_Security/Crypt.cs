@@ -23,10 +23,10 @@ namespace O_Z_IL2CPP_Security
         public byte[] Crypted_Header; //加密后Header
         public CryptHeader(object Header, IL2CPP_Version ver, long offset)
         {
-            if (ver == IL2CPP_Version.V24_5)
+            if (ver == IL2CPP_Version.V24_4)
                 cryptHeader = new CryptedHeader_2019_4_32_f1((MetadataHeader_v24_5)Header);
-            else if (ver == IL2CPP_Version.V29)
-                cryptHeader = new CryptedHeader_2021_3_6_f1((MetadataHeader_v29)Header);
+            else if (ver == IL2CPP_Version.V28)
+                cryptHeader = new CryptedHeader_2021_3_6_f1((MetadataHeader_v28)Header);
             else
                 throw new Exception("Error!");
             o_Header = cryptHeader.GetType().GetMethod("cryptedHeader").Invoke(cryptHeader, null) as byte[];
@@ -343,7 +343,7 @@ namespace O_Z_IL2CPP_Security
             public int genericParameterConstraintsSize;
         }
         public o_Header o_header;
-        public CryptedHeader_2021_3_6_f1(MetadataHeader_v29 metadataHeader)
+        public CryptedHeader_2021_3_6_f1(MetadataHeader_v28 metadataHeader)
         {
             o_header.sanity = 0x5A264F;
             o_header.version = 0x00;

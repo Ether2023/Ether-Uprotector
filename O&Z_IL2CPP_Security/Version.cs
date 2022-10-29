@@ -8,8 +8,8 @@ namespace O_Z_IL2CPP_Security
 {
     public enum IL2CPP_Version
     {
-        V24_5,
-        V29
+        V24_4,
+        V28
     };
     public struct MetadataHeader_v24_5
     {
@@ -82,7 +82,7 @@ namespace O_Z_IL2CPP_Security
         public int exportedTypeDefinitionsOffset; // TypeDefinitionIndex
         public int exportedTypeDefinitionsCount;
     }
-    public struct MetadataHeader_v29
+    public struct MetadataHeader_v28
     {
         public uint sanity;
         public int version;
@@ -227,11 +227,11 @@ namespace O_Z_IL2CPP_Security
             metadatastream.Position = 0;
         }
     }
-    public class LoadMetadata_v29
+    public class LoadMetadata_v28
     {
         public Stream metadatastream;
-        public MetadataHeader_v29 Header;
-        public LoadMetadata_v29(Stream i_metadatastream)
+        public MetadataHeader_v28 Header;
+        public LoadMetadata_v28(Stream i_metadatastream)
         {
             metadatastream = i_metadatastream;
             BinaryReader Reader = new BinaryReader(metadatastream);

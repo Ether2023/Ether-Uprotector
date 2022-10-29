@@ -22,5 +22,16 @@ namespace O_Z_IL2CPP_Security
             stream.Seek(0, SeekOrigin.Begin);
             return bytes;
         }
+        public static int CheckNull(int Checker)
+        {
+            for(byte i = byte.MinValue; i < byte.MaxValue;i++)
+            {
+                if ((byte)(i ^ Checker) == 0x00)
+                {
+                    return i;
+                }
+            }
+            return 0x100;
+        }
     }
 }

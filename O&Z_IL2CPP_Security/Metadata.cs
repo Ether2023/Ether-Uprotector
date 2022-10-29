@@ -181,7 +181,7 @@ namespace O_Z_IL2CPP_Security
             assembliesOffset = (uint)HeaderType.GetField("assembliesOffset").GetValue(Header);
             windowsRuntimeTypeNamesOffset = (uint)HeaderType.GetField("windowsRuntimeTypeNamesOffset").GetValue(Header);
             typeDefinitionsOffset = (uint)HeaderType.GetField("typeDefinitionsOffset").GetValue(Header);
-            if (Version == IL2CPP_Version.V24_5)
+            if (Version == IL2CPP_Version.V24_4)
             {
                 stringCount = (int)HeaderType.GetField("stringCount").GetValue(Header);
                 stringLiteralCount = (int)HeaderType.GetField("stringLiteralCount").GetValue(Header);
@@ -191,7 +191,7 @@ namespace O_Z_IL2CPP_Security
                 windowsRuntimeTypeNamesSize = (int)HeaderType.GetField("windowsRuntimeTypeNamesSize").GetValue(Header);
                 typeDefinitionsCount = (int)HeaderType.GetField("typeDefinitionsCount").GetValue(Header);
             }
-            else if(Version == IL2CPP_Version.V29)
+            else if(Version == IL2CPP_Version.V28)
             {
                 stringCount = (int)HeaderType.GetField("stringSize").GetValue(Header);
                 stringLiteralCount = (int)HeaderType.GetField("stringLiteralSize").GetValue(Header);
