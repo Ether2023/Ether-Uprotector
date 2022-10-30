@@ -11,6 +11,10 @@
     "Test": {
       "commandName": "Project",
       "commandLineArgs": "\"global-metadata.dat\" Test"
+    },
+    "Generate": {
+      "commandName": "Project",
+      "commandLineArgs": "Generate"
     }
   }
 }

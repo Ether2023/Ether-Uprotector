@@ -2,6 +2,8 @@
 O&Z IL2cpp 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.bilibili.com/79045701)[QQ:2286401259]** 共同制作的针对Unity IL2CPP编译进行的客制化和加密
 
 交流群：957552913（QQ）
+
+***本程序基于Net6.0开发，运行需要Net6.0环境，请确保您的PC正确安装了NET6 Runtime或者NET6 SDK***
 # Support Unity Version
 
 | Il2Cpp Version | Unity Version                | Support        |
@@ -16,28 +18,37 @@ O&Z IL2cpp 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.bil
 | 27.2           | 2021.1.x, 2021.2.x           |                |
 | 28             | 2021.3.x, 2022.1.x           |✔️             |
 
-如果需要了解您使用的unity Metadata版本，可以使用CheckVersion参数来查看您的Metadata版本
+如果需要了解您使用的unity Metadata版本，可以使用CheckVersion参数来查看您的Metadata版本 *（具体方法在下方）*
 
 ***如果你想让我们添加对您使用的Unity版本的支持，可以联系作者QQ哦***
 
-~~~
-O&Z_IL2CPP_Security InputMetadataFilePath CheckVersion
-
-例如:
-O&Z_IL2CPP_Security global-metadata.dat CheckVersion
-~~~
-
-![Version](Asset/CheckVersion.png "IL2CPP版本")
 
 
 ## What's New
-1.新增了对Metadata版本检测功能
+1. 本次我们对程序的整体代码进行了修剪和优化，同时优化了用户交互体验
+
+>新增的帮助界面
+
+>![Help](Asset/help.png)
+
+>详细的执行流程
+
+>![Run](Asset/run.png)
+
+2. 我们新增了Config配置文件,可以直接在Config内配置相关参数,**并且我们本次更新支持自定义key**
+   
+   ***详细使用方法请阅读下方的使用方法***
+
+>![Config](Asset/config.png)
+
+3. 我们修复了代码中错误的表述信息,并且修复了release中应用程序无法正常运行的问题
+> 将IL2CPP版本修改为Metadata版本 
+> 
+> 2019.4 修正为 v24，2021.1 修正为 v28
 
 
 ## 预告
-1. ~~我们会在之后的版本中提供检测您的IL2CPP_Version的功能（coming soon！）~~
-2. 我们会在近期更新中重构IL2CPP的结构体
-3. ***我们正在开发UI版本以及Json配置等功能(可以自定义加密流程，以及密钥等)(coming soon!)***
+1. UI窗口界面即将完成！
 
 预告指的是在近期版本会更新的条目，更多长期目标可以查看下文的未来规划 ***qwq***
 ## 加密流程
@@ -69,31 +80,51 @@ O&Z_Header
 ![O&Z_Header](Asset/FrontHeader.png "After Crypted Header")
 
 ## 使用方法
-1. 编译出VS工程,或者直接下载[Release](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases)内的exe程序
-2. 首先对Unity工程进行一次生成，得到原始的 **globa-metadata.dat** 文件 *(一般位于 你的项目名称_Data\il2cpp_data\Metadata\ 文件夹内)*
-3. 在生成的可执行文件的文件夹内使用命令行，并且正确输入您的IL2CPP版本,你将得到加密后的Metadata文件
+1. 下载源代码并使用VS编译项目,或者直接下载[Release](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases)内的exe程序
+2. 首先打开 Config.json 正确配置您的Metadata版本 *(关于Unity对应版本图可以在上方查看)*
+   >也可以使用**CheckVersion**参数查看您的Metadata版本(需要提前生成一次您的工程以获取Metadata原始文件)
 
 ~~~
-"O&Z_IL2CPP_Security" 原始global-metadata.dat文件路径 Crypt 加密后输出文件的路径
+O&Z_IL2CPP_Security Input CheckVersion
+
+例如:
+O&Z_IL2CPP_Security global-metadata.dat CheckVersion
+~~~
+
+![Version](Asset/CheckVersion.png "IL2CPP版本")
+
+1. 设置您的key以用于加密Metadata **(不可以超过int类型的最高上限)**
+   >![Config](Asset/config.png)
+
+2. 使用**Generate**参数生成配套的加密组件
+
+~~~
+O&Z_IL2CPP_Security Generate
+~~~
+
+>生成成功后，你可以在 *Generation\您的Metadata版本\\* 文件夹下找到对应组件(组件为**整个目录/文件夹**)
+
+>![Generation](Asset/Generation.png)
+
+>***tips: src-res文件夹内为组件模型，请不要去修改或者移动以防止出错***
+
+5. 将生成的组件覆盖进入Unity的IL2CPP文件夹(**\Unity XXXXX\Editor\Data\il2cpp\libil2cpp\\**)内
+
+6. 启动Unity，重新生成一遍需要加密的项目
+7. 提取出生成项目的Metadata文件(global-metadata.dat)，使用**Crypt**参数加密此文件
+~~~
+"O&Z_IL2CPP_Security" input Crypt output
 
 例如 "O&Z_IL2CPP_Security" "global-metadata.dat" Crypt "global-metadata.dat.crypted"
-
-Please input your il2cpp version(v24.5/v29):
-v24
-
 ~~~
-4. 使用 **libil2cpp** 覆盖Unity安装目录下的同名文件夹 **\Unity XXXXX\Editor\Data\il2cpp\libil2cpp\\**
-5. 再次启动Unity，重新生成一遍需要加密的项目
-6. 使用加密后的 Metadata 文件替换掉新生成项目下的 **globa-metadata.dat**文件
-7. 享受**O&Z IL2cpp**给你带来的安全! :D
+8. 将加密输出的文件重命名为原始Metadata文件的名称并且替换掉原来的Metadata文件
+9. 享受**O&Z IL2cpp**给你带来的安全! :D
 
 ## 未来的规划
-1. ~~重定位Header在Metadata中的位置（甚至是重构Metadata Loader System）~~
-2. ~~将Metadata整体进行加密~~
-3. 对AssetBundle资源进行加密
-4. 修改IL2CPP的运行机制
-5. 对原始Assembly-Csharp.dll进行混淆
-6. . . . . . .
+1. 对AssetBundle资源进行加密
+2. 修改IL2CPP的运行机制
+3. 对原始Assembly-Csharp.dll进行混淆
+4. . . . . . .
 
 敬请期待 awa！
 

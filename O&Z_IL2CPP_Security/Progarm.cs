@@ -1,5 +1,4 @@
-﻿//Unity IL2CPP Version 24.5
-using O_Z_IL2CPP_Security;
+﻿using O_Z_IL2CPP_Security;
 using System.Reflection;
 using System.Text;
 using System.Security.Cryptography;
@@ -8,7 +7,16 @@ List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
 string OpenFilePath;
 byte[]? metadata_origin = null;
-if(!File.Exists("Config.json"))
+
+Console.WriteLine("O&Z_IL2CPP_Security");
+
+if (args.Length == 0)
+{
+    Help();
+    return;
+}
+
+if (!File.Exists("Config.json"))
 {
     Console.WriteLine("Config.json not found!");
     Console.WriteLine("正在生成默认配置文件...");
@@ -22,16 +30,18 @@ if(!File.Exists("Config.json"))
     if (File.Exists("Config.json")) Console.WriteLine("已重新生成默认配置文件,..Done!");
 }
 JsonManager jsonManager = new JsonManager("Config.json");
-if (args.Length == 0)
+
+if (args[0] == "Generate")
 {
-    Help();
+    _Generate();
+    Console.WriteLine("Done!");
+    Console.WriteLine("Press any key to exit...");
+    Console.ReadKey();
     return;
 }
-else
-{
-    OpenFilePath = args[0];
-}
-Console.WriteLine("O&Z_IL2CPP_Security");
+
+OpenFilePath = args[0];
+
 Console.WriteLine("Loading Meatadata:" + OpenFilePath);
 
 switch(args[1])
@@ -46,6 +56,7 @@ switch(args[1])
 return;
 void _Crypt()
 {
+    Console.WriteLine("正在执行加密...");
     IL2CPP_Version ver;
     if (!File.Exists(OpenFilePath))
     {
@@ -53,14 +64,28 @@ void _Crypt()
         return;
     }
     metadata_origin = File.ReadAllBytes(OpenFilePath);
-    if (!CheckMetadataFile()) return;
+    if (!CheckMetadataFile())
+    {
+        Console.WriteLine("这不是一个Metadata文件!");
+        return; 
+    }
     jsonManager = new JsonManager("Config.json");
     
     switch(jsonManager.index.Version)
     {
-        case "24.4": ver = IL2CPP_Version.V24_4; break;
-        case "28": ver = IL2CPP_Version.V28; break;
-        default: Console.WriteLine("Error!"); return;
+        case "24.4":
+            { 
+                ver = IL2CPP_Version.V24_4;
+                Console.WriteLine("Metadata版本:24.4");
+            }
+            break;
+        case "28":
+            { 
+                ver = IL2CPP_Version.V28;
+                Console.WriteLine("Metadata版本:28");
+            }
+            break;
+        default: Console.WriteLine("版本错误!请确保你配置了正确且受支持的Metadata版本!(24.4 / 28)"); return;
     }
     object Loader;
     if (ver == IL2CPP_Version.V24_4)
@@ -72,15 +97,21 @@ void _Crypt()
         Console.WriteLine("Input version Error!");
         return;
     }
+    Console.WriteLine("正在创建O&Z Metadata...");
     Metadata metadata = new Metadata(Loader.GetType().GetField("metadatastream").GetValue(Loader) as Stream, Loader.GetType().GetField("Header").GetValue(Loader).GetType(), Loader.GetType().GetField("Header").GetValue(Loader), ver);
+    Console.WriteLine("正在加密StringLiteral...");
     StringLiteraBytes = metadata.GetBytesFromStringLiteral(metadata.stringLiterals);
-    StringLiteraBytes_Crypted = Crypt.Cryptstring(StringLiteraBytes);
+    Console.WriteLine("正在加密String...");
+    StringLiteraBytes_Crypted = Crypt.Cryptstring(StringLiteraBytes,jsonManager.index.key);
     byte[] allstring = metadata.GetAllStringFromMeta();
-    Stream stream = metadata.SetCryptedStreamToMetadata(StringLiteraBytes_Crypted, CryptB(allstring,(byte)Tools.CheckNull(jsonManager.index.key), jsonManager.index.key),ver);
+    Console.WriteLine("正在构建新的Metadata文件...");
+    Stream stream = metadata.SetCryptedStreamToMetadata(StringLiteraBytes_Crypted, Crypt.CryptWithSkipNULL(allstring,(byte)Tools.CheckNull(jsonManager.index.key), jsonManager.index.key),ver);
     byte[] tmp = Tools.StreamToBytes(stream);
-    File.WriteAllBytes(args[2], tmp); 
-    
-    
+    Console.WriteLine("正在写入文件...");
+    File.WriteAllBytes(args[2], tmp);
+    Console.WriteLine("Done!");
+    Console.WriteLine("Press any key to exit...");
+    Console.ReadKey();
 }
 void _default()
 {
@@ -90,6 +121,39 @@ void _default()
 }
 void _Read()
 {
+    return;
+}
+void _Generate()
+{
+    jsonManager = new JsonManager("Config.json");
+    string src;
+    CPP cpp;
+    Console.WriteLine("正在创建密钥组件...");
+    Console.WriteLine("您的Metadata版本为:" + jsonManager.index.Version);
+    Console.WriteLine("您的密钥为:" + jsonManager.index.key);
+    if (!Directory.Exists("Generation/" + jsonManager.index.Version + "/libil2cpp/vm/"))
+        Directory.CreateDirectory("Generation/" + jsonManager.index.Version + "/libil2cpp/vm/");
+    if (jsonManager.index.Version == "24.4")
+    {
+        src = File.ReadAllText("src-res/" + jsonManager.index.Version + "/MetadataCache.cpp");
+        cpp = new CPP(src, IL2CPP_Version.V24_4, jsonManager.index.key, (byte)Tools.CheckNull(jsonManager.index.key));
+        File.WriteAllText("Generation/" + jsonManager.index.Version + "/libil2cpp/vm/MetadataCache.cpp", cpp.retsrc);
+        File.WriteAllLines("Generation/" + jsonManager.index.Version + "/libil2cpp/il2cpp-metadata.h", File.ReadAllLines("src-res/" + jsonManager.index.Version + "/il2cpp-metadata.h"));
+    }
+    else if (jsonManager.index.Version == "28")
+    {
+        src = File.ReadAllText("src-res/" + jsonManager.index.Version + "/GlobalMetadata.cpp");
+        cpp = new CPP(src, IL2CPP_Version.V24_4, jsonManager.index.key, (byte)Tools.CheckNull(jsonManager.index.key));
+        File.WriteAllText("Generation/" + jsonManager.index.Version + "/libil2cpp/vm/GlobalMetadata.cpp", cpp.retsrc);
+        File.WriteAllLines("Generation/" + jsonManager.index.Version + "/libil2cpp/vm/GlobalMetadataFileInternals.h", File.ReadAllLines("src-res/" + jsonManager.index.Version + "/GlobalMetadataFileInternals.h"));
+    }
+    else
+    {
+        Console.WriteLine("版本错误!请确保你配置了正确且受支持的Metadata版本!(24.4 / 28)");
+        return;
+    }
+    File.WriteAllLines("Generation/" + jsonManager.index.Version + "/libil2cpp/vm/xxtea.cpp", File.ReadAllLines("src-res/xxtea.cpp"));
+    File.WriteAllLines("Generation/" + jsonManager.index.Version + "/libil2cpp/vm/xxtea.h", File.ReadAllLines("src-res/xxtea.h"));
     return;
 }
 bool CheckMetadataFile()
@@ -106,7 +170,10 @@ void _Test()
     jsonManager = new JsonManager("Config.json");
     Console.WriteLine("Your Password is: " + jsonManager.index.key);
     Console.WriteLine("Your MetadataVersion is: " + jsonManager.index.Version);
-    Console.WriteLine((byte)Tools.CheckNull(114514));
+    string tmp = File.ReadAllText("src-res/24.4/MetadataCache.cpp");
+    CPP cpp = new CPP(tmp,IL2CPP_Version.V24_4,jsonManager.index.key, (byte)Tools.CheckNull(jsonManager.index.key));
+    
+    Console.WriteLine(cpp.retsrc);
 }
 void CheckVersion()
 {
@@ -115,35 +182,12 @@ void CheckVersion()
     MetadataCheck metadataCheck = new MetadataCheck(new MemoryStream(metadata_origin));
     Console.WriteLine("Your Metadata Version:" + metadataCheck.Version);
 }
-byte[] CryptB(byte[] b,byte skip,int key)
-{
-    byte[] result = new byte[b.Length];
-    for (int i = 0; i < b.Length; i++)
-    {
-        if (b[i] != 0 && b[i] != skip)
-            result[i] = (byte)(b[i] ^ key);
-        else
-            result[i] = b[i];
-    }
-    return result;
-}
-/*
-byte[] CryptB(byte[] b)
-{
-    byte[] result = new byte[b.Length];
-    for (int i = 0; i < b.Length; i++)
-    {
-        if (b[i] != 0 && b[i] != 0x52)
-            result[i] = (byte)(b[i] ^ 114514);
-        else
-            result[i] = b[i];
-    }
-    return result;
-}
-*/
 void Help()
 {
-    Console.WriteLine("O&Z_IL2CPP_Security使用方法:"+"\n");
-    Console.WriteLine("O&Z_IL2CPP_Security.exe [文件路径] [参数] *[输出路径]");
-    Console.WriteLine("参数: Crypt:加密 CheckVersion:检查版本");
+    Console.WriteLine("使用方法:"+"\n");
+    Console.WriteLine("加密:\n    O&Z_IL2CPP_Security.exe [文件路径] Crypt [输出路径]\n");
+    Console.WriteLine("查看Metadata版本:\n    O&Z_IL2CPP_Security.exe [文件路径] CheckVersion\n");
+    Console.WriteLine("生成密钥组件:\n    O&Z_IL2CPP_Security.exe Generate\n");
+    Console.WriteLine("Press any key to exit...");
+    Console.ReadKey();
 }

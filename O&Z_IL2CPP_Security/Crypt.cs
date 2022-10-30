@@ -491,21 +491,21 @@ namespace O_Z_IL2CPP_Security
         
     public static class Crypt
     {
-        public static List<byte[]> Cryptstring(List<byte[]> bytes)
+        public static List<byte[]> Cryptstring(List<byte[]> bytes,int key)
         {
             List<byte[]> result = new List<byte[]>();
             foreach (byte[] b in bytes)
             {
-                result.Add(CryptByte(b));
+                result.Add(CryptByte(b, key));
             }
             return result;
         }
-        public static byte[] CryptByte(byte[] b)
+        public static byte[] CryptByte(byte[] b,int key)
         {
             byte[] result = new byte[b.Length];
             for(int i = 0; i < b.Length; i++)
             {
-                result[i] = (byte)(b[i]^114514);
+                result[i] = (byte)(b[i]^ key);
             }
             return result;
         }
@@ -522,6 +522,18 @@ namespace O_Z_IL2CPP_Security
             writer.Write(ret.Length);
             writer.Write(ret);
             return Tools.StreamToBytes(stream);
+        }
+        public static byte[] CryptWithSkipNULL(byte[] b, int skip, int key)
+        {
+            byte[] result = new byte[b.Length];
+            for (int i = 0; i < b.Length; i++)
+            {
+                if (b[i] != 0 && b[i] != skip)
+                    result[i] = (byte)(b[i] ^ key);
+                else
+                    result[i] = b[i];
+            }
+            return result;
         }
     }
     public static class AssetBundleCrypt
