@@ -25,7 +25,11 @@ O&Z IL2cpp 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.bil
 
 
 ## What's New
-1. 本次我们对程序的整体代码进行了修剪和优化，同时优化了用户交互体验
+1. ~~本次我们对程序的整体代码进行了修剪和优化，同时优化了用户交互体验~~
+
+2. 开始了 **O&Z_Obfuscator** 的开发!(目前实现了 **数字型常量加密** )
+   
+![Num2Module](Asset/obfus_num2module.png)
 
 >新增的帮助界面
 
@@ -35,7 +39,7 @@ O&Z IL2cpp 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.bil
 
 >![Run](Asset/run.png)
 
-2. 我们新增了Config配置文件,可以直接在Config内配置相关参数,**并且我们本次更新支持自定义key**
+1. 我们新增了Config配置文件,可以直接在Config内配置相关参数,**并且我们本次更新支持自定义key**
    
    ***详细使用方法请阅读下方的使用方法***
 
