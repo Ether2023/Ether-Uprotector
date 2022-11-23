@@ -16,6 +16,7 @@ namespace dnlib.test
         }
         public void Execute()
         {
+            Numbers = new Dictionary<int, FieldDef>();
             foreach (var type in Module.Types.Where(x => x != Module.GlobalType))
                 foreach (var method in type.Methods.Where(x => !x.IsConstructor && x.HasBody && x.Body.HasInstructions))
                     ObfusMethod(method);
