@@ -5,7 +5,6 @@ using dnlib.test;
 using System.Security.Cryptography;
 AssemblyLoader loader = new AssemblyLoader("C:\\Users\\22864\\Desktop\\2019Testbuild\\O&Z_2019_4_32_f1_Data\\Managed\\Assembly-CSharp.bak.dll");
 //AssemblyLoader loader = new AssemblyLoader("Y:\\Code\\cs\\TestLibrary1\\bin\\Debug\\net6.0\\TestLibrary1.dll");
-//AssemblyLoader loader2 = new AssemblyLoader("Y:\\Code\\cs\\TestLibrary1\\bin\\Debug\\net6.0\\TestLibrary1.dll.obfuscated");
 //printfinstr(loader.Module);
 //CreateMethod(loader.Module);
 NumObfus obfus = new NumObfus(loader.Module);
