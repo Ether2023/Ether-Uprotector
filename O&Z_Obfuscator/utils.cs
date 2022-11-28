@@ -172,7 +172,7 @@ namespace dnlib.test
                     return GetZH_CNString(length);
                 case Mode.Invalid:
                     return GetERRORString(length);
-                case Mode.Logical:
+                case Mode.FuncName:
                     return GenertateRandomFuncName();
                 default:
                     throw new InvalidOperationException();
@@ -184,7 +184,7 @@ namespace dnlib.test
             Base64,
             Chinese,
             Invalid,
-            Logical
+            FuncName
         }
         public static string GetZH_CNString(int len)
         {
@@ -238,6 +238,15 @@ namespace dnlib.test
         public static int Generate(int Range)
         {
             return RandomNumberGenerator.GetInt32(Range);
+        }
+        public static void GetXor(int input, out int output1, out int output2)
+        {
+            int a = RandomNumberGenerator.GetInt32(int.MaxValue);
+            int b = RandomNumberGenerator.GetInt32(int.MaxValue);
+            int c = input ^ a ^ b;
+            int d = b ^ a;
+            output1 = c;
+            output2 = d;
         }
     }
 }

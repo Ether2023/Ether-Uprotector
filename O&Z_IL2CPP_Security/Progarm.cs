@@ -167,13 +167,7 @@ bool CheckMetadataFile()
 }
 void _Test()
 {
-    jsonManager = new JsonManager("Config.json");
-    Console.WriteLine("Your Password is: " + jsonManager.index.key);
-    Console.WriteLine("Your MetadataVersion is: " + jsonManager.index.Version);
-    string tmp = File.ReadAllText("src-res/24.4/MetadataCache.cpp");
-    CPP cpp = new CPP(tmp,IL2CPP_Version.V24_4,jsonManager.index.key, (byte)Tools.CheckNull(jsonManager.index.key));
-    
-    Console.WriteLine(cpp.retsrc);
+    Console.WriteLine(Xxtea.XXTEA.EncryptToBase64String("HelloWorld", "123456"));
 }
 void CheckVersion()
 {

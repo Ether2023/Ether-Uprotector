@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\O&amp;Z_IL2CPP_Security\O&amp;Z_IL2CPP_Security.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="dnlib">
       <HintPath>plugin\dnlib.dll</HintPath>
     </Reference>

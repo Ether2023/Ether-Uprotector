@@ -3,13 +3,19 @@ using dnlib.DotNet.Writer;
 using dnlib.DotNet.Emit;
 using dnlib.test;
 using System.Security.Cryptography;
+using dnlib.test.obfuscators;
+
 AssemblyLoader loader = new AssemblyLoader("C:\\Users\\22864\\Desktop\\2019Testbuild\\O&Z_2019_4_32_f1_Data\\Managed\\Assembly-CSharp.bak.dll");
 //AssemblyLoader loader = new AssemblyLoader("Y:\\Code\\cs\\TestLibrary1\\bin\\Debug\\net6.0\\TestLibrary1.dll");
 //printfinstr(loader.Module);
 //CreateMethod(loader.Module);
-NumObfus obfus = new NumObfus(loader.Module);
+//NumObfus obfus = new NumObfus(loader.Module);
+//obfus.Execute();
+StrCrypter obfus = new StrCrypter(loader.Module);
 obfus.Execute();
 loader.Save();
+//Console.WriteLine(dnlib.test.ModuleType.StringEncoder.DecryptString("123","oMgi2ofCqVjZ8w/8y1R87w==", "123456"));
+
 int a, b;
 GetXor(100,out a,out b);
 Console.WriteLine(100 + "=" +a+"^"+b+"="+(a^b) );

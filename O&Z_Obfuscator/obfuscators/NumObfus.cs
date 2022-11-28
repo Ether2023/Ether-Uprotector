@@ -3,7 +3,7 @@ using dnlib.DotNet.Emit;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace dnlib.test
+namespace dnlib.test.obfuscators
 {
     public class NumObfus
     {
@@ -28,10 +28,15 @@ namespace dnlib.test
             NameGenerator.GetObfusName(field, NameGenerator.Mode.Base64, 2);
             field.DeclaringType = null;
             Module.GlobalType.Fields.Add(field);
-
+            int tmp1, tmp2;
+            RandomGenerator.GetXor(num, out tmp1, out tmp2);
             var method = Module.GlobalType.FindOrCreateStaticConstructor();
-            method.Body.Instructions.Insert(0, new Instruction(OpCodes.Ldc_I4, num));
-            method.Body.Instructions.Insert(1, new Instruction(OpCodes.Stsfld, field));
+
+            method.Body.Instructions.Insert(0, new Instruction(OpCodes.Ldc_I4, tmp1));
+            method.Body.Instructions.Insert(1, new Instruction(OpCodes.Ldc_I4, tmp2));
+            method.Body.Instructions.Insert(2, new Instruction(OpCodes.Xor));
+            method.Body.Instructions.Insert(3, new Instruction(OpCodes.Stsfld, field));//field = tmp1 ^ tmp2
+
             return field;
         }
         public void ObfusMethod(MethodDef method)
@@ -58,5 +63,6 @@ namespace dnlib.test
                 }
             }
         }
+
     }
 }
