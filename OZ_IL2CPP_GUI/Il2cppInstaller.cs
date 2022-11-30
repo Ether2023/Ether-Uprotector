@@ -133,7 +133,6 @@ namespace OZ_IL2CPP_GUI
                 Utilitys.ShowError("安装OZIl2cpp失败"+"\n错误原因:\n" + e.ToString());
                 return false;
             }
-            Directory.Delete("./Generation");
             return true;
         }
 
