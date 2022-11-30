@@ -146,19 +146,19 @@ namespace O_Z_IL2CPP_Security
         public IL2CPP_Version InVersion;
         
         public int version;
-        public uint stringOffset;
+        public int stringOffset;
         public int stringCount;
-        public uint stringLiteralOffset;
+        public int stringLiteralOffset;
         public int stringLiteralCount;
-        public uint stringLiteralDataOffset;
+        public int stringLiteralDataOffset;
         public int stringLiteralDataCount;
-        public uint imagesOffset;
+        public int imagesOffset;
         public int imagesCount;
-        public uint assembliesOffset;
+        public int assembliesOffset;
         public int assembliesCount;
-        public uint windowsRuntimeTypeNamesOffset;
+        public int windowsRuntimeTypeNamesOffset;
         public int windowsRuntimeTypeNamesSize;
-        public uint typeDefinitionsOffset;
+        public int typeDefinitionsOffset;
         public int typeDefinitionsCount;
 
         public StringLiteral[] stringLiterals;
@@ -174,13 +174,13 @@ namespace O_Z_IL2CPP_Security
 
             header = Header;
             version = (int)HeaderType.GetField("version").GetValue(Header);
-            stringOffset = (uint)HeaderType.GetField("stringOffset").GetValue(Header);
-            stringLiteralOffset = (uint)HeaderType.GetField("stringLiteralOffset").GetValue(Header);
-            imagesOffset = (uint)HeaderType.GetField("imagesOffset").GetValue(Header);
-            stringLiteralDataOffset = (uint)HeaderType.GetField("stringLiteralDataOffset").GetValue(Header);
-            assembliesOffset = (uint)HeaderType.GetField("assembliesOffset").GetValue(Header);
-            windowsRuntimeTypeNamesOffset = (uint)HeaderType.GetField("windowsRuntimeTypeNamesOffset").GetValue(Header);
-            typeDefinitionsOffset = (uint)HeaderType.GetField("typeDefinitionsOffset").GetValue(Header);
+            stringOffset = (int)HeaderType.GetField("stringOffset").GetValue(Header);
+            stringLiteralOffset = (int)HeaderType.GetField("stringLiteralOffset").GetValue(Header);
+            imagesOffset = (int)HeaderType.GetField("imagesOffset").GetValue(Header);
+            stringLiteralDataOffset = (int)HeaderType.GetField("stringLiteralDataOffset").GetValue(Header);
+            assembliesOffset = (int)HeaderType.GetField("assembliesOffset").GetValue(Header);
+            windowsRuntimeTypeNamesOffset = (int)HeaderType.GetField("windowsRuntimeTypeNamesOffset").GetValue(Header);
+            typeDefinitionsOffset = (int)HeaderType.GetField("typeDefinitionsOffset").GetValue(Header);
             if (Version == IL2CPP_Version.V24_4)
             {
                 stringCount = (int)HeaderType.GetField("stringCount").GetValue(Header);
@@ -249,7 +249,7 @@ namespace O_Z_IL2CPP_Security
         }
         Il2CppAssemblyDefinition[] GetIl2CppAssemblyDefinitions()
         {
-            return ReadMetadataClassArray<Il2CppAssemblyDefinition>(assembliesOffset, assembliesCount);
+            return ReadMetadataClassArray<Il2CppAssemblyDefinition>((uint)assembliesOffset, assembliesCount);
         }
         Il2CppWindowsRuntimeTypeNamePair[] GetCppWindowsRuntimeTypeNamePairs()
         {
@@ -257,7 +257,7 @@ namespace O_Z_IL2CPP_Security
         }
         Il2CppTypeDefinition[] GetIl2CppTypeDefinitions()
         {
-            return ReadMetadataClassArray<Il2CppTypeDefinition>(typeDefinitionsOffset, typeDefinitionsCount);
+            return ReadMetadataClassArray<Il2CppTypeDefinition>((uint)typeDefinitionsOffset, typeDefinitionsCount);
         }
 
         public List<byte[]> GetBytesFromStringLiteral(StringLiteral[] stringLiterals)
@@ -346,7 +346,7 @@ namespace O_Z_IL2CPP_Security
         }
         public byte[] GetStringFromIndex(ulong index)
         {
-            return (ReadStringToNull(stringOffset + index));
+            return (ReadStringToNull(((uint)stringOffset) + index));
         }
         byte[] ReadStringToNull(ulong addr)
         {

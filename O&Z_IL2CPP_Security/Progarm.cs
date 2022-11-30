@@ -86,17 +86,33 @@ void _Crypt()
                 Console.WriteLine("Metadata版本:28");
             }
             break;
+        case "24.1":
+            {
+                ver = IL2CPP_Version.V24_1;
+                Console.WriteLine("Metadata版本:24.1");
+            }
+            break;
         default: Console.WriteLine("版本错误!请确保你配置了正确且受支持的Metadata版本!(24.4 / 28)"); return;
     }
     object Loader;
-    if (ver == IL2CPP_Version.V24_4)
-        Loader = new LoadMetadata_v24_5(new MemoryStream(metadata_origin));
-    else if (ver == IL2CPP_Version.V28)
-        Loader = new LoadMetadata_v28(new MemoryStream(metadata_origin));
-    else
+    switch (ver)
     {
-        Console.WriteLine("Input version Error!");
-        return;
+        case IL2CPP_Version.V24_4:
+            {
+                Loader = new LoadMetadata_v24_4(new MemoryStream(metadata_origin));
+            }
+            break;
+        case IL2CPP_Version.V28:
+            {
+                Loader = new LoadMetadata_v28(new MemoryStream(metadata_origin));
+            }
+            break;
+        case IL2CPP_Version.V24_1:
+            {
+                Loader = new LoadMetadata_v24_1(new MemoryStream(metadata_origin));
+            }
+            break;
+        default: Console.WriteLine("版本错误!请确保你配置了正确且受支持的Metadata版本!"); return;
     }
     Console.WriteLine("正在创建O&Z Metadata...");
     Metadata metadata = new Metadata(Loader.GetType().GetField("metadatastream").GetValue(Loader) as Stream, Loader.GetType().GetField("Header").GetValue(Loader).GetType(), Loader.GetType().GetField("Header").GetValue(Loader), ver);
