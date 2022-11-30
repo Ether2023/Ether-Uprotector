@@ -86,8 +86,16 @@ namespace OZ_IL2CPP_GUI
             Utilitys.system(cmd);
         }
 
-        protected static string InvokeOZIL2CPPSecurity(params string[] cmd)
+        public static string InvokeOZIL2CPPSecurity(params string[] cmd)
         {
+            //CheckFile
+            if (!File.Exists("O&Z_IL2CPP_Security.exe"))
+            {
+                Utilitys.ShowError("未找到 O&Z_IL2CPP_Security.exe");
+                return "未找到 O&Z_IL2CPP_Security.exe\n请放在同一目录下";
+            }
+
+
             StringBuilder sb = new StringBuilder();
             foreach(string s in cmd)
             {
