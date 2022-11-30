@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
-using Xxtea;
 
 namespace O_Z_IL2CPP_Security
 {

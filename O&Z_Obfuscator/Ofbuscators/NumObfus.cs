@@ -3,7 +3,7 @@ using dnlib.DotNet.Emit;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace dnlib.test.obfuscators
+namespace OZ_Obfus.obfuscators
 {
     public class NumObfus
     {
@@ -23,7 +23,7 @@ namespace dnlib.test.obfuscators
         }
         public FieldDef AddNumberField(int num)
         {
-            var cstype = Tools.GetRuntimeType("dnlib.test.ModuleType.Num2Modle");
+            var cstype = Tools.GetRuntimeTypeSelf("dnlib.test.ModuleType.Num2Modle");
             FieldDef field = cstype.FindField("NUM");
             NameGenerator.GetObfusName(field, NameGenerator.Mode.Base64, 2);
             field.DeclaringType = null;

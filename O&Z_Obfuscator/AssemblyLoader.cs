@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dnlib.test
+namespace OZ_Obfus
 {
     public class AssemblyLoader
     {

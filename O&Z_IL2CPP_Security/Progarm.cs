@@ -2,7 +2,8 @@
 using System.Reflection;
 using System.Text;
 using System.Security.Cryptography;
-using LitJson;
+using O_Z_IL2CPP_Security.LitJson;
+
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
 string OpenFilePath;
@@ -167,7 +168,7 @@ bool CheckMetadataFile()
 }
 void _Test()
 {
-    Console.WriteLine(Xxtea.XXTEA.EncryptToBase64String("HelloWorld", "123456"));
+    Console.WriteLine(XXTEA.EncryptToBase64String("HelloWorld", "123456"));
 }
 void CheckVersion()
 {

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace dnlib.test.ModuleType
+
+namespace OZ_Obfus.Rumtime
 {
     public class StringEncoder
     {
@@ -14,7 +15,7 @@ namespace dnlib.test.ModuleType
         }
         */
 
-        public static String DecryptString(String sign,String data, String key)
+        public static String DecryptString(String sign, String data, String key)
         {
             byte[] para1 = Convert.FromBase64String(data);
             byte[] para2 = Encoding.UTF8.GetBytes(key);
@@ -22,12 +23,12 @@ namespace dnlib.test.ModuleType
             {
                 return data;
             }
-            
+
             Int32 length = para1.Length;
             Int32 n = (((length & 3) == 0) ? (length >> 2) : ((length >> 2) + 1));
             UInt32[] result;
             result = new UInt32[n];
-            
+
             for (Int32 i = 0; i < length; i++)
             {
                 result[i >> 2] |= (UInt32)para1[i] << ((i & 3) << 3);
@@ -59,7 +60,7 @@ namespace dnlib.test.ModuleType
                 result1[i >> 2] |= (UInt32)FixedKey[i] << ((i & 3) << 3);
             }
 
-            
+
             uint[] de;
 
             Int32 n3 = result.Length - 1;
@@ -90,8 +91,8 @@ namespace dnlib.test.ModuleType
             de = result;
 
             Int32 n2 = de.Length << 2;
-                Int32 m = (Int32)de[de.Length - 1];
-                n2 -= 4;
+            Int32 m = (Int32)de[de.Length - 1];
+            n2 -= 4;
 
             n2 = m;
             Byte[] result2 = new Byte[n2];

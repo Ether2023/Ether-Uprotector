@@ -3,12 +3,13 @@ using dnlib.DotNet.Emit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dnlib.test
+namespace OZ_Obfus
 {
     public static class Extensions
     {
@@ -21,9 +22,16 @@ namespace dnlib.test
     {
         public static Importer Importer;
         public static ModuleDefMD SelfModule = ModuleDefMD.Load(typeof(Tools).Assembly.Modules.First());
-        public static TypeDef GetRuntimeType(string fullName)
+        public static ModuleDefMD RuntimeModule;
+        public static TypeDef GetRuntimeTypeSelf(string fullName)
         {
             var type = SelfModule.Find(fullName, true);
+            return Clone(type);
+        }
+        public static TypeDef GetRuntimeType(Assembly assmebly,string fullName)
+        {
+            RuntimeModule = ModuleDefMD.Load(assmebly.Modules.First());
+            var type = RuntimeModule.Find(fullName, true);
             return Clone(type);
         }
         public static TypeDef Clone(TypeDef origin)
@@ -237,12 +245,18 @@ namespace dnlib.test
     {
         public static int Generate(int Range)
         {
-            return RandomNumberGenerator.GetInt32(Range);
+            byte[] buffer = Guid.NewGuid().ToByteArray();
+            int iSeed = BitConverter.ToInt32(buffer, 0);
+            Random random = new Random(iSeed);
+            return random.Next(Range);
+            //return RandomNumberGenerator.GetInt32(Range);
         }
         public static void GetXor(int input, out int output1, out int output2)
         {
-            int a = RandomNumberGenerator.GetInt32(int.MaxValue);
-            int b = RandomNumberGenerator.GetInt32(int.MaxValue);
+            //int a = RandomNumberGenerator.GetInt32(int.MaxValue);
+            //int b = RandomNumberGenerator.GetInt32(int.MaxValue);
+            int a = Generate(int.MaxValue);
+            int b = Generate(int.MaxValue);
             int c = input ^ a ^ b;
             int d = b ^ a;
             output1 = c;

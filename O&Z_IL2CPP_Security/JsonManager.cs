@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LitJson;
+using O_Z_IL2CPP_Security.LitJson;
 
 namespace O_Z_IL2CPP_Security
 {
