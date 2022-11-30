@@ -171,7 +171,7 @@ namespace OZ_IL2CPP_GUI
             this.EncOption_Test.Name = "EncOption_Test";
             this.EncOption_Test.Size = new System.Drawing.Size(249, 24);
             this.EncOption_Test.TabIndex = 14;
-            this.EncOption_Test.Text = "Metadata全文加密,混淆Header";
+            this.EncOption_Test.Text = "Metadata全文加密,隐藏Header";
             this.EncOption_Test.UseVisualStyleBackColor = true;
             // 
             // TextEncOption
@@ -179,9 +179,9 @@ namespace OZ_IL2CPP_GUI
             this.TextEncOption.AutoSize = true;
             this.TextEncOption.Location = new System.Drawing.Point(212, 126);
             this.TextEncOption.Name = "TextEncOption";
-            this.TextEncOption.Size = new System.Drawing.Size(69, 20);
+            this.TextEncOption.Size = new System.Drawing.Size(188, 20);
             this.TextEncOption.TabIndex = 15;
-            this.TextEncOption.Text = "加密选项";
+            this.TextEncOption.Text = "加密选项(开发中,敬请期待)";
             // 
             // EncOption_AntiDump
             // 
@@ -201,9 +201,9 @@ namespace OZ_IL2CPP_GUI
             this.EncOption_ProtectAsset.Enabled = false;
             this.EncOption_ProtectAsset.Location = new System.Drawing.Point(212, 209);
             this.EncOption_ProtectAsset.Name = "EncOption_ProtectAsset";
-            this.EncOption_ProtectAsset.Size = new System.Drawing.Size(195, 24);
+            this.EncOption_ProtectAsset.Size = new System.Drawing.Size(285, 24);
             this.EncOption_ProtectAsset.TabIndex = 17;
-            this.EncOption_ProtectAsset.Text = "游戏资源保护 (敬请期待)";
+            this.EncOption_ProtectAsset.Text = "游戏数据保护(测试性功能,可影响性能)";
             this.EncOption_ProtectAsset.UseVisualStyleBackColor = true;
             // 
             // BtnApplyOption

@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using ICSharpCode.SharpZipLib;
 using ICSharpCode.SharpZipLib.Zip;
+using ICSharpCode.SharpZipLib.Checksum;
 
 namespace OZ_IL2CPP_GUI
 {
@@ -209,7 +210,7 @@ namespace OZ_IL2CPP_GUI
 				}
 				return result;
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
 				return false;
 			}
@@ -290,6 +291,7 @@ namespace OZ_IL2CPP_GUI
 			}
 			catch (Exception e)
 			{
+				Utilitys.ShowError(e.ToString());
 				result = false;
 			}
 			finally

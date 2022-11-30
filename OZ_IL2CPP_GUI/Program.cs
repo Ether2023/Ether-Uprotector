@@ -17,6 +17,10 @@ namespace OZ_IL2CPP_GUI
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            //Generate code
+            BaseEncrypter.InvokeOZIL2CPPSecurity("Generate");
+            //Start
             Application.Run(new MainForm());
         }
     }
