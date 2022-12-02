@@ -251,6 +251,14 @@ namespace OZ_Obfus
             return random.Next(Range);
             //return RandomNumberGenerator.GetInt32(Range);
         }
+        public static int Generate(int min,int max)
+        {
+            byte[] buffer = Guid.NewGuid().ToByteArray();
+            int iSeed = BitConverter.ToInt32(buffer, 0);
+            Random random = new Random(iSeed);
+            return random.Next(min,max);
+            //return RandomNumberGenerator.GetInt32(Range);
+        }
         public static void GetXor(int input, out int output1, out int output2)
         {
             //int a = RandomNumberGenerator.GetInt32(int.MaxValue);

@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using OZ_Obfus.obfuscators;
 using System;
 using System.Linq;
+using OZ_Obfuscator.Ofbuscators;
 
 namespace OZ_Obfus
 {
@@ -20,6 +21,8 @@ namespace OZ_Obfus
             //obfus.Execute();
             StrCrypter obfus = new StrCrypter(loader.Module);
             obfus.Execute();
+            ControlFlow obfus2 = new ControlFlow(loader.Module);
+            obfus2.Execute();
             loader.Save();
             //Console.WriteLine(dnlib.test.ModuleType.StringEncoder.DecryptString("123","oMgi2ofCqVjZ8w/8y1R87w==", "123456"));
 
