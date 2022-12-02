@@ -15,7 +15,7 @@ namespace OZ_Obfus.Rumtime
         }
         */
 
-        public static String DecryptString(String sign, String data, String key)
+        public static String DecryptString1(String sign, String data, String key)
         {
             byte[] para1 = Convert.FromBase64String(data);
             byte[] para2 = Encoding.UTF8.GetBytes(key);
@@ -110,5 +110,103 @@ namespace OZ_Obfus.Rumtime
             string ret = Encoding.UTF8.GetString(debyte);
             return ret;
         }
+
+        public unsafe static String DecryptString2(String sign, String data, String key)
+        {
+            byte[] key_ = Encoding.UTF8.GetBytes(key);
+            byte[] data_ = Convert.FromBase64String(data);
+            byte[] mBox = new byte[256];
+            fixed (byte* _mBox = &mBox[0])
+            {
+                for (Int64 i = 0; i < 256; i++)
+                {
+                    *(_mBox + i) = (byte)i;
+                }
+                Int64 j = 0;
+                int lengh = key_.Length;
+                fixed (byte* _pass = &key_[0])
+                {
+                    for (Int64 i = 0; i < 256; i++)
+                    {
+                        j = (j + *(_mBox + i) + *(_pass + (i % lengh))) % 256;
+                        byte temp = *(_mBox + i);
+                        *(_mBox + i) = *(_mBox + j);
+                        *(_mBox + j) = temp;
+                    }
+                }
+            }
+            byte[] output = new byte[data_.Length];
+                fixed (byte* _mBox = &mBox[0])
+                fixed (byte* _data = &data_[0])
+                fixed (byte* _output = &output[0])
+                {
+                    var length = data.Length;
+                    int i = 0, j = 0;
+                    for (Int64 offset = 0; offset < length; offset++)
+                    {
+                        i = (++i) & 0xFF;
+                        j = (j + *(_mBox + i)) & 0xFF;
+
+                        byte a = *(_data + offset);
+                        byte c = (byte)(a ^ *(_mBox + ((*(_mBox + i) + *(_mBox + j)) & 0xFF)));
+                        *(_output + offset) = c;
+
+                        byte temp = *(_mBox + a);
+                        *(_mBox + a) = *(_mBox + c);
+                        *(_mBox + c) = temp;
+                        j = (j + a + c);
+                    }
+                }
+            return Encoding.UTF8.GetString(output);
+        }
+        public unsafe static String DecryptString3(String sign, String data, String key)
+        {
+            byte[] key_ = Encoding.UTF8.GetBytes(key);
+            byte[] data_ = Convert.FromBase64String(data);
+            byte[] mBox = new byte[256];
+            fixed (byte* _mBox = &mBox[0])
+            {
+                for (Int64 i = 0; i < 256; i++)
+                {
+                    *(_mBox + i) = (byte)i;
+                }
+                Int64 j = 0;
+                int lengh = key_.Length;
+                fixed (byte* _pass = &key_[0])
+                {
+                    for (Int64 i = 0; i < 256; i++)
+                    {
+                        j = (j + *(_mBox + i) + *(_pass + (i % lengh))) % 256;
+                        byte temp = *(_mBox + i);
+                        *(_mBox + i) = *(_mBox + j);
+                        *(_mBox + j) = temp;
+                    }
+                }
+            }
+            byte[] output = new byte[data_.Length];
+            fixed (byte* _mBox = &mBox[0])
+            fixed (byte* _data = &data_[0])
+            fixed (byte* _output = &output[0])
+            {
+                var length = data.Length;
+                int i = 0, j = 0;
+                for (int offset = data.Length - 1; offset >= 0; offset--)
+                {
+                    i = (++i) & 0xFF;
+                    j = (j + *(_mBox + i)) & 0xFF;
+
+                    byte a = *(_data + offset);
+                    byte c = (byte)(a ^ *(_mBox + ((*(_mBox + i) + *(_mBox + j)) & 0xFF)));
+                    *(_output + offset) = c;
+
+                    byte temp = *(_mBox + a);
+                    *(_mBox + a) = *(_mBox + c);
+                    *(_mBox + c) = temp;
+                    j = (j + a + c);
+                }
+            }
+            return Encoding.UTF8.GetString(output);
+        }
     }
 }
+

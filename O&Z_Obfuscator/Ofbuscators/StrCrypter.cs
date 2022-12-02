@@ -3,6 +3,8 @@ using dnlib.DotNet.Emit;
 using dnlib.PE;
 using System.Text;
 using System;
+using System.Security.Cryptography;
+
 namespace OZ_Obfus.obfuscators
 {
     public class StrCrypter
@@ -15,15 +17,6 @@ namespace OZ_Obfus.obfuscators
         }
         public void Execute()
         {
-            //var cstype = Tools.GetRuntimeType("dnlib.test.ModuleType.StringEncoder");
-            //OZ_Obfus.Rumtime.StringEncoder stringEncoder = new OZ_Obfus.Rumtime.StringEncoder();
-            TypeDef cstype =  Tools.GetRuntimeTypeSelf("OZ_Obfus.Rumtime.StringEncoder");
-            DecryptStr = cstype.FindMethod("DecryptString");
-            NameGenerator.GetObfusName(DecryptStr, NameGenerator.Mode.Invalid, 5);
-            DecryptStr.DeclaringType = null;
-            //DecryptStr.CustomAttributes.Clear();
-            moduleDef.GlobalType.Methods.Add(DecryptStr);
-            //moduleDef.GlobalType.Methods.Add(methoddefUser);
             foreach (TypeDef type in moduleDef.Types)
                 foreach (MethodDef method in type.Methods)
                     if (method.HasBody && method.Body.HasInstructions)
@@ -36,12 +29,18 @@ namespace OZ_Obfus.obfuscators
             method.Body.SimplifyBranches();
             for (int i = 0; i < method.Body.Instructions.Count; i++)
             {
-                string key = method.Rid.ToString();
+                string key = GetKeyHash(method.Rid.ToString());
                 if (method.Body.Instructions[i].OpCode == OpCodes.Ldstr&& method.Body.Instructions[i].Operand.ToString() != "")
                 {
+                    var cstype = Tools.GetRuntimeTypeSelf("OZ_Obfus.Rumtime.StringEncoder");
+                    DecryptStr = cstype.FindMethod("DecryptString1");
+                    NameGenerator.GetObfusName(DecryptStr, NameGenerator.Mode.Invalid, 5);
+                    DecryptStr.DeclaringType = null;
+                    moduleDef.GlobalType.Methods.Add(DecryptStr);
+                    
                     string str = method.Body.Instructions[i].Operand.ToString();
                     Console.WriteLine(str);
-                    string newstr = EncryptToBase64String(str, key);
+                    string newstr = EncryptString1(str, key);
                     method.Body.Instructions[i].Operand = "OrangeObfuscator by oRangeSumMer"; 
                     method.Body.Instructions.Insert(i + 1, new Instruction(OpCodes.Ldstr, newstr)); //1
                     method.Body.Instructions.Insert(i + 2, new Instruction(OpCodes.Ldstr, key)); //2
@@ -55,7 +54,7 @@ namespace OZ_Obfus.obfuscators
         {
             return (z >> 5 ^ y << 2) + (y >> 3 ^ z << 4) ^ (sum ^ y) + (k[p & 3 ^ e] ^ z);
         }
-        public static string EncryptToBase64String(string data, string key)
+        public static string EncryptString1(string data, string key)
         {
             return Convert.ToBase64String(Encrypt(data, key));
         }
@@ -150,6 +149,111 @@ namespace OZ_Obfus.obfuscators
                 Array.Copy(key, 0, fixedkey, 0, 16);
             }
             return fixedkey;
+        }
+        public static string GetKeyHash(string data)
+        {
+            var bytes = Encoding.UTF8.GetBytes(data);
+            var hash = SHA256.Create().ComputeHash(bytes);
+            var builder = new StringBuilder();
+            foreach (var t in hash) { builder.Append(t.ToString("X2")); }
+            return builder.ToString();
+
+        }
+        public unsafe static string EncryptString2(string data, string key)
+        {
+            byte[] key_ = Encoding.UTF8.GetBytes(key);
+            byte[] data_ = Encoding.UTF8.GetBytes(data);
+            byte[] mBox = new byte[256];
+            fixed (byte* _mBox = &mBox[0])
+            {
+                for (Int64 i = 0; i < 256; i++)
+                {
+                    *(_mBox + i) = (byte)i;
+                }
+                Int64 j = 0;
+                int lengh = key_.Length;
+                fixed (byte* _pass = &key_[0])
+                {
+                    for (Int64 i = 0; i < 256; i++)
+                    {
+                        j = (j + *(_mBox + i) + *(_pass + (i % lengh))) % 256;
+                        byte temp = *(_mBox + i);
+                        *(_mBox + i) = *(_mBox + j);
+                        *(_mBox + j) = temp;
+                    }
+                }
+            }
+            byte[] output = new byte[data_.Length];
+            fixed (byte* _mBox = &mBox[0])
+            fixed (byte* _data = &data_[0])
+            fixed (byte* _output = &output[0])
+            {
+                var length = data.Length;
+                int i = 0, j = 0;
+                for (Int64 offset = 0; offset < length; offset++)
+                {
+                    i = (++i) & 0xFF;
+                    j = (j + *(_mBox + i)) & 0xFF;
+
+                    byte a = *(_data + offset);
+                    byte c = (byte)(a ^ *(_mBox + ((*(_mBox + i) + *(_mBox + j)) & 0xFF)));
+                    *(_output + offset) = c;
+
+                    byte temp = *(_mBox + a);
+                    *(_mBox + a) = *(_mBox + c);
+                    *(_mBox + c) = temp;
+                    j = (j + a + c);
+                }
+            }
+            return Convert.ToBase64String(output);
+        }
+        public unsafe static string EncryptString3(string data, string key)
+        {
+            byte[] key_ = Encoding.UTF8.GetBytes(key);
+            byte[] data_ = Encoding.UTF8.GetBytes(data);
+            byte[] mBox = new byte[256];
+            fixed (byte* _mBox = &mBox[0])
+            {
+                for (Int64 i = 0; i < 256; i++)
+                {
+                    *(_mBox + i) = (byte)i;
+                }
+                Int64 j = 0;
+                int lengh = key_.Length;
+                fixed (byte* _pass = &key_[0])
+                {
+                    for (Int64 i = 0; i < 256; i++)
+                    {
+                        j = (j + *(_mBox + i) + *(_pass + (i % lengh))) % 256;
+                        byte temp = *(_mBox + i);
+                        *(_mBox + i) = *(_mBox + j);
+                        *(_mBox + j) = temp;
+                    }
+                }
+            }
+            byte[] output = new byte[data_.Length];
+            fixed (byte* _mBox = &mBox[0])
+            fixed (byte* _data = &data_[0])
+            fixed (byte* _output = &output[0])
+            {
+                var length = data.Length;
+                int i = 0, j = 0;
+                for (int offset = data.Length - 1; offset >= 0; offset--)
+                {
+                    i = (++i) & 0xFF;
+                    j = (j + *(_mBox + i)) & 0xFF;
+
+                    byte a = *(_data + offset);
+                    byte c = (byte)(a ^ *(_mBox + ((*(_mBox + i) + *(_mBox + j)) & 0xFF)));
+                    *(_output + offset) = c;
+
+                    byte temp = *(_mBox + a);
+                    *(_mBox + a) = *(_mBox + c);
+                    *(_mBox + c) = temp;
+                    j = (j + a + c);
+                }
+            }
+            return Convert.ToBase64String(output);
         }
     }
 }
