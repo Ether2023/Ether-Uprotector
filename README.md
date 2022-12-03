@@ -7,7 +7,7 @@ O&Z Protector 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.
 
 ## >>>[O&Z-IL2CPP(Click me!)](/O%26Z_IL2CPP_Security/README.md)<<<
 
-## >>>[O&Z-MonoObfuscator(Click me!)](/O%26Z_IL2CPP_Security/README.md)<<<
+## >>>[O&Z-MonoObfuscator(Click me!)](/O%26Z_Obfuscator/README.md)<<<
 
 ## What's New
 1. 我们正式完成了O&Z MonoObfuscator的编写并且在此次更新中release!
@@ -28,7 +28,8 @@ O&Z Protector 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.
 1. 对AssetBundle资源进行加密
 2. 修改IL2CPP的运行机制
 3. 对原始Assembly-Csharp.dll进行混淆
-4. . . . . . .
+4. ***我们正式准备上架Unity AssetStore啦!**
+5. . . . . . .
 
 敬请期待 awa！
 
