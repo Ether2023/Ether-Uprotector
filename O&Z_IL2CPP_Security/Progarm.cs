@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Text;
 using System.Security.Cryptography;
 using O_Z_IL2CPP_Security.LitJson;
+using System.Diagnostics;
 
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
@@ -10,13 +11,6 @@ string OpenFilePath;
 byte[]? metadata_origin = null;
 
 Console.WriteLine("O&Z_IL2CPP_Security");
-
-if (args.Length == 0)
-{
-    Help();
-    return;
-}
-
 if (!File.Exists("Config.json"))
 {
     Console.WriteLine("Config.json not found!");
@@ -24,11 +18,22 @@ if (!File.Exists("Config.json"))
     JsonIndex index = new JsonIndex()
     {
         key = 114514,
-        Version = "24.4"
-        
+        Version = "24.4",
+        Obfus = new ObfusConfig()
+        {
+            ControlFlow = 1,
+            NumObfus = 1,
+            LocalVariables2Field = 1,
+            StrCrypter = 1
+        }
     };
     File.WriteAllText("Config.json", JsonMapper.ToJson(index));
-    if (File.Exists("Config.json")) Console.WriteLine("已重新生成默认配置文件,..Done!");
+    if (File.Exists("Config.json")) Console.WriteLine("已重新生成默认配置文件...\nDone!");
+}
+if (args.Length == 0)
+{
+    Help();
+    return;
 }
 JsonManager jsonManager = new JsonManager("Config.json");
 
@@ -43,7 +48,7 @@ if (args[0] == "Generate")
 
 OpenFilePath = args[0];
 
-Console.WriteLine("Loading Meatadata:" + OpenFilePath);
+Console.WriteLine("Loading File:" + OpenFilePath);
 
 switch(args[1])
 {
@@ -52,6 +57,7 @@ switch(args[1])
     case "Read":_Read();break;
     case "Test":_Test();break;
     case "CheckVersion": CheckVersion(); break;
+    case "MonoObfus": MonoObfus(); break;
     default:_default();break;
 }
 return;
@@ -199,6 +205,28 @@ void Help()
     Console.WriteLine("加密:\n    O&Z_IL2CPP_Security.exe [文件路径] Crypt [输出路径]\n");
     Console.WriteLine("查看Metadata版本:\n    O&Z_IL2CPP_Security.exe [文件路径] CheckVersion\n");
     Console.WriteLine("生成密钥组件:\n    O&Z_IL2CPP_Security.exe Generate\n");
+    Console.WriteLine("混淆Mono程序集:\n    O&Z_IL2CPP_Security.exe [文件路径] MonoObfus\n");
     Console.WriteLine("Press any key to exit...");
     Console.ReadKey();
+}
+void MonoObfus()
+{
+    string args = "";
+    args +=OpenFilePath;
+    if (jsonManager.index.Obfus.ControlFlow == 1)
+        args += " --ControlFlow";
+    if (jsonManager.index.Obfus.NumObfus == 1)
+        args += " --NumObfus";
+    if(jsonManager.index.Obfus.LocalVariables2Field==1)
+        args += " --LocalVariables2Field";
+    if (jsonManager.index.Obfus.StrCrypter == 1)
+        args += " --StrCrypter";
+    if(string.Compare(args,OpenFilePath)!=0)
+    {
+        Process process = new Process();
+        process.StartInfo.FileName = "OZ_Obfuscator.exe";
+        process.StartInfo.Arguments = args;
+        process.Start();
+    }
+    
 }

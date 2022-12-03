@@ -186,7 +186,7 @@ namespace OZ_Obfus
         {
             ModuleWriterOptions opts = new ModuleWriterOptions(Module);
             opts.Logger = DummyLogger.NoThrowInstance;
-            Assembly.Write(Path + ".obfuscated", opts);
+            Assembly.Write(Path + "Protected", opts);
             Console.WriteLine("Saved.");
         }
     }

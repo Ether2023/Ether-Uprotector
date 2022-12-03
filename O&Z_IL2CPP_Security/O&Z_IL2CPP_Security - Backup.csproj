@@ -7,8 +7,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <BaseOutputPath>..\bin</BaseOutputPath>
-    <PlatformTarget>x64</PlatformTarget>
-    <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,5 +21,9 @@
   <ItemGroup>
     <None Remove="README.md" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy ..\bin\Release\net6.0\* ..\bin&#xD;&#xA;del ..\bin\Debug\&#xD;&#xA;del ..\bin\Release\" />
+  </Target>
 
 </Project>

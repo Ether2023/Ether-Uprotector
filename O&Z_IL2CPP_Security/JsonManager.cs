@@ -11,6 +11,14 @@ namespace O_Z_IL2CPP_Security
     {
         public int key;
         public string Version;
+        public ObfusConfig Obfus;
+    }
+    public class ObfusConfig
+    {
+        public int ControlFlow { get; set; }
+        public int NumObfus { get; set; }
+        public int LocalVariables2Field { get; set; }
+        public int StrCrypter { get; set; }
     }
     public class JsonManager
     {

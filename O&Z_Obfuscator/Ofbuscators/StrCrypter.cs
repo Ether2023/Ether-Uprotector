@@ -34,12 +34,12 @@ namespace OZ_Obfus.obfuscators
                 {
                     var cstype = Tools.GetRuntimeTypeSelf("OZ_Obfus.Rumtime.StringEncoder");
                     DecryptStr = cstype.FindMethod("DecryptString1");
-                    NameGenerator.GetObfusName(DecryptStr, NameGenerator.Mode.Invalid, 5);
+                    NameGenerator.SetObfusName(DecryptStr, NameGenerator.Mode.ERRORCharacter, 3);
                     DecryptStr.DeclaringType = null;
                     moduleDef.GlobalType.Methods.Add(DecryptStr);
                     
                     string str = method.Body.Instructions[i].Operand.ToString();
-                    Console.WriteLine(str);
+                    //Console.WriteLine(str);
                     string newstr = EncryptString1(str, key);
                     method.Body.Instructions[i].Operand = "OrangeObfuscator by oRangeSumMer"; 
                     method.Body.Instructions.Insert(i + 1, new Instruction(OpCodes.Ldstr, newstr)); //1

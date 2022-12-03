@@ -155,12 +155,12 @@ namespace OZ_Obfus
     }
     public class NameGenerator
     {
-        public static void GetObfusName(IMemberDef member, Mode mode, int depth = 1, int sublength = 10)
+        public static void SetObfusName(IMemberDef member, Mode mode, int depth = 1, int sublength = 10)
         {
-            member.Name = GetEndName(mode, depth, sublength);
+            member.Name = GetObfusName(mode, depth, sublength);
         }
 
-        public static string GetEndName(Mode mode, int depth = 1, int sublength = 10)
+        public static string GetObfusName(Mode mode, int depth = 1, int sublength = 10)
         {
             string endname = string.Empty;
             for (int i = 0; i < depth; i++)
@@ -178,7 +178,7 @@ namespace OZ_Obfus
                     return GenertateRandomFuncName().ToBase64();
                 case Mode.Chinese:
                     return GetZH_CNString(length);
-                case Mode.Invalid:
+                case Mode.ERRORCharacter:
                     return GetERRORString(length);
                 case Mode.FuncName:
                     return GenertateRandomFuncName();
@@ -191,7 +191,7 @@ namespace OZ_Obfus
         {
             Base64,
             Chinese,
-            Invalid,
+            ERRORCharacter,
             FuncName
         }
         public static string GetZH_CNString(int len)
