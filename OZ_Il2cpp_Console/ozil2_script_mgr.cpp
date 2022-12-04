@@ -23,6 +23,12 @@ namespace ozil2_script_mgr
 		if (cmd == L"repl_line") {
 			return 104;
 		}
+		if (cmd == L"repl_line_from_file") {
+			return 105;
+		}
+		if (cmd == L"swap_line") {
+			return 106;
+		}
 		if (cmd == L"contain_in_line") {
 			return 200;
 		}
@@ -32,8 +38,8 @@ namespace ozil2_script_mgr
 		if (cmd == L"find_method_in_file") {
 			return 202;
 		}
-		if (cmd == L"int") {
-			return 1000;
+		if (cmd == L"#null") {//deleted
+			return 114514;
 		}
 		if (cmd[0] == '$') {
 			return 1001;
@@ -47,7 +53,7 @@ namespace ozil2_script_mgr
 		return -1;
 	}
 
-	int parse_int(vector<oz_script_var> vars, wstring ws) {
+	int parse_int(vector<oz_script_var>& vars, wstring ws) {
 		if (ws[0] == '$') {//int
 			wstring rs = ws.substr(1);
 			for (auto a : vars) {
@@ -55,6 +61,8 @@ namespace ozil2_script_mgr
 					return a.intv;
 				}
 			}
+			change_value(vars, ws, 0);
+			return 0;
 		}
 		else {
 			string intg;
@@ -78,10 +86,15 @@ namespace ozil2_script_mgr
 	}
 
 	void change_value(vector<oz_script_var>& vars, wstring name, int v) {
+		bool declared = false;
 		for (int i = 0; i < vars.size(); i++) {
 			if (vars[i].n == name.substr(1)) {
 				vars[i].intv = v;
+				declared = true;
 			}
+		}
+		if (!declared) {
+			vars.push_back(oz_script_var(name.substr(1), v));
 		}
 	}
 
@@ -118,6 +131,14 @@ namespace ozil2_script_mgr
 				repl_line(lines, parse_int(vars, cmd[1]), cmd[2]);
 				break;
 
+			case 105:
+				repl_line_from_file(lines, parse_int(vars, cmd[1]), parse_fp(cmd[2]).c_str());
+				break;
+			case 106:
+				swap_line(lines, parse_int(vars, cmd[1]), parse_int(vars, cmd[2]));
+				break;
+
+
 			case 200:
 				change_value(vars,
 					cmd[3],
@@ -134,7 +155,7 @@ namespace ozil2_script_mgr
 					find_method_in_file(lines, cmd[1]));
 				break;
 
-			case 1000:
+			/*case 1000:
 				if (cmd[2] == L"=") {
 					vars.push_back(oz_script_var(cmd[1], parse_int(vars, cmd[3])));
 				}
@@ -142,27 +163,22 @@ namespace ozil2_script_mgr
 					oz_script_var v = oz_script_var(cmd[1], parse_int(vars, cmd[2]));
 					vars.push_back(v);
 				}
-				break;
+				break;*/
 			case 1001:
-				for (int i = 0; i < vars.size(); i++) {
-					if (vars[i].n == cmd[0].substr(1)) {
-						ind = i;
-					}
-				}
 				if (cmd[1] == L"=") {
-					vars[ind].intv = parse_int(vars, cmd[2]);
+					change_value(vars,cmd[0], parse_int(vars, cmd[2]));
 				}
 				if (cmd[1] == L"+=") {
-					vars[ind].intv += parse_int(vars, cmd[2]);
+					change_value(vars, cmd[0], parse_int(vars, cmd[0])+ parse_int(vars, cmd[2]));
 				}
 				if (cmd[1] == L"-=") {
-					vars[ind].intv -= parse_int(vars, cmd[2]);
+					change_value(vars, cmd[0], parse_int(vars, cmd[0]) - parse_int(vars, cmd[2]));
 				}
 				if (cmd[1] == L"*=") {
-					vars[ind].intv *= parse_int(vars, cmd[2]);
+					change_value(vars, cmd[0], parse_int(vars, cmd[0]) * parse_int(vars, cmd[2]));
 				}
 				if (cmd[1] == L"/=") {
-					vars[ind].intv /= parse_int(vars, cmd[2]);
+					change_value(vars, cmd[0], parse_int(vars, cmd[0]) / parse_int(vars, cmd[2]));
 				}
 
 				break;

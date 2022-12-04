@@ -14,7 +14,7 @@ int main(int argc, char* const argv[], const char* optstr)
     wcout.imbue(locale("chs"));
 
     //Dbg
-    cpp_mgr::proc_cpp("MetadataCache.cpp", "test.cpp", "mdc.txt");
+    cpp_mgr::proc_cpp("MetadataCache.cpp", "test.cpp", "./oz_scripts/mdc.ozs");
     system("pause");
 
     if (argc == 1) {

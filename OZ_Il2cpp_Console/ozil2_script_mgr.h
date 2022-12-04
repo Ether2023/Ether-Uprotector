@@ -26,7 +26,7 @@ public:
 namespace ozil2_script_mgr
 {
 	int str2opcode(wstring cmd);
-	int parse_int(vector<oz_script_var> vars, wstring ws);
+	int parse_int(vector<oz_script_var>& vars, wstring ws);
 	string parse_str(wstring ws);
 	string parse_fp(wstring ws);
 	void run_line(vector<wstring>& lines, vector<oz_script_var>& vars, wstring c);

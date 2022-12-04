@@ -22,5 +22,7 @@ namespace cpp_mgr
 	void repl_line(vector<wstring>& lines, int ln, wstring s);
 	void insert_method_at_from_file(vector<wstring>& lines, wstring m_n, wstring v_2, const char* fp);
 	void proc_cpp(const char* ifp, const char* ofp, const char* sfp);
+	void repl_line_from_file(vector<wstring>& lines, int ln, const char* fp);
+	void swap_line(vector<wstring>& lines, int ln1, int ln2);
 }
 

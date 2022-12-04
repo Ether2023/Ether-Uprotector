@@ -36,6 +36,7 @@ namespace cpp_mgr {
 			if (num >= off) {
 				bool find = false;
 				if (line.find(str) != string::npos) {
+					find = true;
 				}
 				else {
 					bool find = false;
@@ -90,10 +91,16 @@ namespace cpp_mgr {
 	}
 
 	void repl_line(vector<wstring>& lines, int ln, wstring s) {
-		lines[ln+1] = s;
+		lines[ln-1] = s;
 	}
 
-	void swap_line(vector<wstring>& lines, int ln1, int ln2, wstring s) {
+	void repl_line_from_file(vector<wstring>& lines, int ln, const char* fp) {
+		vector<wstring> a;
+		utils::read_file_lines_w(fp, a);
+		lines[ln -1] = a[0];
+	}
+
+	void swap_line(vector<wstring>& lines, int ln1, int ln2) {
 		wstring ss = lines[ln1+1];
 		lines[ln1+1] = lines[ln2+1];
 		lines[ln2+1] = ss;
