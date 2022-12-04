@@ -21,7 +21,7 @@ O&Z Protector 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.
 
 ## 预告
 1. UI窗口界面即将完成！
-2. 正在测试对于**Metadata24.1**的支持(2018.3.x - 2018.4.x)
+2. 正在测试对于所有unity版本il2cpp的支持,自动生成libil2cpp
 3. 我们正在编写O&ZMonoObfus的函数与方法名称的混淆
 
 ## 未来的规划

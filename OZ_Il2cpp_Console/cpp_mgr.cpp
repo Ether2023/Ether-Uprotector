@@ -36,6 +36,7 @@ namespace cpp_mgr {
 			if (num >= off) {
 				bool find = false;
 				if (line.find(str) != string::npos) {
+					find = true;
 				}
 				else {
 					bool find = false;
@@ -89,6 +90,22 @@ namespace cpp_mgr {
 		insert_from_file(lines, insert_a, fp);
 	}
 
+	void repl_line(vector<wstring>& lines, int ln, wstring s) {
+		lines[ln-1] = s;
+	}
+
+	void repl_line_from_file(vector<wstring>& lines, int ln, const char* fp) {
+		vector<wstring> a;
+		utils::read_file_lines_w(fp, a);
+		lines[ln -1] = a[0];
+	}
+
+	void swap_line(vector<wstring>& lines, int ln1, int ln2) {
+		wstring ss = lines[ln1-1];
+		lines[ln1-1] = lines[ln2-1];
+		lines[ln2-1] = ss;
+	}
+
 	void proc_cpp(const char* ifp, const char* ofp, const char* sfp) {
 		vector<wstring> lines;
 		utils::read_file_lines_w(ifp, lines);
@@ -96,46 +113,10 @@ namespace cpp_mgr {
 		vector<wstring> l_script;
 		utils::read_file_lines_w(sfp, l_script);
 
-		std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+		std::vector<oz_script_var> vars;
 
 		for (auto c : l_script) {
-			if (c.length() == 0) {
-				//empty line
-				continue;
-			}
-			else if (c[0] == '#') {
-				//comment
-				continue;
-			}
-			else {
-				vector<wstring> cmd;
-				utils::string_split_w(c, L" ", cmd);
-				wcout << "cmd:" << cmd[0] << endl;
-				
-				int opcode = ozil2_script_mgr::str2opcode(cmd[0]);
-
-				string fp;
-
-				switch (opcode) {
-				case 100:
-					fp = "./src_res/"+conv.to_bytes(cmd[3]);
-					insert_method_at_from_file(lines, cmd[1], cmd[2], fp.c_str());
-					break;
-				case 101:
-					insert_line(lines, 10, cmd[2]);
-					break;
-				case 102:
-					fp = "./src_res/" + conv.to_bytes(cmd[2]);
-					insert_from_file(lines, 10, fp.c_str());
-					break;
-				case 103:
-					insert_header(lines, cmd[1]);
-					break;
-				case -1:
-					continue;
-					break;
-				}
-			}
+			ozil2_script_mgr::run_line(lines, vars, c);
 		}
 
 		utils::write_file_lines_w(ofp, lines);
