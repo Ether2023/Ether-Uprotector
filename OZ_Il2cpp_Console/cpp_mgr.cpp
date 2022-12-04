@@ -101,9 +101,9 @@ namespace cpp_mgr {
 	}
 
 	void swap_line(vector<wstring>& lines, int ln1, int ln2) {
-		wstring ss = lines[ln1+1];
-		lines[ln1+1] = lines[ln2+1];
-		lines[ln2+1] = ss;
+		wstring ss = lines[ln1-1];
+		lines[ln1-1] = lines[ln2-1];
+		lines[ln2-1] = ss;
 	}
 
 	void proc_cpp(const char* ifp, const char* ofp, const char* sfp) {

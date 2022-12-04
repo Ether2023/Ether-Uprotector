@@ -8,6 +8,12 @@ $check_ver += 1
 repl_line_from_file $sanity mdc_init_assert.cpp
 repl_line_from_file $check_ver mdc_init_assert.cpp
 
+#变量
+$head
+find_str_in_file s_GlobalMetadata 0 $head
+printd $head
+insert_from_file $head mdc.cpp
+
 #头引用
 insert_header xxtea.h
 
@@ -15,22 +21,3 @@ insert_header xxtea.h
 insert_method_at_from_file Initialize s_GlobalMetadata mdc_init.cpp
 insert_method_at_from_file GetStringFromIndex strings mdc_getstr.cpp
 insert_method_at_from_file GetStringLiteralFromIndex GarbageCollector::SetWriteBarrier mdc_getstrlit.cpp
-
-
-
-#test area
-# int lineInit = 0
-# find_method_in_file Initialize $lineInit
-# prints MetadataCache::Initialize()__line:
-# printd $lineInit
-# prints \n
-
-# find_method_in_file GetStringFromIndex $lineInit
-# prints MetadataCache::GetStringFromIndex()__line:
-# printd $lineInit
-# prints \n
-
-# find_method_in_file GetStringLiteralFromIndex $lineInit
-# prints MetadataCache::GetStringLiteralFromIndex()__line:
-# printd $lineInit
-# prints \n
