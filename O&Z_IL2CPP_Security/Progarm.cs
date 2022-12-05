@@ -3,7 +3,10 @@ using System.Reflection;
 using System.Text;
 using System.Security.Cryptography;
 using O_Z_IL2CPP_Security.LitJson;
+using OZ_Obfus.obfuscators;
 using System.Diagnostics;
+using OZ_Obfuscator.Ofbuscators;
+using OZ_Obfus;
 
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
@@ -128,8 +131,8 @@ void _Crypt()
     StringLiteraBytes_Crypted = Crypt.Cryptstring(StringLiteraBytes,jsonManager.index.key);
     byte[] allstring = metadata.GetAllStringFromMeta();
     Console.WriteLine("正在构建新的Metadata文件...");
-    Stream stream = metadata.SetCryptedStreamToMetadata(StringLiteraBytes_Crypted, Crypt.CryptWithSkipNULL(allstring,(byte)Tools.CheckNull(jsonManager.index.key), jsonManager.index.key),ver);
-    byte[] tmp = Tools.StreamToBytes(stream);
+    Stream stream = metadata.SetCryptedStreamToMetadata(StringLiteraBytes_Crypted, Crypt.CryptWithSkipNULL(allstring,(byte)O_Z_IL2CPP_Security.Tools.CheckNull(jsonManager.index.key), jsonManager.index.key),ver);
+    byte[] tmp = O_Z_IL2CPP_Security.Tools.StreamToBytes(stream);
     Console.WriteLine("正在写入文件...");
     File.WriteAllBytes(args[2], tmp);
     Console.WriteLine("Done!");
@@ -159,14 +162,14 @@ void _Generate()
     if (jsonManager.index.Version == "24.4")
     {
         src = File.ReadAllText("src-res/" + jsonManager.index.Version + "/MetadataCache.cpp");
-        cpp = new CPP(src, IL2CPP_Version.V24_4, jsonManager.index.key, (byte)Tools.CheckNull(jsonManager.index.key));
+        cpp = new CPP(src, IL2CPP_Version.V24_4, jsonManager.index.key, (byte)O_Z_IL2CPP_Security.Tools.CheckNull(jsonManager.index.key));
         File.WriteAllText("Generation/" + jsonManager.index.Version + "/libil2cpp/vm/MetadataCache.cpp", cpp.retsrc);
         File.WriteAllLines("Generation/" + jsonManager.index.Version + "/libil2cpp/il2cpp-metadata.h", File.ReadAllLines("src-res/" + jsonManager.index.Version + "/il2cpp-metadata.h"));
     }
     else if (jsonManager.index.Version == "28")
     {
         src = File.ReadAllText("src-res/" + jsonManager.index.Version + "/GlobalMetadata.cpp");
-        cpp = new CPP(src, IL2CPP_Version.V24_4, jsonManager.index.key, (byte)Tools.CheckNull(jsonManager.index.key));
+        cpp = new CPP(src, IL2CPP_Version.V24_4, jsonManager.index.key, (byte)O_Z_IL2CPP_Security.Tools.CheckNull(jsonManager.index.key));
         File.WriteAllText("Generation/" + jsonManager.index.Version + "/libil2cpp/vm/GlobalMetadata.cpp", cpp.retsrc);
         File.WriteAllLines("Generation/" + jsonManager.index.Version + "/libil2cpp/vm/GlobalMetadataFileInternals.h", File.ReadAllLines("src-res/" + jsonManager.index.Version + "/GlobalMetadataFileInternals.h"));
     }
@@ -211,22 +214,26 @@ void Help()
 }
 void MonoObfus()
 {
-    string args = "";
-    args +=OpenFilePath;
+    AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
     if (jsonManager.index.Obfus.ControlFlow == 1)
-        args += " --ControlFlow";
-    if (jsonManager.index.Obfus.NumObfus == 1)
-        args += " --NumObfus";
-    if(jsonManager.index.Obfus.LocalVariables2Field==1)
-        args += " --LocalVariables2Field";
-    if (jsonManager.index.Obfus.StrCrypter == 1)
-        args += " --StrCrypter";
-    if(string.Compare(args,OpenFilePath)!=0)
     {
-        Process process = new Process();
-        process.StartInfo.FileName = "OZ_Obfuscator.exe";
-        process.StartInfo.Arguments = args;
-        process.Start();
+        ControlFlow controlFlow = new ControlFlow(loader.Module);
+        controlFlow.Execute();
     }
-    
+    if (jsonManager.index.Obfus.NumObfus == 1)
+    {
+        NumObfus numObfus = new NumObfus(loader.Module);
+        numObfus.Execute();
+    }
+    if (jsonManager.index.Obfus.LocalVariables2Field == 1)
+    {
+        LocalVariables2Field localVariables2Field = new LocalVariables2Field(loader.Module);
+        localVariables2Field.Execute();
+    }
+    if (jsonManager.index.Obfus.StrCrypter == 1)
+    {
+        StrCrypter strCrypter = new StrCrypter(loader.Module);
+        strCrypter.Execute();
+    }
+        loader.Save();
 }

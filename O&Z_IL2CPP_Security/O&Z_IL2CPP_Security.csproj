@@ -24,4 +24,14 @@
     <None Remove="README.md" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\O&amp;Z_Obfuscator\OZ_Obfuscator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="dnlib">
+      <HintPath>..\O&amp;Z_Obfuscator\plugin\dnlib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

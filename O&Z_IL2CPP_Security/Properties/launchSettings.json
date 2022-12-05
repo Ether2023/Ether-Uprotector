@@ -18,7 +18,7 @@
     },
     "Obfus": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\22864\\Desktop\\2019Testbuild\\O&Z_2019_4_32_f1_Data\\Managed\\Assembly-CSharp.bak.dll\" MonoObfus"
+      "commandLineArgs": "\"C:\\Users\\22864\\Desktop\\END_AUTO V2\\END_Data\\Managed\\Assembly-CSharp.dll.bak\" MonoObfus"
     }
   }
 }
