@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClCompile Include="cpp_mgr.cpp" />
     <ClCompile Include="lib_plugins_mgr.cpp" />
+    <ClCompile Include="metadata_mgr.cpp" />
     <ClCompile Include="ozil2_script_mgr.cpp" />
     <ClCompile Include="OZ_Il2cpp_Console.cpp" />
     <ClCompile Include="utils.cpp" />
@@ -149,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="cpp_mgr.h" />
     <ClInclude Include="lib_plugins_mgr.h" />
+    <ClInclude Include="metadata_mgr.h" />
     <ClInclude Include="ozil2_script_mgr.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>

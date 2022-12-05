@@ -9,9 +9,7 @@ repl_line_from_file $sanity mdc_init_assert.cpp
 repl_line_from_file $check_ver mdc_init_assert.cpp
 
 #变量
-$head
 find_str_in_file s_GlobalMetadata 0 $head
-printd $head
 insert_from_file $head mdc.cpp
 
 #头引用

@@ -165,6 +165,14 @@ namespace utils {
         return true;
     }
 
+    void read_file_int32_lines(const char* fp, vector<int>& v) {
+        vector<string> l;
+        read_file_lines(fp, l);
+        for (auto a : l) {
+            v.push_back(atoi(a.c_str()));
+        }
+    }
+
     void dump(void* ptr, int buflen){
         unsigned char* buf = (unsigned char*)ptr;
         int i;

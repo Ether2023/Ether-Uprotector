@@ -23,6 +23,7 @@ namespace utils {
 	bool write_file(const char* path, const char* buf, size_t len);
 	bool write_file_lines(const char* path, vector<string> lines);
 	bool write_file_lines_w(const char* path, vector<wstring> lines);
+	void read_file_int32_lines(const char* fp, vector<int>& v);
 
 	//byte tools
 	void dump(void* ptr, int buflen);

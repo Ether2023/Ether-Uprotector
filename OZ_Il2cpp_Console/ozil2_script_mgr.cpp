@@ -38,6 +38,9 @@ namespace ozil2_script_mgr
 		if (cmd == L"find_method_in_file") {
 			return 202;
 		}
+		if (cmd == L"read_file_int32_lines") {
+			return 203;
+		}
 		if (cmd == L"#null") {//deleted
 			return 114514;
 		}
@@ -114,6 +117,7 @@ namespace ozil2_script_mgr
 			int opcode = ozil2_script_mgr::str2opcode(cmd[0]);
 
 			int ind = 0;
+			vector<int> is;
 			switch (opcode) {
 			case 100:
 				insert_method_at_from_file(lines, cmd[1], cmd[2], parse_fp(cmd[3]).c_str());
@@ -153,6 +157,12 @@ namespace ozil2_script_mgr
 				change_value(vars,
 					cmd[2],
 					find_method_in_file(lines, cmd[1]));
+				break;
+
+			case 203:
+				
+				utils::read_file_int32_lines(parse_fp(cmd[1]).c_str(), is);
+				change_value(vars, cmd[3], is[parse_int(vars, cmd[2])-1]);
 				break;
 
 			/*case 1000:
