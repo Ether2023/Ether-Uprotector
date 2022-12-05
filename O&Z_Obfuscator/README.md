@@ -10,7 +10,9 @@
    O&Z_IL2CPP_Security.exe input MonoObfus
    ~~~
 3. Enjoy Safe！ xD
-4. 您也可以直接使用命令行来操作加密你的NET程序集(*不仅是Unity Script，而是任何NET程序集!*)
+4. ~~您也可以直接使用命令行来操作加密你的NET程序集(*不仅是Unity Script，而是任何NET程序集!*)~~
+
+   (此功能已删除,目前已经将主程序合并到O&Z_IL2CPP_Security.exe中)
    
    ![Usage](img/usage.png)
 

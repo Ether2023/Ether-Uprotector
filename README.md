@@ -11,6 +11,7 @@ O&Z Protector 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.
 
 ## What's New
 1. 我们正式完成了O&Z MonoObfuscator的编写并且在此次更新中release!
+2. **修复了MonoObfuscate 功能使用过程中无法对路径中含有空格的程序集使用**
 
    目前实现的功能:
 - 字符串加密
