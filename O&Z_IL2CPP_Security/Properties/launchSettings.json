@@ -10,7 +10,7 @@
     },
     "Test": {
       "commandName": "Project",
-      "commandLineArgs": "\"global-metadata.dat\" Test"
+      "commandLineArgs": "\"C:\\Users\\22864\\Desktop\\2019Testbuild\\O&Z_2019_4_32_f1_Data\\Managed\\Assembly-CSharp - 副本.dll\" Test"
     },
     "Generate": {
       "commandName": "Project",
@@ -18,7 +18,7 @@
     },
     "Obfus": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\22864\\Desktop\\END_AUTO V2\\END_Data\\Managed\\Assembly-CSharp.dll.bak\" MonoObfus"
+      "commandLineArgs": "\"C:\\Users\\22864\\Desktop\\2019Testbuild\\O&Z_2019_4_32_f1_Data\\Managed\\Assembly-CSharp - 副本.dll\" MonoObfus"
     }
   }
 }

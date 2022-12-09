@@ -16,22 +16,13 @@ byte[]? metadata_origin = null;
 Console.WriteLine("O&Z_IL2CPP_Security");
 if (!File.Exists("Config.json"))
 {
+    Console.ForegroundColor = ConsoleColor.Red;
     Console.WriteLine("Config.json not found!");
-    Console.WriteLine("正在生成默认配置文件...");
-    JsonIndex index = new JsonIndex()
-    {
-        key = 114514,
-        Version = "24.4",
-        Obfus = new ObfusConfig()
-        {
-            ControlFlow = 1,
-            NumObfus = 1,
-            LocalVariables2Field = 1,
-            StrCrypter = 1
-        }
-    };
-    File.WriteAllText("Config.json", JsonMapper.ToJson(index));
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    Console.WriteLine("正在生成默认配置文件..."); 
+    File.WriteAllBytes("Config.json", Convert.FromBase64String(JsonManager.origin));
     if (File.Exists("Config.json")) Console.WriteLine("已重新生成默认配置文件...\nDone!");
+    Console.ForegroundColor = ConsoleColor.White;
 }
 if (args.Length == 0)
 {
@@ -193,7 +184,10 @@ bool CheckMetadataFile()
 }
 void _Test()
 {
-    Console.WriteLine(XXTEA.EncryptToBase64String("HelloWorld", "123456"));
+    AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
+    ObfusFunc obfusFunc = new ObfusFunc(loader.Module);
+    obfusFunc.Excute();
+    loader.Save();
 }
 void CheckVersion()
 {
@@ -219,6 +213,11 @@ void MonoObfus()
     {
         ControlFlow controlFlow = new ControlFlow(loader.Module);
         controlFlow.Execute();
+    }
+    if (jsonManager.index.Obfus.Obfusfunc == 1)
+    {
+        ObfusFunc obfusFunc = new ObfusFunc(loader.Module);
+        obfusFunc.Excute();
     }
     if (jsonManager.index.Obfus.NumObfus == 1)
     {

@@ -15,6 +15,12 @@ namespace OZ_Obfus
     {
         static void Main(string[] args)
         {
+            AssemblyLoader loader = new AssemblyLoader("C:\\Users\\22864\\Desktop\\END_AUTO V2\\END_Data\\Managed\\Assembly-CSharp.dll.bak");
+            ObfusFunc obfusFunc = new ObfusFunc(loader.Module);
+            obfusFunc.Excute();
+            loader.Save();
+            Console.ReadKey();
+            /*
             AssemblyLoader loader;
             if (args.Length > 0)
             {
@@ -61,6 +67,7 @@ namespace OZ_Obfus
                 Console.WriteLine("Press any key to exit...");
                 Console.ReadKey();
             }
+            */
         }
         void printfinstr(ModuleDefMD Module)
         {

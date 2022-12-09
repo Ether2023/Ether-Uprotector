@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-
+using O_Z_IL2CPP_Security.LitJson;
 namespace OZ_Obfus
 {
     public static class Extensions
@@ -211,7 +211,6 @@ namespace OZ_Obfus
 {
             return FuncNames[RandomGenerator.Generate(FuncNames.Length)];
         }
-
         public static string[] FuncNames =
         {
             "Awake","Start","Updata","FixedUpdata",
@@ -225,9 +224,11 @@ namespace OZ_Obfus
             "OnGUI","OnJointBreak","OnLevelWasLoaded","OnMouseDown","OnMouseDrag","OnMouseEnter",
             "OnMouseExit","OnMouseOver","OnMouseUp","OnPostRender","OnPreCull","OnPreRender",
             "OnRenderImage","OnRenderObject","OnSerializeNetworkView","OnServerInitialized",
-            "OnTriggerEnter","OnTriggerExit","OnTriggerStay"
+            "OnTriggerEnter","OnTriggerExit","OnTriggerStay","Reset","OnTransformParentChanged",
+            "OnPreCull","OnJointBreak","OnApplicationQuit","OnDestory","OnDisable","OnAnimatorIK",
+            "OnAnimatorMove","OnApplicationQuit","OnEnable","OnParticleTrigger","OnParticleUpdateJobScheduled",
+            "OnPlayerConnected","OnPostRender","__"
         };
-        
         public const string ERROR = ";̥͓̠̙̠̺̫̱̹̮͈͈͓͍̟̻͆ͧ͒ͩͨ̉ͯ̂̈̉̽̉͑̔̊́͟͜;̢̧͔͓͉̝̆̒ͣͣ̄ͣ̊̈́̎̓͛̇͆ͯͪ̿͟;ͫͭ͒̉̐͑̀҉̭̭͕̟͇̰̺͖͎̗̰̩͉;̸̛̘̬̫̫͔̜͙̣̯̠̯̻͍̰͍̥͓ͦ̎ͯͯ͂ͤ̉̃̊͐̐̽͜;̵̧̂͐̉̆́̚̚҉̜̦̳͇͍;̙͈̞̪̖͚̬͍͙̹ͭ̿͒ͧͧͨ̀;͐̇̋̍̿̎̀͌ͣ͌҉ ̞̙̘̱͟͠_̍̽̋̑͒ͧ̌͐̿͞͡҉̯̣̥̹̗̫̥̩͈̘͟ͅͅ_̈͛̈͊̈́ͥͬ̌ͪ̃̽͑̓͋͛̆̈͋̽҉̸̛̠̝̜͈̮͢_͒͂̋̈́͋̉͒ͦ̊ͯ̐̾̂̐҉҉̧̯̜̣̮̦̱̦̖̗͡_̧̨̹̳̘̯̱͖͙̘̍ͥ͊͌̌ͧͥ̍ͨ̐͡_̵̺̮̞̖̰͔̮̺̳͖̳̳̥͖͖͊͐͛ͥͪ͛͑͠ͅ_ͧ̓ ̴̡̪͎̣̘̳̤̬͔̟̺̳̻̥͇ͧͫ̽͐̄ͤ̎̔_̸̠̪̺͕̩̮̹̦͇̫͙͖̦̻̏̈́̅ͦ͐_̴̸̢͚̤͙͓̱̬̫̝̞̣̥̽͛͊ͥͬ̍͆ͨ͑͋̍͊ͭ͗́ͅ^̵͖̖̹̦͎̦̜͋̉͋͐̈́ͪ̋̊̄́͘͟ ̨͚͙͖̫͚̙̊̏̍̐ͥ̅̏̎͆͗ͧ́̚͞!̧͕͈͕͙̱̟̆ͭ͋ͫ̕͢͞;̛̣̭̖̹̜̘̮̜̭͓̰̫͙͋̏ͯͤ̂ͬ͗ͥ̌ͥ̓ͮͪ͗́͞ͅ;̪̳̼̱̽ͨ͋͛̔ͪͬ̃͌̂̌͐̀ͧͬ̾ͨ̚̚;̛͍̘̗̣͉͓̘͖͙̪͙̦͇̩͈ͩ͋̄̓ͣ́̃ͦͫ͒̑͋̃ͣͥ̋̀;̢͚̰͈͍ͮͤͣ͂̆͋ͨ̀̐̕͞͞ͅ;̨̢̬̹̯̯̤͕͍̺̩̫͈͉̙̪̪̜̻͚̂͋̏̓͛ͣ͟;̥̖̭͕͔̝͇̞̠̰͐̿̆ͣ̈͟͡;̵̸̻̫͔̼͚̤͇̝̞̬̞͚͇̓̐͆̾ͭ̈́ͫ̈́́͜͞;̌ͨ͌̐̉̂̃̅̃̋ͤͤͣͯ҉̧̹̗̺̹͈̙͇̦̣ͅ;̸̫̙͈̫̮̻͎̱͓̗̍&a_̈͛̈͊̈́ͥͬ̌ͪ̃̽͑̓͋͛̆̈͋̽҉̸̛̠̝̜͈̮͢_͒&‮‮‮‮‮‮‮‮‮‮‮";
 
 

@@ -1,0 +1,19 @@
+{
+    "key":114514,
+    "Version":"24.4",
+    "//":"支持28 24.4",
+    "Obfus":
+    {
+        "ControlFlow":1,
+        "NumObfus":1,
+        "LocalVariables2Field":1,
+        "StrCrypter":1,
+        "StrObfus":1,
+        "//":"0=关闭 1=开启",
+        "//":"ControlFlow：控制流程混淆",
+        "//":"NumObfus：数字混淆",
+        "//":"LocalVariables2Field：局部变量转换为字段",
+        "//":"StrCrypter：字符串加密",
+        "//":"StrObfus：方法加密混淆,可以在keyfunc中添加自定义需要排除的方法(如用到了反射等类型)"
+    }
+}
