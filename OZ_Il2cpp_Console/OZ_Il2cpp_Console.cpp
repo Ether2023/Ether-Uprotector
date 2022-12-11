@@ -19,7 +19,7 @@ int main(int argc, char* const argv[], const char* optstr)
     if (argc == 1) {
         //cpp_mgr::proc_cpp("il2cpp-metadata.h", "il2cpp-metadata_enc.h", "./oz_scripts/metadataheader.ozs");
         cout << "为了调试方便,输入下面序号即可快速使用功能\n1.把global-metadata放在exe同目录即可加密" << endl;
-        cout << "2.输入unity的libil2cpp的目录自动处理libil2cpp" << endl;
+        cout << "2.输入unity的libil2cpp的目录自动处理libil2cpp(可能需要管理员模式运行)" << endl;
         char imp[50];
         cin >> imp;
         if (strstr(imp, "1")) {
