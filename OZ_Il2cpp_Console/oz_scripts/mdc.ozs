@@ -3,10 +3,12 @@
 #删除版本校验
 find_method_in_file Initialize $lineInit
 find_str_in_file Header->sanity $lineInit $sanity
+find_str_in_file Il2CppGlobalMetadataHeader*)s_GlobalMetadata; $lineInit $setHead
 $check_ver = $sanity
 $check_ver += 1
 repl_line_from_file $sanity mdc_init_assert.cpp
 repl_line_from_file $check_ver mdc_init_assert.cpp
+repl_line_from_file $setHead mdc_init_assert.cpp
 
 #变量
 find_str_in_file s_GlobalMetadata 0 $head

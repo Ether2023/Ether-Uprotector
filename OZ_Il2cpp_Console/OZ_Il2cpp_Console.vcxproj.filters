@@ -33,6 +33,12 @@
     <ClCompile Include="metadata_mgr.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="xxtea.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="il2cpp_lib_mgr.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.h">
@@ -48,6 +54,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="metadata_mgr.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="xxtea.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="il2cpp_lib_mgr.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

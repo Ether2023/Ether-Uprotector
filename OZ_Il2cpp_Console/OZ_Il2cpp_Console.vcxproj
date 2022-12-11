@@ -23,32 +23,32 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{e248ddb8-1cb8-4093-b9f9-e62cfb7502ce}</ProjectGuid>
     <RootNamespace>OZIl2cppConsole</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.20348.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -102,7 +102,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>Default</LanguageStandard>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,18 +142,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cpp_mgr.cpp" />
+    <ClCompile Include="il2cpp_lib_mgr.cpp" />
     <ClCompile Include="lib_plugins_mgr.cpp" />
     <ClCompile Include="metadata_mgr.cpp" />
     <ClCompile Include="ozil2_script_mgr.cpp" />
     <ClCompile Include="OZ_Il2cpp_Console.cpp" />
     <ClCompile Include="utils.cpp" />
+    <ClCompile Include="xxtea.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cpp_mgr.h" />
+    <ClInclude Include="il2cpp_lib_mgr.h" />
     <ClInclude Include="lib_plugins_mgr.h" />
     <ClInclude Include="metadata_mgr.h" />
     <ClInclude Include="ozil2_script_mgr.h" />
     <ClInclude Include="utils.h" />
+    <ClInclude Include="xxtea.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

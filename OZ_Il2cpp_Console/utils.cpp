@@ -2,7 +2,8 @@
 
 namespace utils {
 	void show_help() {
-		cout << "暂时懒得写了awa" << endl;
+		cout << "\t--proclib-p     <libil2cpp_path>                       \t生成ozlibil2cpp" << endl;
+		cout << "\t--encmetadata-p <metadata_path> <metadata_output_path> \t加密global-metadata.dat文件" << endl;
 	}
 
     void read_file_lines(const char* fp, std::vector<string>& lines) {

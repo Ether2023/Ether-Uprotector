@@ -2,12 +2,15 @@
 #include <codecvt>
 #include "utils.h"
 #include "cpp_mgr.h"
+#include "metadata_mgr.h"
 
 using namespace cpp_mgr;
+using namespace metadata_mgr;
 
 namespace ozil2_script_mgr
 {
 	int str2opcode(wstring cmd) {
+
 		if (cmd == L"insert_method_at_from_file") {
 			return 100;
 		}

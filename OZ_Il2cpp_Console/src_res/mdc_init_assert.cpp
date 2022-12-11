@@ -1,2 +1,1 @@
-    //IL2CPP_ASSERT(s_GlobalMetadataHeader->sanity == 0xFAB11BAF);
-    //IL2CPP_ASSERT(s_GlobalMetadataHeader->version == 24);
+    //注释掉了一些没有用的代码

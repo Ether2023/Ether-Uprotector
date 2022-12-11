@@ -1,419 +1,240 @@
+insert_from_file 10 front_head.h
+
 find_str_in_file Il2CppGlobalMetadataHeader 0 $head
 printd $head
 prints \n
 
-$h1 = $head
-$h1 += 2
+read_file_int32_lines metadata_header_repl.txt 1 $h1
+$h1 += $head
+$h1 += 1
 
-read_file_int32_lines metadata_header_repl.txt 1 $s1
+read_file_int32_lines metadata_header_repl.txt 31 $s1
 $s1 += $head
-$s1 += 2
+$s1 += 1
 
-$h2 = $head
-$h2 += 3
+read_file_int32_lines metadata_header_repl.txt 2 $h2
+$h2 += $head
+$h2 += 1
 
-read_file_int32_lines metadata_header_repl.txt 2 $s2
+read_file_int32_lines metadata_header_repl.txt 32 $s2
 $s2 += $head
-$s2 += 2
+$s2 += 1
 
-$h3 = $head
-$h3 += 4
+read_file_int32_lines metadata_header_repl.txt 3 $h3
+$h3 += $head
+$h3 += 1
 
-read_file_int32_lines metadata_header_repl.txt 3 $s3
+read_file_int32_lines metadata_header_repl.txt 33 $s3
 $s3 += $head
-$s3 += 2
+$s3 += 1
 
-$h4 = $head
-$h4 += 5
+read_file_int32_lines metadata_header_repl.txt 4 $h4
+$h4 += $head
+$h4 += 1
 
-read_file_int32_lines metadata_header_repl.txt 4 $s4
+read_file_int32_lines metadata_header_repl.txt 34 $s4
 $s4 += $head
-$s4 += 2
+$s4 += 1
 
-$h5 = $head
-$h5 += 6
+read_file_int32_lines metadata_header_repl.txt 5 $h5
+$h5 += $head
+$h5 += 1
 
-read_file_int32_lines metadata_header_repl.txt 5 $s5
+read_file_int32_lines metadata_header_repl.txt 35 $s5
 $s5 += $head
-$s5 += 2
+$s5 += 1
 
-$h6 = $head
-$h6 += 7
+read_file_int32_lines metadata_header_repl.txt 6 $h6
+$h6 += $head
+$h6 += 1
 
-read_file_int32_lines metadata_header_repl.txt 6 $s6
+read_file_int32_lines metadata_header_repl.txt 36 $s6
 $s6 += $head
-$s6 += 2
+$s6 += 1
 
-$h7 = $head
-$h7 += 8
+read_file_int32_lines metadata_header_repl.txt 7 $h7
+$h7 += $head
+$h7 += 1
 
-read_file_int32_lines metadata_header_repl.txt 7 $s7
+read_file_int32_lines metadata_header_repl.txt 37 $s7
 $s7 += $head
-$s7 += 2
+$s7 += 1
 
-$h8 = $head
-$h8 += 9
+read_file_int32_lines metadata_header_repl.txt 8 $h8
+$h8 += $head
+$h8 += 1
 
-read_file_int32_lines metadata_header_repl.txt 8 $s8
+read_file_int32_lines metadata_header_repl.txt 38 $s8
 $s8 += $head
-$s8 += 2
+$s8 += 1
 
-$h9 = $head
-$h9 += 10
+read_file_int32_lines metadata_header_repl.txt 9 $h9
+$h9 += $head
+$h9 += 1
 
-read_file_int32_lines metadata_header_repl.txt 9 $s9
+read_file_int32_lines metadata_header_repl.txt 39 $s9
 $s9 += $head
-$s9 += 2
+$s9 += 1
 
-$h10 = $head
-$h10 += 11
+read_file_int32_lines metadata_header_repl.txt 10 $h10
+$h10 += $head
+$h10 += 1
 
-read_file_int32_lines metadata_header_repl.txt 10 $s10
+read_file_int32_lines metadata_header_repl.txt 40 $s10
 $s10 += $head
-$s10 += 2
+$s10 += 1
 
-$h11 = $head
-$h11 += 12
+read_file_int32_lines metadata_header_repl.txt 11 $h11
+$h11 += $head
+$h11 += 1
 
-read_file_int32_lines metadata_header_repl.txt 11 $s11
+read_file_int32_lines metadata_header_repl.txt 41 $s11
 $s11 += $head
-$s11 += 2
+$s11 += 1
 
-$h12 = $head
-$h12 += 13
+read_file_int32_lines metadata_header_repl.txt 12 $h12
+$h12 += $head
+$h12 += 1
 
-read_file_int32_lines metadata_header_repl.txt 12 $s12
+read_file_int32_lines metadata_header_repl.txt 42 $s12
 $s12 += $head
-$s12 += 2
+$s12 += 1
 
-$h13 = $head
-$h13 += 14
+read_file_int32_lines metadata_header_repl.txt 13 $h13
+$h13 += $head
+$h13 += 1
 
-read_file_int32_lines metadata_header_repl.txt 13 $s13
+read_file_int32_lines metadata_header_repl.txt 43 $s13
 $s13 += $head
-$s13 += 2
+$s13 += 1
 
-$h14 = $head
-$h14 += 15
+read_file_int32_lines metadata_header_repl.txt 14 $h14
+$h14 += $head
+$h14 += 1
 
-read_file_int32_lines metadata_header_repl.txt 14 $s14
+read_file_int32_lines metadata_header_repl.txt 44 $s14
 $s14 += $head
-$s14 += 2
+$s14 += 1
 
-$h15 = $head
-$h15 += 16
+read_file_int32_lines metadata_header_repl.txt 15 $h15
+$h15 += $head
+$h15 += 1
 
-read_file_int32_lines metadata_header_repl.txt 15 $s15
+read_file_int32_lines metadata_header_repl.txt 45 $s15
 $s15 += $head
-$s15 += 2
+$s15 += 1
 
-$h16 = $head
-$h16 += 17
+read_file_int32_lines metadata_header_repl.txt 16 $h16
+$h16 += $head
+$h16 += 1
 
-read_file_int32_lines metadata_header_repl.txt 16 $s16
+read_file_int32_lines metadata_header_repl.txt 46 $s16
 $s16 += $head
-$s16 += 2
+$s16 += 1
 
-$h17 = $head
-$h17 += 18
+read_file_int32_lines metadata_header_repl.txt 17 $h17
+$h17 += $head
+$h17 += 1
 
-read_file_int32_lines metadata_header_repl.txt 17 $s17
+read_file_int32_lines metadata_header_repl.txt 47 $s17
 $s17 += $head
-$s17 += 2
+$s17 += 1
 
-$h18 = $head
-$h18 += 19
+read_file_int32_lines metadata_header_repl.txt 18 $h18
+$h18 += $head
+$h18 += 1
 
-read_file_int32_lines metadata_header_repl.txt 18 $s18
+read_file_int32_lines metadata_header_repl.txt 48 $s18
 $s18 += $head
-$s18 += 2
+$s18 += 1
 
-$h19 = $head
-$h19 += 20
+read_file_int32_lines metadata_header_repl.txt 19 $h19
+$h19 += $head
+$h19 += 1
 
-read_file_int32_lines metadata_header_repl.txt 19 $s19
+read_file_int32_lines metadata_header_repl.txt 49 $s19
 $s19 += $head
-$s19 += 2
+$s19 += 1
 
-$h20 = $head
-$h20 += 21
+read_file_int32_lines metadata_header_repl.txt 20 $h20
+$h20 += $head
+$h20 += 1
 
-read_file_int32_lines metadata_header_repl.txt 20 $s20
+read_file_int32_lines metadata_header_repl.txt 50 $s20
 $s20 += $head
-$s20 += 2
+$s20 += 1
 
-$h21 = $head
-$h21 += 22
+read_file_int32_lines metadata_header_repl.txt 21 $h21
+$h21 += $head
+$h21 += 1
 
-read_file_int32_lines metadata_header_repl.txt 21 $s21
+read_file_int32_lines metadata_header_repl.txt 51 $s21
 $s21 += $head
-$s21 += 2
+$s21 += 1
 
-$h22 = $head
-$h22 += 23
+read_file_int32_lines metadata_header_repl.txt 22 $h22
+$h22 += $head
+$h22 += 1
 
-read_file_int32_lines metadata_header_repl.txt 22 $s22
+read_file_int32_lines metadata_header_repl.txt 52 $s22
 $s22 += $head
-$s22 += 2
+$s22 += 1
 
-$h23 = $head
-$h23 += 24
+read_file_int32_lines metadata_header_repl.txt 23 $h23
+$h23 += $head
+$h23 += 1
 
-read_file_int32_lines metadata_header_repl.txt 23 $s23
+read_file_int32_lines metadata_header_repl.txt 53 $s23
 $s23 += $head
-$s23 += 2
+$s23 += 1
 
-$h24 = $head
-$h24 += 25
+read_file_int32_lines metadata_header_repl.txt 24 $h24
+$h24 += $head
+$h24 += 1
 
-read_file_int32_lines metadata_header_repl.txt 24 $s24
+read_file_int32_lines metadata_header_repl.txt 54 $s24
 $s24 += $head
-$s24 += 2
+$s24 += 1
 
-$h25 = $head
-$h25 += 26
+read_file_int32_lines metadata_header_repl.txt 25 $h25
+$h25 += $head
+$h25 += 1
 
-read_file_int32_lines metadata_header_repl.txt 25 $s25
+read_file_int32_lines metadata_header_repl.txt 55 $s25
 $s25 += $head
-$s25 += 2
+$s25 += 1
 
-$h26 = $head
-$h26 += 27
+read_file_int32_lines metadata_header_repl.txt 26 $h26
+$h26 += $head
+$h26 += 1
 
-read_file_int32_lines metadata_header_repl.txt 26 $s26
+read_file_int32_lines metadata_header_repl.txt 56 $s26
 $s26 += $head
-$s26 += 2
+$s26 += 1
 
-$h27 = $head
-$h27 += 28
+read_file_int32_lines metadata_header_repl.txt 27 $h27
+$h27 += $head
+$h27 += 1
 
-read_file_int32_lines metadata_header_repl.txt 27 $s27
+read_file_int32_lines metadata_header_repl.txt 57 $s27
 $s27 += $head
-$s27 += 2
+$s27 += 1
 
-$h28 = $head
-$h28 += 29
+read_file_int32_lines metadata_header_repl.txt 28 $h28
+$h28 += $head
+$h28 += 1
 
-read_file_int32_lines metadata_header_repl.txt 28 $s28
+read_file_int32_lines metadata_header_repl.txt 58 $s28
 $s28 += $head
-$s28 += 2
+$s28 += 1
 
-$h29 = $head
-$h29 += 30
+read_file_int32_lines metadata_header_repl.txt 29 $h29
+$h29 += $head
+$h29 += 1
 
-read_file_int32_lines metadata_header_repl.txt 29 $s29
+read_file_int32_lines metadata_header_repl.txt 59 $s29
 $s29 += $head
-$s29 += 2
-
-$h30 = $head
-$h30 += 31
-
-read_file_int32_lines metadata_header_repl.txt 30 $s30
-$s30 += $head
-$s30 += 2
-
-$h31 = $head
-$h31 += 32
-
-read_file_int32_lines metadata_header_repl.txt 31 $s31
-$s31 += $head
-$s31 += 2
-
-$h32 = $head
-$h32 += 33
-
-read_file_int32_lines metadata_header_repl.txt 32 $s32
-$s32 += $head
-$s32 += 2
-
-$h33 = $head
-$h33 += 34
-
-read_file_int32_lines metadata_header_repl.txt 33 $s33
-$s33 += $head
-$s33 += 2
-
-$h34 = $head
-$h34 += 35
-
-read_file_int32_lines metadata_header_repl.txt 34 $s34
-$s34 += $head
-$s34 += 2
-
-$h35 = $head
-$h35 += 36
-
-read_file_int32_lines metadata_header_repl.txt 35 $s35
-$s35 += $head
-$s35 += 2
-
-$h36 = $head
-$h36 += 37
-
-read_file_int32_lines metadata_header_repl.txt 36 $s36
-$s36 += $head
-$s36 += 2
-
-$h37 = $head
-$h37 += 38
-
-read_file_int32_lines metadata_header_repl.txt 37 $s37
-$s37 += $head
-$s37 += 2
-
-$h38 = $head
-$h38 += 39
-
-read_file_int32_lines metadata_header_repl.txt 38 $s38
-$s38 += $head
-$s38 += 2
-
-$h39 = $head
-$h39 += 40
-
-read_file_int32_lines metadata_header_repl.txt 39 $s39
-$s39 += $head
-$s39 += 2
-
-$h40 = $head
-$h40 += 41
-
-read_file_int32_lines metadata_header_repl.txt 40 $s40
-$s40 += $head
-$s40 += 2
-
-$h41 = $head
-$h41 += 42
-
-read_file_int32_lines metadata_header_repl.txt 41 $s41
-$s41 += $head
-$s41 += 2
-
-$h42 = $head
-$h42 += 43
-
-read_file_int32_lines metadata_header_repl.txt 42 $s42
-$s42 += $head
-$s42 += 2
-
-$h43 = $head
-$h43 += 44
-
-read_file_int32_lines metadata_header_repl.txt 43 $s43
-$s43 += $head
-$s43 += 2
-
-$h44 = $head
-$h44 += 45
-
-read_file_int32_lines metadata_header_repl.txt 44 $s44
-$s44 += $head
-$s44 += 2
-
-$h45 = $head
-$h45 += 46
-
-read_file_int32_lines metadata_header_repl.txt 45 $s45
-$s45 += $head
-$s45 += 2
-
-$h46 = $head
-$h46 += 47
-
-read_file_int32_lines metadata_header_repl.txt 46 $s46
-$s46 += $head
-$s46 += 2
-
-$h47 = $head
-$h47 += 48
-
-read_file_int32_lines metadata_header_repl.txt 47 $s47
-$s47 += $head
-$s47 += 2
-
-$h48 = $head
-$h48 += 49
-
-read_file_int32_lines metadata_header_repl.txt 48 $s48
-$s48 += $head
-$s48 += 2
-
-$h49 = $head
-$h49 += 50
-
-read_file_int32_lines metadata_header_repl.txt 49 $s49
-$s49 += $head
-$s49 += 2
-
-$h50 = $head
-$h50 += 51
-
-read_file_int32_lines metadata_header_repl.txt 50 $s50
-$s50 += $head
-$s50 += 2
-
-$h51 = $head
-$h51 += 52
-
-read_file_int32_lines metadata_header_repl.txt 51 $s51
-$s51 += $head
-$s51 += 2
-
-$h52 = $head
-$h52 += 53
-
-read_file_int32_lines metadata_header_repl.txt 52 $s52
-$s52 += $head
-$s52 += 2
-
-$h53 = $head
-$h53 += 54
-
-read_file_int32_lines metadata_header_repl.txt 53 $s53
-$s53 += $head
-$s53 += 2
-
-$h54 = $head
-$h54 += 55
-
-read_file_int32_lines metadata_header_repl.txt 54 $s54
-$s54 += $head
-$s54 += 2
-
-$h55 = $head
-$h55 += 56
-
-read_file_int32_lines metadata_header_repl.txt 55 $s55
-$s55 += $head
-$s55 += 2
-
-$h56 = $head
-$h56 += 57
-
-read_file_int32_lines metadata_header_repl.txt 56 $s56
-$s56 += $head
-$s56 += 2
-
-$h57 = $head
-$h57 += 58
-
-read_file_int32_lines metadata_header_repl.txt 57 $s57
-$s57 += $head
-$s57 += 2
-
-$h58 = $head
-$h58 += 59
-
-read_file_int32_lines metadata_header_repl.txt 58 $s58
-$s58 += $head
-$s58 += 2
-
-$h59 = $head
-$h59 += 60
-
-read_file_int32_lines metadata_header_repl.txt 59 $s59
-$s59 += $head
-$s59 += 2
+$s29 += 1
 
 
 
@@ -647,246 +468,6 @@ prints swap_
 printd $h29
 prints _
 printd $s29
-prints \n
-
-swap_line $h30 $s30
-
-prints swap_
-printd $h30
-prints _
-printd $s30
-prints \n
-
-swap_line $h31 $s31
-
-prints swap_
-printd $h31
-prints _
-printd $s31
-prints \n
-
-swap_line $h32 $s32
-
-prints swap_
-printd $h32
-prints _
-printd $s32
-prints \n
-
-swap_line $h33 $s33
-
-prints swap_
-printd $h33
-prints _
-printd $s33
-prints \n
-
-swap_line $h34 $s34
-
-prints swap_
-printd $h34
-prints _
-printd $s34
-prints \n
-
-swap_line $h35 $s35
-
-prints swap_
-printd $h35
-prints _
-printd $s35
-prints \n
-
-swap_line $h36 $s36
-
-prints swap_
-printd $h36
-prints _
-printd $s36
-prints \n
-
-swap_line $h37 $s37
-
-prints swap_
-printd $h37
-prints _
-printd $s37
-prints \n
-
-swap_line $h38 $s38
-
-prints swap_
-printd $h38
-prints _
-printd $s38
-prints \n
-
-swap_line $h39 $s39
-
-prints swap_
-printd $h39
-prints _
-printd $s39
-prints \n
-
-swap_line $h40 $s40
-
-prints swap_
-printd $h40
-prints _
-printd $s40
-prints \n
-
-swap_line $h41 $s41
-
-prints swap_
-printd $h41
-prints _
-printd $s41
-prints \n
-
-swap_line $h42 $s42
-
-prints swap_
-printd $h42
-prints _
-printd $s42
-prints \n
-
-swap_line $h43 $s43
-
-prints swap_
-printd $h43
-prints _
-printd $s43
-prints \n
-
-swap_line $h44 $s44
-
-prints swap_
-printd $h44
-prints _
-printd $s44
-prints \n
-
-swap_line $h45 $s45
-
-prints swap_
-printd $h45
-prints _
-printd $s45
-prints \n
-
-swap_line $h46 $s46
-
-prints swap_
-printd $h46
-prints _
-printd $s46
-prints \n
-
-swap_line $h47 $s47
-
-prints swap_
-printd $h47
-prints _
-printd $s47
-prints \n
-
-swap_line $h48 $s48
-
-prints swap_
-printd $h48
-prints _
-printd $s48
-prints \n
-
-swap_line $h49 $s49
-
-prints swap_
-printd $h49
-prints _
-printd $s49
-prints \n
-
-swap_line $h50 $s50
-
-prints swap_
-printd $h50
-prints _
-printd $s50
-prints \n
-
-swap_line $h51 $s51
-
-prints swap_
-printd $h51
-prints _
-printd $s51
-prints \n
-
-swap_line $h52 $s52
-
-prints swap_
-printd $h52
-prints _
-printd $s52
-prints \n
-
-swap_line $h53 $s53
-
-prints swap_
-printd $h53
-prints _
-printd $s53
-prints \n
-
-swap_line $h54 $s54
-
-prints swap_
-printd $h54
-prints _
-printd $s54
-prints \n
-
-swap_line $h55 $s55
-
-prints swap_
-printd $h55
-prints _
-printd $s55
-prints \n
-
-swap_line $h56 $s56
-
-prints swap_
-printd $h56
-prints _
-printd $s56
-prints \n
-
-swap_line $h57 $s57
-
-prints swap_
-printd $h57
-prints _
-printd $s57
-prints \n
-
-swap_line $h58 $s58
-
-prints swap_
-printd $h58
-prints _
-printd $s58
-prints \n
-
-swap_line $h59 $s59
-
-prints swap_
-printd $h59
-prints _
-printd $s59
 prints \n
 
 
