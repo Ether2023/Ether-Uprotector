@@ -9,7 +9,7 @@ O&Z Protector 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.
 
 ## >>>[O&Z-MonoObfuscator(Click me!)](O%26Z_Obfuscator/README.md)<<<
 
-## What's New (O&Z IL2CPP Obfuscator Released!)
+## What's New (O&Z IL2CPP Obfuscator and OZ_Il2cpp_Console Released!)
 1. 本次更新为预备更新，我们尝试将mono obfus功能集成到IL2CPP上，并且取得了成功(具体使用方法如下)
    > ***现在你可以同时享受O&Z-IL2CPP和O&Z-MonoObfuscator的双倍安全***
 
@@ -17,6 +17,16 @@ O&Z Protector 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.
 
 2. 在MonoObfuscate功能中，我们添加了对类，方法，字段名的混淆是的代码的不可读性和破解难度上升到了最高，而且此方法可以兼容Unity（需要自定义配置keyfunc.json文件）！
    ![obfusfunc](O%26Z_Obfuscator/img/funcobfus.png)
+   
+3. ***OZ_Il2cpp_Console***是一个实验性功能, 我们尝试自动生成Libil2cpp，并已经成功
+   > 只要您没有修改过Libil2cpp, ***OZ_Il2cpp_Console***就支持您使用的Unity版本, 不过安全性暂时不如原版本
+   
+   > 由于是实验性功能, 如果不能支持您的Unity版本, 欢迎提出Issue
+   
+   > 您可以通过手动恢复bak备份文件来还原Libil2cpp
+   
+   > 我们正在研发控制台程序所对应的窗口程序, 敬请期待
+   
 
 ## 关于O&Z IL2CPP Obfuscator的使用方法
 1. 从[Release](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases)中下载我们的unitypackage
