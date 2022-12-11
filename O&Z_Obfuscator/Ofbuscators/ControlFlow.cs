@@ -23,9 +23,12 @@ namespace OZ_Obfuscator.Ofbuscators
     public class ControlFlow
     {
         public ModuleDef Module;
-        public ControlFlow(ModuleDef module)
+        List<string> IgnoreMethod = new List<string>();
+        public ControlFlow(ModuleDef module, string[] ignoreMethod)
         {
             Module = module;
+            foreach (var item in ignoreMethod)
+                IgnoreMethod.Add(item.ToLower());
         }
         public void Execute()
         {
@@ -39,6 +42,7 @@ namespace OZ_Obfuscator.Ofbuscators
                         if (!mDef.Name.StartsWith("get_") && !mDef.Name.StartsWith("set_"))
                         {
                             if (!mDef.HasBody || mDef.IsConstructor) continue;
+                            if (IgnoreMethod.FirstOrDefault(x => mDef.FullName.ToLower().Contains(x)) != null) continue;
                             mDef.Body.SimplifyBranches();
                             ObfusMethod(mDef);
                         }

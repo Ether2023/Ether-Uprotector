@@ -211,7 +211,7 @@ void MonoObfus()
     AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
     if (jsonManager.index.Obfus.ControlFlow == 1)
     {
-        ControlFlow controlFlow = new ControlFlow(loader.Module);
+        ControlFlow controlFlow = new ControlFlow(loader.Module, jsonManager.index.Obfus.ignore_ControlFlow_Method);
         controlFlow.Execute();
     }
     if (jsonManager.index.Obfus.Obfusfunc == 1)

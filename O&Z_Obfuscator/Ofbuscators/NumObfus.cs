@@ -63,6 +63,6 @@ namespace OZ_Obfus.obfuscators
                 }
             }
         }
-
+        
     }
 }

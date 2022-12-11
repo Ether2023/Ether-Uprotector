@@ -9,17 +9,33 @@ O&Z Protector 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.
 
 ## >>>[O&Z-MonoObfuscator(Click me!)](O%26Z_Obfuscator/README.md)<<<
 
-## What's New
-1. **修复了MonoObfuscate 功能使用过程中无法对路径中含有空格的程序集使用**
+## What's New (O&Z IL2CPP Obfuscator Released!)
+1. 本次更新为预备更新，我们尝试将mono obfus功能集成到IL2CPP上，并且取得了成功(具体使用方法如下)
+   > ***现在你可以同时享受O&Z-IL2CPP和O&Z-MonoObfuscator的双倍安全***
+
+   > 即使O&Z-IL2CPP暂时还没有适配您使用的Unity版本,您同样可以使用**O&Z IL2CPP Obfuscator**，因为O&Z IL2CPP Obfuscator目前支持**2019.4之后的所有Unity版本**
+
 2. 在MonoObfuscate功能中，我们添加了对类，方法，字段名的混淆是的代码的不可读性和破解难度上升到了最高，而且此方法可以兼容Unity（需要自定义配置keyfunc.json文件）！
    ![obfusfunc](O%26Z_Obfuscator/img/funcobfus.png)
 
+## 关于O&Z IL2CPP Obfuscator的使用方法
+1. 从[Release](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases)中下载我们的unitypackage
+2. 正确的配置**Config.json**和**KeyFunc.json**,就像你配置O&Z-MonoObfuscator那样(如不明白配置,可以跳转到[O&Z-MonoObfuscator](O%26Z_Obfuscator/README.md)了解)
+3. 您只需要像正常的构建生成项目一样，O&Z 会自动帮你完成IL2CPP的混淆
+4. 当然，在预更新阶段，本功能还存在一些bug，目前已知有以下几点
+   - 使用O&Z IL2CPP Obfuscator构建您的项目时，可能会出现某一个函数的报错(而且是构建时可能发生，也可能不发生，例如同一工程构建时候报错了，过一会又可以顺序编译了)，这是由于ControlFlow的随机问题造成的，如果您有耐心可以多尝试几次，如果一直在某一个报错，可以尝试在Config.json中添加该函数的名称，这样会让ControFlow跳过这个函数,例如以下这种情况
+   ![err1](pics/err1.png)
+   可以将HandleShoot函数添加到**ignore_ControlFlow_Method**中
+   ![config](pics/config.png)
+   - 在构建Android项目时，你可能会出现下方的报错，这个bug目前仅存在Android平台，且暂时未知原因(仅知道他是来自StringCrypt)，因此如果您在构建Android项目时出现了下方的报错，请禁用StringCrypt
+   ![er2](pics/err2.png)
+5. 本功能可以在IL2CPP执行之前对您的项目进行一次混淆(强度等同于O&Z Monoobfus)，可以使您的项目构建cpp时更加安全，即使您的程序收到了il2cppdumper之类的攻击，您的方法和字段任然处于混淆状态，而且il2cpp储存的代码文件任然被ControlFlow等功能混淆，使其可读性降低，最大程度保护您的游戏安全
+   > 配合**O&Z-IL2CPP**可以获得最佳效果哦
 ## 预告
 1. UI窗口界面即将完成！
 2. 正在测试对于所有unity版本il2cpp的支持,自动生成libil2cpp
-3. ~~我们正在编写O&ZMonoObfus的函数与方法名称的混淆~~
-4. 我们准备重写Mono虚拟机，在底层对Unity Mono的JIT，AOT等进行加密
-5. 我们正在尝试对于IL2CPP生成方式中，在生成IL代码时，插入MonoObfuscate的功能，使得IL2CPP获得最佳保险
+3. 我们准备重写Mono虚拟机，在底层对Unity Mono的JIT，AOT等进行加密
+4. ~~我们正在尝试对于IL2CPP生成方式中，在生成IL代码时，插入MonoObfuscate的功能，使得IL2CPP获得最佳保险~~
 
 ## 未来的规划
 1. 对AssetBundle资源进行加密

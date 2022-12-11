@@ -34,7 +34,7 @@ namespace OZ_Obfus.obfuscators
                 {
                     var cstype = Tools.GetRuntimeTypeSelf("OZ_Obfus.Rumtime.StringEncoder");
                     DecryptStr = cstype.FindMethod("DecryptString1");
-                    NameGenerator.SetObfusName(DecryptStr, NameGenerator.Mode.ERRORCharacter, 3);
+                    NameGenerator.SetObfusName(DecryptStr, NameGenerator.Mode.FuncName, 7);
                     DecryptStr.DeclaringType = null;
                     moduleDef.GlobalType.Methods.Add(DecryptStr);
                     
