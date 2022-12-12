@@ -1,4 +1,7 @@
 # O-Z-Unity Protector
+
+<a href="https://info.flagcounter.com/2gWm"><img src="https://s01.flagcounter.com/map/2gWm/size_s/txt_000000/border_858585/pageviews_1/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
+
 O&Z Protector 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.bilibili.com/79045701)[QQ:2286401259]** 共同制作的针对Unity进行的客制化和加密
 
 交流群：957552913（QQ）
