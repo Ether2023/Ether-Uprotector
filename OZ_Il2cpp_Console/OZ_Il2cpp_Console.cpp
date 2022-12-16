@@ -8,12 +8,17 @@
 #include "cpp_mgr.h"
 #include "metadata_mgr.h"
 
+
 using namespace std;
+
+
 
 int main(int argc, char* const argv[], const char* optstr)
 {
     //Enable chs output
     wcout.imbue(locale("chs"));
+
+    utils::load_config();
 
     //Dbg
     if (argc == 1) {
@@ -47,9 +52,13 @@ int main(int argc, char* const argv[], const char* optstr)
         if (strcmp(argv[1], "--proclib-p") == 0) {
             il2cpp_lib_mgr::proc_lib(argv[2]);
         }
+        if (strcmp(argv[1], "--restorelib-p") == 0) {
+            il2cpp_lib_mgr::restore_lib(argv[2]);
+        }
         if (strcmp(argv[1], "--encmetadata-p") == 0) {
             metadata_mgr::proc_metadata(argv[2], argv[3]);
         }
-        system("pause");
+        //system("pause");
     }
 }
+

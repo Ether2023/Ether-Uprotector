@@ -3,8 +3,20 @@
 namespace utils {
 	void show_help() {
 		cout << "\t--proclib-p     <libil2cpp_path>                       \t生成ozlibil2cpp" << endl;
+		cout << "\t--restorelib-p  <libil2cpp_path>                       \t还原libil2cpp" << endl;
 		cout << "\t--encmetadata-p <metadata_path> <metadata_output_path> \t加密global-metadata.dat文件" << endl;
 	}
+
+    void load_config() {
+        ini.SetUnicode();
+        ini.LoadFile("oz_il2cpp.ini");
+        show_mb_err = ini.GetBoolValue(L"Basic", L"Show_MB_Error", false);
+        //ini.SaveFile("oz_il2cpp.ini");
+    }
+
+    bool is_show_mb_err() {
+        return show_mb_err;
+    }
 
     void read_file_lines(const char* fp, std::vector<string>& lines) {
         fstream fs;
@@ -57,7 +69,7 @@ namespace utils {
                     strcat_s(filename, fileinfo.name);
                     string temfilename = filename;
                     files.push_back(temfilename);
-                    cout << temfilename << endl;
+                    //cout << temfilename << endl;
                 }
             } while (_findnext(hFile, &fileinfo) == 0);
             _findclose(hFile);
@@ -88,7 +100,7 @@ namespace utils {
                     strcat_s(filename, fileinfo.name);
                     string temfilename = filename;
                     files.push_back(temfilename);
-                    cout << temfilename << endl;
+                    //cout << temfilename << endl;
                 }
             } while (_findnext(hFile, &fileinfo) == 0);
             _findclose(hFile);
