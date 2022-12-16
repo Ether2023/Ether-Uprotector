@@ -16,7 +16,6 @@ namespace OZ_IL2CPP_GUI
         public MainForm()
         {
             InitializeComponent();
-            InputCustomPwd.Text = JsonConvert.DeserializeObject<ConfigJson>(System.IO.File.ReadAllText("Config.json")).key.ToString();
             SelectApk.Click += SelectApk_Click;
             SelectExe.Click += SelectExe_Click;
             Encrypt.Click += Encrypt_Click;
@@ -28,16 +27,7 @@ namespace OZ_IL2CPP_GUI
 
         private void BtnApplyOption_Click(object sender, EventArgs e)
         {
-            ConfigJson cfg = JsonConvert.DeserializeObject<ConfigJson>(System.IO.File.ReadAllText("Config.json"));
-            try
-            {
-                cfg.key = int.Parse(InputCustomPwd.Text);
-                System.IO.File.WriteAllText("Config.json", JsonConvert.SerializeObject(cfg));
-            }
-            catch
-            {
-                Utilitys.ShowError("密码必须是整数数字");
-            }
+            Utilitys.ShowError("该功能未启用敬请期待");
         }
 
         private void SelectApk_Click(object sender, System.EventArgs e)

@@ -52,7 +52,7 @@ namespace OZ_IL2CPP_GUI
             }
             File.Move(newapkp, GetOutputPath());
 
-            Utilitys.ShowMsg("提示:\nApk加密完成后需要手动签名");
+            Utilitys.ShowMsg("加密成功!\n提示:Apk加密完成后需要手动签名");
         }
     }
 }

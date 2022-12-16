@@ -51,7 +51,7 @@ namespace OZ_IL2CPP_GUI
             //For debug only
             //Utilitys.ShowMsg(path);
 
-            uniqueId = new Random().Next(int.MinValue, int.MaxValue);
+            uniqueId = new Random().Next(1, int.MaxValue);
         }
 
         public virtual void Process()
@@ -89,10 +89,10 @@ namespace OZ_IL2CPP_GUI
         public static string InvokeOZIL2CPPSecurity(params string[] cmd)
         {
             //CheckFile
-            if (!File.Exists("O&Z_IL2CPP_Security.exe"))
+            if (!File.Exists("OZ_Il2cpp_Console.exe"))
             {
-                Utilitys.ShowError("未找到 O&Z_IL2CPP_Security.exe");
-                return "未找到 O&Z_IL2CPP_Security.exe\n请放在同一目录下";
+                Utilitys.ShowError("未找到 OZ_Il2cpp_Console.exe");
+                return "未找到 OZ_Il2cpp_Console.exe\n请放在同一目录下";
             }
 
 
@@ -103,14 +103,16 @@ namespace OZ_IL2CPP_GUI
                 sb.Append(s);
             }
             string cmds = /*"\"O&Z_IL2CPP_Security.exe\"" + */sb.ToString();
-            string res = Utilitys.ExecCmd("\"O&Z_IL2CPP_Security.exe\"", cmds);
+            string res = Utilitys.ExecCmd("\"OZ_Il2cpp_Console.exe\"", cmds);
+            //Utilitys.ShowMsg(cmds);
+            //Utilitys.system("OZ_Il2cpp_Console.exe " + cmds);
             return res;
             //Utilitys.ShowMsg(res);
         }
 
         protected bool EncryptMetadataFile(string fp, string ofp)
         {
-            string s = InvokeOZIL2CPPSecurity("\"" + fp + "\"", "Crypt", "\"" + ofp + "\"");
+            string s = InvokeOZIL2CPPSecurity("--encmetadata-p", "\"" + fp + "\"", "\"" + ofp + "\"");
 
             if (!File.Exists(ofp))
             {

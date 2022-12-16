@@ -21,16 +21,14 @@ namespace OZ_IL2CPP_GUI
             UnityVersion uniVer = new UnityVersion(GetUnityVersion(unityExePath));
             string il2Ver = Il2cppLibUtilitys.GetVersion(uniVer);
 
-            if (!Il2cppLibUtilitys.HasOZSupport(il2Ver))
+            /*if (!Il2cppLibUtilitys.HasOZSupport(il2Ver))
             {
                 Utilitys.ShowError("OZ Il2cpp暂不支持该版本Unity\nIl2cpp版本:" + il2Ver);
                 return;
-            }
+            }*/
 
-            //Update json
-            UpdateConfigIl2cppVersion(il2Ver);
-            //Gen code
-            BaseEncrypter.InvokeOZIL2CPPSecurity("Generate");
+            //预留方法
+            //BaseEncrypter.InvokeOZIL2CPPSecurity("--null");
 
             string editorPath = Path.GetDirectoryName(unityExePath);
 
@@ -41,22 +39,32 @@ namespace OZ_IL2CPP_GUI
             }
 
             //CheckBackup
-            string zipPath = editorPath + "/libil2cpp.zip";
-            if (File.Exists(zipPath))
+            string ozsignFile = editorPath + "/ozli2cpp";
+            if (File.Exists(ozsignFile))
             {
                 Utilitys.ShowError("您已经安装OZIl2cpp\n请勿重复安装!");
                 return;
             }
+            //Create sign
+            File.WriteAllText(ozsignFile, GetUnityVersion(unityExePath));
             //Backup
-            CreateBackup(editorPath);
+            //CreateBackup(editorPath);
 
+            string s = BaseEncrypter.InvokeOZIL2CPPSecurity("--proclib-p", "\"" + editorPath + "/Data/il2cpp/libil2cpp/" + "\"");
+            if (!s.Contains("succ"))
+            {
+                Utilitys.ShowError("发生错误:\n"+s);
+                File.WriteAllText("error.log", s);
+                UnInstall(unityExePath);
+                return;
+            }
             //Move
-            if(!InstallLibil2cpp(editorPath, il2Ver))
+            /*if(!InstallLibil2cpp(editorPath, il2Ver))
             {
                 //Uninstall if failed
                 UnInstall(unityExePath);
                 return;
-            }
+            }*/
 
             //Utilitys.CopyDirectory()
             Utilitys.ShowMsg("安装成功!");
@@ -64,9 +72,7 @@ namespace OZ_IL2CPP_GUI
 
         public static void UpdateConfigIl2cppVersion(string v)
         {
-            ConfigJson cfg = JsonConvert.DeserializeObject<ConfigJson>(File.ReadAllText("Config.json"));
-            cfg.Version = v;
-            File.WriteAllText("Config.json", JsonConvert.SerializeObject(cfg));
+            
         }
 
         public static string GetUnityVersion(string fp)
@@ -113,14 +119,38 @@ namespace OZ_IL2CPP_GUI
                 return;
             }
 
-            if (!UnpackBackup(editorPath))
+            //Check
+            if (!CheckWritePermission(editorPath))
             {
                 return;
             }
 
+            string ozsignFile = editorPath + "/ozli2cpp";
+            if (!File.Exists(ozsignFile))
+            {
+                Utilitys.ShowError("您还没有安装OZIl2cpp\n卸载失败!");
+                return;
+            }
+
+            string s = BaseEncrypter.InvokeOZIL2CPPSecurity("--restorelib-p", "\"" + editorPath + "/" + "\"");
+            if (!s.Contains("succ"))
+            {
+                Utilitys.ShowError("发生错误:\n" + s);
+                //UnInstall(unityExePath);
+                return;
+            }
+            
+            File.Delete(ozsignFile);
+
+            /*if (!UnpackBackup(editorPath))
+            {
+                return;
+            }*/
+
             Utilitys.ShowMsg("卸载成功!");
         }
 
+        [Obsolete]
         static bool InstallLibil2cpp(string edtp,string ver)
         {
             string libIl2cppPath = edtp + "\\Data\\il2cpp\\";
@@ -213,13 +243,4 @@ namespace OZ_IL2CPP_GUI
             return true;
         }
     }
-}
-
-public class ConfigJson
-{
-    // Token: 0x0400009D RID: 157
-    public int key;
-
-    // Token: 0x0400009E RID: 158
-    public string Version;
 }

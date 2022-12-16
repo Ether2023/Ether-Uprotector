@@ -19,7 +19,7 @@ namespace OZ_IL2CPP_GUI
             Application.SetCompatibleTextRenderingDefault(false);
 
             //Generate code
-            BaseEncrypter.InvokeOZIL2CPPSecurity("Generate");
+            //BaseEncrypter.InvokeOZIL2CPPSecurity("Generate");
             //Start
             Application.Run(new MainForm());
         }

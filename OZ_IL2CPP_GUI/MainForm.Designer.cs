@@ -181,7 +181,7 @@ namespace OZ_IL2CPP_GUI
             this.TextEncOption.Name = "TextEncOption";
             this.TextEncOption.Size = new System.Drawing.Size(188, 20);
             this.TextEncOption.TabIndex = 15;
-            this.TextEncOption.Text = "加密选项(开发中,敬请期待)";
+            this.TextEncOption.Text = "加密选项(研发中,敬请期待)";
             // 
             // EncOption_AntiDump
             // 
@@ -221,14 +221,14 @@ namespace OZ_IL2CPP_GUI
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.BtnApplyOption);
+            /*this.Controls.Add(this.BtnApplyOption);
             this.Controls.Add(this.EncOption_ProtectAsset);
-            this.Controls.Add(this.EncOption_AntiDump);
+            this.Controls.Add(this.EncOption_AntiDump);*/
             this.Controls.Add(this.TextEncOption);
-            this.Controls.Add(this.EncOption_Test);
+            /*this.Controls.Add(this.EncOption_Test);
             this.Controls.Add(this.TextCustomPwdDesc);
             this.Controls.Add(this.TextCustomPwd);
-            this.Controls.Add(this.InputCustomPwd);
+            this.Controls.Add(this.InputCustomPwd);*/
             this.Controls.Add(this.LabelSelectedFileShow);
             this.Controls.Add(this.UnInstall);
             this.Controls.Add(this.Install);
@@ -243,7 +243,7 @@ namespace OZ_IL2CPP_GUI
             this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "O&Z IL2CPP GUI";
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
