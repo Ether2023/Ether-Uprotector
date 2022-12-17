@@ -7,12 +7,19 @@
 #include <vector>
 #include <codecvt>
 #include <Windows.h>
+#include "SimpleIni.h"
 
 using namespace std;
 
+static CSimpleIni ini;
+
 namespace utils {
+	static bool show_mb_err = false;
+
 	//main func utils
+	void load_config();
 	void show_help();
+	bool is_show_mb_err();
 
 	//file utils
 	void read_file_lines(const char* fp, std::vector<string>& lines);

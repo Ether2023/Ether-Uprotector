@@ -291,7 +291,7 @@ namespace OZ_IL2CPP_GUI
 			}
 			catch (Exception e)
 			{
-				Utilitys.ShowError(e.ToString());
+				//Utilitys.ShowError(e.ToString());
 				result = false;
 			}
 			finally

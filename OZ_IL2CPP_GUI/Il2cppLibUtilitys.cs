@@ -49,11 +49,15 @@ namespace OZ_IL2CPP_GUI
 
         public static bool HasOZSupport(string v)
         {
-            if(v=="24.4"|| v == "28.0" || v == "28")
+            switch (v)
             {
-                return true;
+                case "28":
+                case "24.4":
+                case "24.1":
+                    return true;
+                default:
+                    return false;
             }
-            return false;
         }
     }
 }

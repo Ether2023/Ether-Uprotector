@@ -62,5 +62,8 @@
     <ClInclude Include="il2cpp_lib_mgr.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SimpleIni.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

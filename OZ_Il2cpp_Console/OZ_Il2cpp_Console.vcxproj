@@ -156,6 +156,7 @@
     <ClInclude Include="lib_plugins_mgr.h" />
     <ClInclude Include="metadata_mgr.h" />
     <ClInclude Include="ozil2_script_mgr.h" />
+    <ClInclude Include="SimpleIni.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="xxtea.h" />
   </ItemGroup>

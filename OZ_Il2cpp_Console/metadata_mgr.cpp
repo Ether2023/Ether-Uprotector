@@ -13,13 +13,22 @@ namespace metadata_mgr
 			return;
 		}
 
+		//Check sanity
+		if (*((int*)data_o) != 0xFAB11BAF) {
+			cout << "[metadata_mgr] not a invaild metadatafile" << endl;
+			if (utils::is_show_mb_err()) {
+				MessageBox(NULL, L"无效的metadata文件", L"错误", MB_ICONERROR);
+			}
+			return;
+		}
+
 		//多来点空间,反正1024就1kb
 		char* data = (char*)malloc(s_o+1024);
 		memcpy(data, data_o, s_o);
 		mt19937 rand = mt19937(std::random_device()());
 		//Fill
 		for (int i = 0; i < 1024; i++) {
-			//data[i + s_o] = rand();
+			data[i + s_o] = rand();
 		}
 
 		// 从这里开始,处理data
@@ -71,20 +80,20 @@ namespace metadata_mgr
 		//Create header
 		FrontHeader* fh = (FrontHeader*)malloc(sizeof(FrontHeader));
 		char sign[] = "o&z_il2cpp_protection";
-		//strcpy_s(fh->sign, sign);
+		strcpy_s(fh->sign, sign);
 
 		fh->length = MAX_HEADER_LENGTH;
 		fh->offset = len_o;
 		
 		mt19937 rand = mt19937(std::random_device()());
 		for (int i = 0; i < 32; i++) {
-			//fh->key[i] = rand();
+			fh->key[i] = rand();
 			fh->key[i] = 0;
 		}
 
 		//Destroy original header
 		for (int i = 0; i < 200; i++) {
-			//data[i] = rand();
+			data[i] = rand();
 			data[i] = 0;
 		}
 
