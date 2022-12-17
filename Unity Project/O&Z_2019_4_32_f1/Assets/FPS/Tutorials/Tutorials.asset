@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89305aa391d1c5141bbe1628d930a2c5, type: 3}
+  m_Name: Tutorials
+  m_EditorClassIdentifier: 
+  HeaderBackground: {fileID: 2800000, guid: 5384282a0273144fa9333beb77183cb4, type: 3}
+  Title:
+    m_Untranslated: Your First 6 Steps to Creating a Game
+  ProjectName:
+    m_Untranslated: FPS
+  Description:
+    m_Untranslated: Start building your first game now. Have fun clicking through
+      these
+  ProjectLayout: {fileID: 102900000, guid: 9d6f44592b6054254899886ee83841f8, type: 3}
+  Sections:
+  - OrderInView: 0
+    Heading:
+      m_Untranslated: Playtest
+    Text:
+      m_Untranslated: Make a simple change and playtest your game.
+    LinkText: 
+    Url: 
+    AuthorizedUrl: 0
+    Image: {fileID: 2800000, guid: 87e82d8dd40994ee58d1b317c145b92f, type: 3}
+    Tutorial: {fileID: 11400000, guid: 51a83f21771aa4bb4b864e90bc79aeab, type: 2}
+  - OrderInView: 2
+    Heading:
+      m_Untranslated: Add a Room
+    Text:
+      m_Untranslated: Build a level to master navigating in the Editor.
+    LinkText: 
+    Url: 
+    AuthorizedUrl: 0
+    Image: {fileID: 2800000, guid: a77faddc74a5a452e8ae1a65ef7e92c7, type: 3}
+    Tutorial: {fileID: 11400000, guid: 97ff54290d4d54a86b2e22ed724ab843, type: 2}
+  - OrderInView: 4
+    Heading:
+      m_Untranslated: Edit Colors
+    Text:
+      m_Untranslated: Learn how to change the color of a game object.
+    LinkText: 
+    Url: 
+    AuthorizedUrl: 0
+    Image: {fileID: 2800000, guid: 89020edcc6615404493802900ed04b05, type: 3}
+    Tutorial: {fileID: 11400000, guid: 5d0306ad1c1d347ed8eb91190a9e45c2, type: 2}
+  - OrderInView: 6
+    Heading:
+      m_Untranslated: Add an Enemy Bot
+    Text:
+      m_Untranslated: Learn how to add an enemy bot to your game.
+    LinkText: 
+    Url: 
+    AuthorizedUrl: 0
+    Image: {fileID: 2800000, guid: cb88a5233232f48b6a3145ff433696a6, type: 3}
+    Tutorial: {fileID: 11400000, guid: f1296c995c6fc4bcfac81bd7df3e5b18, type: 2}
+  - OrderInView: 8
+    Heading:
+      m_Untranslated: Import Your First Asset
+    Text:
+      m_Untranslated: Learn how to import your first asset.
+    LinkText: 
+    Url: 
+    AuthorizedUrl: 0
+    Image: {fileID: 2800000, guid: 4db00f0358d194313a877344f4ba535c, type: 3}
+    Tutorial: {fileID: 11400000, guid: acc3795cfd9ef4206836da4a1d377627, type: 2}
+  - OrderInView: 10
+    Heading:
+      m_Untranslated: Build and Publish
+    Text:
+      m_Untranslated: Build, publish, and share your game for other people to play!
+    LinkText: 
+    Url: 
+    AuthorizedUrl: 0
+    Image: {fileID: 2800000, guid: 5ab95756baccd446898f557557202c2b, type: 3}
+    Tutorial: {fileID: 11400000, guid: c122a1a2efeb58349b8154e42481067b, type: 2}
+  - OrderInView: 12
+    Heading:
+      m_Untranslated: Supercharge Your Game
+    Text:
+      m_Untranslated: Get a bundle of premium assets to build out your game.
+    LinkText: Asset Store
+    Url: https://assetstore.unity.com/browse/fps-creator-bundle
+    AuthorizedUrl: 1
+    Image: {fileID: 2800000, guid: caa22bb026fa84979ba1be2779739367, type: 3}
+    Tutorial: {fileID: 0}
+  - OrderInView: 14
+    Heading:
+      m_Untranslated: Modding Tutorials
+    Text:
+      m_Untranslated: Design your own levels, customize weapons, add loot items,
+        and more.
+    LinkText: Mods
+    Url: https://learn.unity.com/project/fps-template
+    AuthorizedUrl: 1
+    Image: {fileID: 2800000, guid: caa22bb026fa84979ba1be2779739367, type: 3}
+    Tutorial: {fileID: 0}
+  - OrderInView: 16
+    Heading:
+      m_Untranslated: FPS Creators Group
+    Text:
+      m_Untranslated: Join other FPS Creators in this online community group.
+    LinkText: Creators Group
+    Url: https://connect.unity.com/g/fps-creators
+    AuthorizedUrl: 1
+    Image: {fileID: 2800000, guid: caa22bb026fa84979ba1be2779739367, type: 3}
+    Tutorial: {fileID: 0}

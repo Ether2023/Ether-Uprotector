@@ -11,6 +11,24 @@ using System.Text;
 
 namespace OZ_Obfus
 {
+    public class OZ_Obfuscator
+    {
+        public ModuleDefMD ModuleDefMD;
+        public ControlFlow controlFlow;
+        public LocalVariables2Field localVariables2Field;
+        public NumObfus numObfus;
+        public StrCrypter strCrypter;
+        public ObfusFunc obfusFunc;
+        public OZ_Obfuscator(ModuleDefMD module,object Config, object keyfunc = null)
+        {
+            ModuleDefMD = module;
+            controlFlow = new ControlFlow(module, Config.GetType().GetField("ignore_ControlFlow_Method").GetValue(Config) as String[]);
+            localVariables2Field = new LocalVariables2Field(module);
+            numObfus = new NumObfus(module);
+            strCrypter = new StrCrypter(module);
+            obfusFunc = new ObfusFunc(module, (string[])keyfunc.GetType().GetField("ignoreMethod").GetValue(keyfunc), (string[])keyfunc.GetType().GetField("ignoreField").GetValue(keyfunc), (string[])keyfunc.GetType().GetField("custom_ignore_Method").GetValue(keyfunc), (string[])keyfunc.GetType().GetField("custom_ignore_Field").GetValue(keyfunc), (string[])keyfunc.GetType().GetField("custom_obfus_Class").GetValue(keyfunc));
+        }
+    }
     class Program
     {
         static void Main(string[] args)

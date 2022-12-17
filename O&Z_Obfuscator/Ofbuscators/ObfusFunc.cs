@@ -57,6 +57,20 @@ namespace OZ_Obfuscator.Ofbuscators
             foreach (var item in ig.custom_obfus_Class)
                 obfusClass.Add(item.ToLower());
         }
+        public ObfusFunc(ModuleDefMD module, string[] _ignoreMethod, string[] _ignoreField, string[] _custom_ignore_Method, string[] _custom_ignore_Field, string[] _obfusClass)
+        {
+            this.module = module;
+            foreach (var item in _ignoreMethod)
+                ignoreMethod.Add(item.ToLower());
+            foreach (var item in _ignoreField)
+                ignoreField.Add(item.ToLower());
+            foreach (var item in _custom_ignore_Method)
+                ignoreMethod.Add(item.ToLower());
+            foreach (var item in _custom_ignore_Field)
+                ignoreField.Add(item.ToLower());
+            foreach (var item in _obfusClass)
+                obfusClass.Add(item.ToLower());
+        }
         public void Excute()
         {
             foreach (var type in module.Types.Where(x => !(x.Name.StartsWith("<"))))
