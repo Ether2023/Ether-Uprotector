@@ -130,6 +130,7 @@ void _Crypt()
     Console.WriteLine("Press any key to exit...");
     Console.ReadKey();
 }
+
 void _default()
 {
     Console.WriteLine("parameter ERROR!");
@@ -235,4 +236,93 @@ void MonoObfus()
         strCrypter.Execute();
     }
         loader.Save();
+}
+namespace O_Z_IL2CPP_Security
+{
+    public class O_Z_UnityProtector
+    {
+        byte[] metadata_origin;
+        List<byte[]> StringLiteraBytes = new List<byte[]>();
+        List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
+        public O_Z_UnityProtector()
+        {
+
+        }
+        void _Crypt(string OpenFilePath,string OutPath ,IL2CPP_Version version,int key)
+        {
+            IL2CPP_Version ver;
+            if (!File.Exists(OpenFilePath))
+            {
+                throw new Exception("File is not EXISTS!");
+            }
+            metadata_origin = File.ReadAllBytes(OpenFilePath);
+            if (!CheckMetadataFile(metadata_origin))
+            {
+                throw new Exception("This is not a Metadata File!");
+            }
+
+            switch (version)
+            {
+                case IL2CPP_Version.V24_4:
+                    {
+                        ver = IL2CPP_Version.V24_4;
+                    }
+                    break;
+                case IL2CPP_Version.V28:
+                    {
+                        ver = IL2CPP_Version.V28;
+                    }
+                    break;
+                case IL2CPP_Version.V24_1:
+                    {
+                        ver = IL2CPP_Version.V24_1;
+                    }
+                    break;
+                default: throw new Exception("Metadata Version is not supported or Error Version!");
+            }
+            object Loader;
+            switch (ver)
+            {
+                case IL2CPP_Version.V24_4:
+                    {
+                        Loader = new LoadMetadata_v24_4(new MemoryStream(metadata_origin));
+                    }
+                    break;
+                case IL2CPP_Version.V28:
+                    {
+                        Loader = new LoadMetadata_v28(new MemoryStream(metadata_origin));
+                    }
+                    break;
+                case IL2CPP_Version.V24_1:
+                    {
+                        Loader = new LoadMetadata_v24_1(new MemoryStream(metadata_origin));
+                    }
+                    break;
+                default: Console.WriteLine("版本错误!请确保你配置了正确且受支持的Metadata版本!"); return;
+            }
+            Metadata metadata = new Metadata(Loader.GetType().GetField("metadatastream").GetValue(Loader) as Stream, Loader.GetType().GetField("Header").GetValue(Loader).GetType(), Loader.GetType().GetField("Header").GetValue(Loader), ver);
+            StringLiteraBytes = metadata.GetBytesFromStringLiteral(metadata.stringLiterals);
+            StringLiteraBytes_Crypted = Crypt.Cryptstring(StringLiteraBytes, key);
+            byte[] allstring = metadata.GetAllStringFromMeta();
+            Stream stream = metadata.SetCryptedStreamToMetadata(StringLiteraBytes_Crypted, Crypt.CryptWithSkipNULL(allstring, (byte)O_Z_IL2CPP_Security.Tools.CheckNull(key), key), ver);
+            byte[] tmp = O_Z_IL2CPP_Security.Tools.StreamToBytes(stream);
+            File.WriteAllBytes(OutPath, tmp);
+        }
+        bool CheckMetadataFile(byte[] data)
+        {
+            if (BitConverter.ToUInt32(data, 0) != 4205910959)
+            {
+                return false;
+            }
+            else
+                return true;
+        }
+        public double CheckVersion(string OpenFilePath)
+        {
+            byte[] data = File.ReadAllBytes(OpenFilePath);
+            if (!CheckMetadataFile(data)) throw new Exception("This is not a Metadata File!");
+            MetadataCheck metadataCheck = new MetadataCheck(new MemoryStream(data));
+            return metadataCheck.Version;
+        }
+    }
 }
