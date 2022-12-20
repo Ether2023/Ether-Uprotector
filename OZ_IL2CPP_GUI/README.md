@@ -12,7 +12,7 @@
 2. 确保已经安装net6.0
 3. 运行OZ_IL2CPP_GUI.exe
 
-![gui_application](OZ_Il2cpp_GUI/pics/gui_main.png)
+![gui_application](pics/gui_main.png)
 
 4. 点击安装, 选择对应的Unity.exe, 安装路径可在Unity Hub中找到
 5. 进入Unity, 在BuildSettings中将脚本后端改为Il2cpp, 构建项目
