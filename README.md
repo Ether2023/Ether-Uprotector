@@ -8,7 +8,7 @@ O&Z Protector 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.
 
 ***本程序基于[Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48)开发，运行需要[Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48)环境，请确保您的PC正确安装了NET Runtime或者NET SDK***
 
-## >>>[O&Z-IL2CPP(Click me!)](O%26Z_IL2CPP_Security/README.md)<<<
+## >>>[O&Z-IL2CPP(Click me!)](OZ_IL2CPP_GUI/README.md)<<<
 
 ## >>>[O&Z-MonoObfuscator(Click me!)](O%26Z_Obfuscator/README.md)<<<
 
