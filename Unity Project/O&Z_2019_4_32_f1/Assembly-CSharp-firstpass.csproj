@@ -247,6 +247,12 @@
     <Reference Include="UnityEditor">
       <HintPath>C:\Program Files\Unity 2019.4.32f1\Editor\Data\Managed\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="dnlib">
+      <HintPath>Assets\O&amp;ZProtector\Plugins\dnlib.dll</HintPath>
+    </Reference>
+    <Reference Include="OZ_Obfuscator">
+      <HintPath>Assets\O&amp;ZProtector\Plugins\OZ_Obfuscator.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.Compression.FileSystem">
       <HintPath>Library\PackageCache\com.unity.connect.share@2.0.3\Plugins\System.IO.Compression.FileSystem.dll</HintPath>
     </Reference>

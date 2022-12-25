@@ -12,15 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c8233b3054f50b469533bcaf15c8469, type: 3}
   m_Name: Config
   m_EditorClassIdentifier: 
+  Enable: 1
   key: 114514
-  Version: 24.4
+  Version: 0
   Obfus:
     ControlFlow: 1
-    ignore_ControlFlow_Method: []
+    ignore_ControlFlow_Method:
+    - HandleShoot
     NumObfus: 1
     LocalVariables2Field: 1
     StrCrypter: 1
     Obfusfunc: 1
+    AntiDe4dot: 1
+    FuckILdasm: 1
+    PEPacker: 1
   Keyfunc:
     ignoreMethod:
     - Awake

@@ -12,7 +12,10 @@ public enum SupportVerison
 };
 public class OZ_Config : ScriptableObject
 {
-    [Header("O&Z_IL2CPP的加密密钥,使用它对您的Metadata文件进行加密",order = 2)]
+    [Header("启用混淆")]
+    public bool Enable = true;
+    [Header("O&Z_IL2CPP加密密钥")]
+    [Tooltip("使用它对您的Metadata文件进行加密")]
     public int key = 114514;
     [Header("Unity对应的metadata版本")]
     [Tooltip("目前支持24.4和28")]
@@ -43,6 +46,15 @@ public class ObfusConfig
     [Header("类&方法&字段混淆)")]
     [Tooltip("使用本方法加密您项目中所有的函数，类，甚至是参数，使程序的不可读性达到最高（我们采用了Unity函数名堆积作为字典，使得这种方法混淆的函数难以被反混淆器识别为Obfuscated或JunkFunc）")]
     public bool Obfusfunc = true;
+    [Header("Anti De4dot")]
+    [Tooltip("通过添加特殊属性使得de4dot无法正确识别被混淆的名称，从而使其无法还原正确反混淆名称")]
+    public bool AntiDe4dot = true;
+    [Header("Anti ILdecomplier")]
+    [Tooltip("通过MS提供的SuppressIldasmAttribute使反编译器无法正常工作")]
+    public bool FuckILdasm = true;
+    [Header("PEPacker(Only For MonoBuild)")]
+    [Tooltip("修改NET程序的特征码使得反编译器无法正确识别")]
+    public bool PEPacker = true;
 }
 [Serializable]
 public class ignore
@@ -64,6 +76,7 @@ public class ignore
 
 public class OZ_Config_Manager : UnityEditor.Editor
 {
+    /*
     [MenuItem("O&Z Manager/CreateConfig")]
     static void CreateConfig()
     {
@@ -72,5 +85,46 @@ public class OZ_Config_Manager : UnityEditor.Editor
             Debug.LogError("Config Exists!");
         else
             AssetDatabase.CreateAsset(_Config, "Assets/O&ZProtector/Config.asset");
+    }
+    [MenuItem("O&Z Manager/UnlockASM")]
+    static void UnlockASM()
+    {
+        EditorApplication.UnlockReloadAssemblies();
+    }
+}
+public class MainWindow : EditorWindow
+{
+    /*
+    private Editor editor;
+    Vector3 scrollPos = Vector2.zero;
+
+    private void Awake()
+    {
+
+    }
+
+    void Update()
+    {
+        //窗口弹出时候每帧调用
+
+    }
+
+    [MenuItem("O&Z Manager/Main")]
+    static void Init()
+    {
+        var window = EditorWindow.GetWindow<MainWindow>(true, "Main", true);
+        window.editor = Editor.CreateEditor(AssetDatabase.LoadAssetAtPath<OZ_Config>("Assets/O&ZProtector/Config.asset"));
+    }
+
+    void OnGUI()
+    {
+
+        this.editor.OnInspectorGUI();
+    }
+    */
+    [MenuItem("O-Z Manager/PEPacker")]
+    public static void Pack()
+    {
+        string path = EditorUtility.OpenFilePanel("选择您的Assembly-CSharp.dll", Application.dataPath,"dll");
     }
 }

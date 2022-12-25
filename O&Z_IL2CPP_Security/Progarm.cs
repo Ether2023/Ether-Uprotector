@@ -186,9 +186,10 @@ bool CheckMetadataFile()
 void _Test()
 {
     AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
-    ObfusFunc obfusFunc = new ObfusFunc(loader.Module);
-    obfusFunc.Excute();
+    Call2Callil c2cil = new Call2Callil(loader.Module);
+    c2cil.Excute();
     loader.Save();
+    //PEPacker.pack(loader.OutputPath);
 }
 void CheckVersion()
 {
@@ -213,29 +214,51 @@ void MonoObfus()
     if (jsonManager.index.Obfus.ControlFlow == 1)
     {
         ControlFlow controlFlow = new ControlFlow(loader.Module, jsonManager.index.Obfus.ignore_ControlFlow_Method);
+        Console.WriteLine("Executing ControlFlow...");
         controlFlow.Execute();
     }
     if (jsonManager.index.Obfus.Obfusfunc == 1)
     {
         ObfusFunc obfusFunc = new ObfusFunc(loader.Module);
+        Console.WriteLine("Executing ObfusFunc...");
         obfusFunc.Excute();
     }
     if (jsonManager.index.Obfus.NumObfus == 1)
     {
         NumObfus numObfus = new NumObfus(loader.Module);
+        Console.WriteLine("Executing NumObfus...");
         numObfus.Execute();
     }
     if (jsonManager.index.Obfus.LocalVariables2Field == 1)
     {
         LocalVariables2Field localVariables2Field = new LocalVariables2Field(loader.Module);
+        Console.WriteLine("Executing LocalVariables2Field...");
         localVariables2Field.Execute();
     }
     if (jsonManager.index.Obfus.StrCrypter == 1)
     {
         StrCrypter strCrypter = new StrCrypter(loader.Module);
+        Console.WriteLine("Executing StrCrypter...");
         strCrypter.Execute();
     }
-        loader.Save();
+    if(jsonManager.index.Obfus.AntiDe4dot == 1)
+    {
+        Antide4dot antide4Dot = new Antide4dot(loader.Module);
+        Console.WriteLine("Executing Antide4dot...");
+        antide4Dot.Execute();
+    }
+    if(jsonManager.index.Obfus.FuckILdasm == 1)
+    {
+        FuckILdasm fuck = new FuckILdasm(loader.Module);
+        Console.WriteLine("Executing FuckILdasm...");
+        fuck.Execute();
+    }
+    loader.Save();
+    if(jsonManager.index.Obfus.PEPacker== 1)
+    {
+        Console.WriteLine("PEPacking...");
+        PEPacker.pack(loader.OutputPath);
+    }
 }
 namespace O_Z_IL2CPP_Security
 {

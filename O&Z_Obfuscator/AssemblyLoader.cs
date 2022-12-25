@@ -19,13 +19,22 @@ namespace OZ_Obfus
         public AssemblyDef Assembly;
         public ModuleDefMD Module{ get; set; }
         public string Path;
+        public string OutputPath;
         public AssemblyLoader(string Assembly)
         {
             Path = Assembly.Replace("\"", "");
+            OutputPath = Path + "Protected";
             LoadAssembly();
             LoadModuleDefMD();
-            LoadDependencies();
+            //LoadDependencies();
             Tools.Importer =  new Importer(Module);
+        }
+        public AssemblyLoader(byte[] Assembly)
+        {
+            LoadAssemblyFromBytes(Assembly);
+            LoadModuleDefMDFromBytes(Assembly);
+            //LoadDependencies();
+            Tools.Importer = new Importer(Module);
         }
         public void LoadAssembly()
         {
@@ -187,6 +196,13 @@ namespace OZ_Obfus
             ModuleWriterOptions opts = new ModuleWriterOptions(Module);
             opts.Logger = DummyLogger.NoThrowInstance;
             Assembly.Write(Path + "Protected", opts);
+            Console.WriteLine("Saved.");
+        }
+        public void Save(string path)
+        {
+            ModuleWriterOptions opts = new ModuleWriterOptions(Module);
+            opts.Logger = DummyLogger.NoThrowInstance;
+            Assembly.Write(path, opts);
             Console.WriteLine("Saved.");
         }
     }

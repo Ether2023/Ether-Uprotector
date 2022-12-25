@@ -2,32 +2,47 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OZ_Obfuscator.Ofbuscators
 {
+    //Thank to BitMono and sunnamed434
     public class Antide4dot
     {
-        AssemblyDef Asmdef;
+        ModuleDefMD ModuleDef;
         public Antide4dot(ModuleDefMD module)
         {
-            Asmdef = module.Assembly;
+            ModuleDef = module;
         }
         public void Execute()
         {
-            foreach (var module in Asmdef.Modules)
-            {
-                var interfaceM = new InterfaceImplUser(module.GlobalType);
-                for (var i = 0; i < 1; i++)
-                {
-                    var typeDef1 = new TypeDefUser(string.Empty, $"Form{i}", module.CorLibTypes.GetTypeRef("System", "Attribute"));
-                    var interface1 = new InterfaceImplUser(typeDef1);
-                    module.Types.Add(typeDef1);
-                    typeDef1.Interfaces.Add(interface1);
-                    typeDef1.Interfaces.Add(interfaceM);
-                }
-            }
+            AddAttrWtihout(ModuleDef, "SmartAssembly.Attributes", "PoweredBy", string.Empty);
+            AddAttrWtihout(ModuleDef, "Xenocode.Client.Attributes.AssemblyAttributes", "PoweredBy", string.Empty);
+            AddAttrWtihout(ModuleDef, string.Empty, "ObfuscatedByGoliath", string.Empty);
+            AddAttrWtihout(ModuleDef, "SecureTeam.Attributes", "ObfuscatedByAgileDotNet", string.Empty);
+            AddAttrWtihout(ModuleDef, string.Empty, "TrinityObfuscator", string.Empty);
+            AddAttrWtihout(ModuleDef, "SecureTeam.Attributes", "ObfuscatedByCliSecure", string.Empty);
+            AddAttrWtihout(ModuleDef, string.Empty, "ZYXDNGuarder", string.Empty);
+            AddAttrWtihout(ModuleDef, string.Empty, "BabelObfuscator", string.Empty);
+            AddAttrWtihout(ModuleDef, string.Empty, "BabelObfuscator", string.Empty);
+            AddAttrWtihout(ModuleDef, string.Empty, "Dotfuscator", string.Empty);
+            AddAttrWtihout(ModuleDef, string.Empty, "Centos", string.Empty);
+            AddAttrWtihout(ModuleDef, string.Empty, "ConfusedBy", string.Empty);
+            AddAttrWtihout(ModuleDef, "NineRays.Obfuscator", "Evaluation", string.Empty);
+            AddAttrWtihout(ModuleDef, "CryptoObfuscator", "ProtectedWithCryptoObfuscator", string.Empty);
+            AddAttrWtihout(ModuleDef, string.Empty, "();\u0009", string.Empty);
+            AddAttrWtihout(ModuleDef, string.Empty, "EMyPID_8234_", string.Empty);
+        }
+        public CustomAttribute AddAttrWtihout(ModuleDefMD moduleDefMD, string _Namespace, string _Name, string text)
+        {
+            var attributeRef = moduleDefMD.CorLibTypes.GetTypeRef(_Namespace, _Name);
+            var attributeCtor = new MemberRefUser(moduleDefMD, ".ctor", MethodSig.CreateInstance(moduleDefMD.CorLibTypes.Void, moduleDefMD.CorLibTypes.String), attributeRef);
+            var customAttribute = new CustomAttribute(attributeCtor);
+            customAttribute.ConstructorArguments.Add(new CAArgument(moduleDefMD.CorLibTypes.String, text));
+            moduleDefMD.CustomAttributes.Add(customAttribute);
+            return customAttribute;
         }
     }
 }

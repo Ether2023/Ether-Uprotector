@@ -19,6 +19,8 @@ namespace OZ_Obfus
         public NumObfus numObfus;
         public StrCrypter strCrypter;
         public ObfusFunc obfusFunc;
+        public Antide4dot antide4dot;
+        public FuckILdasm fuckILdasm;
         public OZ_Obfuscator(ModuleDefMD module,object Config, object keyfunc = null)
         {
             ModuleDefMD = module;
@@ -27,17 +29,19 @@ namespace OZ_Obfus
             numObfus = new NumObfus(module);
             strCrypter = new StrCrypter(module);
             obfusFunc = new ObfusFunc(module, (string[])keyfunc.GetType().GetField("ignoreMethod").GetValue(keyfunc), (string[])keyfunc.GetType().GetField("ignoreField").GetValue(keyfunc), (string[])keyfunc.GetType().GetField("custom_ignore_Method").GetValue(keyfunc), (string[])keyfunc.GetType().GetField("custom_ignore_Field").GetValue(keyfunc), (string[])keyfunc.GetType().GetField("custom_obfus_Class").GetValue(keyfunc));
+            antide4dot = new Antide4dot(module);
+            fuckILdasm = new FuckILdasm(module);
         }
     }
     class Program
     {
         static void Main(string[] args)
         {
-            AssemblyLoader loader = new AssemblyLoader("C:\\Users\\22864\\Desktop\\END_AUTO V2\\END_Data\\Managed\\Assembly-CSharp.dll.bak");
-            ObfusFunc obfusFunc = new ObfusFunc(loader.Module);
-            obfusFunc.Excute();
+            AssemblyLoader loader = new AssemblyLoader("C:\\Users\\22864\\Desktop\\2019Testbuild\\O&Z_2019_4_32_f1_Data\\Managed\\Assembly-CSharp - 副本.dll");
+            Call2Callil c2cil = new Call2Callil(loader.Module);
+            c2cil.Excute();
             loader.Save();
-            Console.ReadKey();
+            //Console.ReadKey();
             /*
             AssemblyLoader loader;
             if (args.Length > 0)
