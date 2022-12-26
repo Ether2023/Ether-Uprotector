@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 public class ObfusDLLs : IIl2CppProcessor , IPostBuildPlayerScriptDLLs, IPreprocessBuildWithReport , IPostprocessBuildWithReport
 {
     private static _OZ_Obfuscator _OZ = new _OZ_Obfuscator();
+    private static OZ_Config config;
     public int callbackOrder { get { return 0; } }
     public void OnBeforeConvertRun(BuildReport report, Il2CppBuildPipelineData data)
     {
@@ -62,6 +63,7 @@ public class ObfusDLLs : IIl2CppProcessor , IPostBuildPlayerScriptDLLs, IPreproc
     }
     public void OnPreprocessBuild(BuildReport report)
     {
+        config = AssetDatabase.LoadAssetAtPath<OZ_Config>("Assets/O&ZProtector/Config.asset");
         UnityEditor.Compilation.CompilationPipeline.RequestScriptCompilation();
         _OZ = new _OZ_Obfuscator();
     }
@@ -93,7 +95,10 @@ public class ObfusDLLs : IIl2CppProcessor , IPostBuildPlayerScriptDLLs, IPreproc
     [PostProcessScene(1)]
     public static void obfuscate()
     {
-        _OZ.obfus();
+        if(config.Enable)
+        {
+            _OZ.obfus();
+        }
     }
     public void OnPostprocessBuild (BuildReport report)
     {
