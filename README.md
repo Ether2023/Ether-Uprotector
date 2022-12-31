@@ -1,95 +1,105 @@
 # O-Z-Unity Protector
 
-O&Z Protector 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.bilibili.com/79045701)[QQ:2286401259]** 共同制作的针对Unity进行的客制化和加密
+O&Z Protector is a tool providing custom encryption for Unity, maintained by **Z1029 [QQ:3408708525]** and **[oRangeSumMer](https://space.bilibili.com/79045701) [QQ:2286401259]**
 
-交流群：957552913（QQ）
+**The program is based on [Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48), requires [Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48) environment, please make sure your computer has NET Runtime or NET SDK properly installed**
 
-***本程序基于[Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48)开发，运行需要[Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48)环境，请确保您的PC正确安装了NET Runtime或者NET SDK***
+中文版本Readme请戳[这里](README_zh-cn.md)
 
-## >>>[O&Z-IL2CPP(Click me!)](OZ_IL2CPP_GUI)<<<
+> ***Some documents have not been translated yet, so please look forward to it.***
 
-## >>>[O&Z-MonoObfuscator(Click me!)](O%26Z_Obfuscator)<<<
+## Project lists
 
-## >>>[O&Z-Auto Generate Console(Click me!)](OZ_Il2cpp_Console)<<<
+- [O&Z-IL2CPP](OZ_IL2CPP_GUI)
+- [O&Z-MonoObfuscator](O%26Z_Obfuscator)
+- [O&Z-Auto Generate Console](OZ_Il2cpp_Console)
 
-## What's New (**O&Z IL2CPP Obfuscator 重大更新!** && O&Z_Il2cpp_Console Released!)
-1. 本次更新添加了UnityPackage功能,现在您可以导入我们的[UnityPackge](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases)，在unity的可视化界面配置您的加密方案
-   > ***现在你可以同时享受O&Z-IL2CPP和O&Z-MonoObfuscator的双倍安全***
+## What's New (**O&Z IL2CPP Obfuscator Major Update!** && O&Z_Il2cpp_Console Released!)
 
-   >详细的使用方法请看[O&Z-MonoObfuscator(Click me!)](O%26Z_Obfuscator)
+1. The [UnityPackge](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases) feature has been added to this update. Now you can import our UnityPackge and configure your encryption scheme in Unity's visual interface.
+   > ***Now you can enjoy `O&Z-IL2CPP` and `O&Z-MonoObfuscator` dual-safety***
+   >
+   > For datailed usage [O&Z-MonoObfuscator](O%26Z_Obfuscator)
 
    ![UnityConfig](pics/Unity%20Config.png)
 
-2. 我们下放了对Unity版本的适配,现在我们的混淆器可以支持到2018.2后的所有版本
+2. We have lowered the minimum version requirement of Unity, and now our obfuscator can support all versions after 2018.2
 
-   > 即使O&Z-IL2CPP暂时还没有适配您使用的Unity版本,您同样可以使用**O&Z IL2CPP Obfuscator**，因为O&Z IL2CPP Obfuscator目前支持**2018.2之后的所有Unity版本**
+   > You can use **O&Z IL2CPP Obfuscator** even if the O&Z-IL2CPP has not yet adapted to the Unity version you are using, because O&Z IL2CPP Obfuscator currently supports all Unity versions after **2018.2**
 
-3. 在MonoObfuscate功能中，我们添加了侦测 **De4dot** 反混淆器的侦测,通过配置Anti-de4dot功能可以使您的程序集无法被de4dot还原！同时也加入了PEPack功能，该功能可以去除您的NET程序集标志使得您的程序集无法被反编译器识别(*请看下方图片*)
-   
-|New                       |说明|
+3. In the `Mono Obfuscate` feature, we added the detection of the `De4dot antiobfuscator`. Configuring the `Anti-de4dot` feature prevents your assembly from being restored by `de4dot`! `PEPack` is also included, which removes your NET assembly flag and makes your assembly unrecognized by the decompiler (*See below picture*)
+
+|New                       |Description|
 |--------------------------|----|
-|Anti De4dot               |使得反混淆器失效|
-|Anti Anti-ILDASM          |使得反汇编器失效|
-|PEPacker                  |去除NET标志使得ILSpy，DnSpy等软件无法正确识别NET程序集|
+|Anti De4dot               |Invalidate anti-confuser|
+|Anti Anti-ILDASM          |Invalidate disassembler|
+|PEPacker                  |Removing the NET flag makes ILSpy, DnSpy and other software unable to correctly recognize the NET assembly|
 
-   > after de4dot: 
+   > After de4dot:
+   >
+   > ![De4dot](pics/Antide4.png)
+   >
+   > After PEPacker
+   >
+   > ![PEPack](pics/pepack.png)
 
-   > ![After De4dot](pics/Antide4.png)
-   
-   > after PEPacker
+1. For `OZ_ Il2cpp_ Console`We have successfully developed the `Auto-Genertate IL2cpp` feature and have been successful (temporarily in beta), now you can use `O&Z IL2CPP` to encrypt any version of Unity!
 
-   > ![After PEPack](pics/pepack.png)
-
-1. ***OZ_Il2cpp_Console***我们成功开发了**Auto-Genertate IL2cpp**功能,并且取得了成功(暂时处于测试阶段),现在你可以使用O&Z IL2CPP加密任何版本的Unity! 
-   
-   **支持的Unity版本**
+   **Support Unity version**
 
    | Il2Cpp Version | Unity Version                | Support        |
-   | -------------- | ---------------------------- |--------------  |   
+   | -------------- | ---------------------------- |--------------  |
    | 24.0           | 2017.x - 2018.2.x            | ✔️             |
    | 24.1           | 2018.3.x - 2018.4.x          | ✔️             |
    | 24.2           | 2019.1.x - 2019.2.x          | ✔️             |
-   | 24.3           | 2019.3.x, 2019.4.x, 2020.1.x |✔️              |
-   | 24.4           | 2019.4.x and 2020.1.x        |✔️              |
+   | 24.3           | 2019.3.x, 2019.4.x, 2020.1.x | ✔️             |
+   | 24.4           | 2019.4.x and 2020.1.x        | ✔️             |
    | 27.0           | 2021.2.x                     | ✔️             |
    | 27.1           | 2020.2.x - 2020.3.x          | ✔️             |
    | 27.2           | 2021.1.x, 2021.2.x           | ✔️             |
-   | 28             | 2021.3.x, 2022.1.x           |✔️              |
+   | 28             | 2021.3.x, 2022.1.x           | ✔️             |
 
-   > ***OZ_Il2cpp_Console*** 支持任何原版本的Unity(未经过修改的)
-   
-   > 如果对您的Unity版本出现不兼容或者存在Bug，欢迎提出issue或者联系z9(Q:3408708525)
-   
-   > ***在测试该项功能前,别忘了手动备份您的libil2cpp文件,避免造成不便xD***
-   
+   > `OZ_Il2cpp_Console` supports any original version of Unity (unmodified)
+   >
+   > If there are incompatibilities or bugs with your Unity version, welcome to propose issue or contact z9
+   >
+   > **Before testing this function, don't forget to manually back up your `libil2cpp` file to avoid inconvenience xD**
 
-## 关于O&Z IL2CPP Obfuscator的使用方法以及问题处理
-1. 从[Release](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases)中下载我们的unitypackage
-2. 正确的配置**Config.json**和**KeyFunc.json**,就像你配置O&Z-MonoObfuscator那样(如不明白配置,可以跳转到[O&Z-MonoObfuscator](O%26Z_Obfuscator/README.md)了解)
-3. 您只需要像正常的构建生成项目一样，O&Z 会自动帮你完成IL2CPP的混淆
-4. 本功能还存在一些bug，目前已知有以下几点
-   - 使用O&Z IL2CPP Obfuscator构建您的项目时，可能会出现某一个函数的报错(而且是构建时可能发生，也可能不发生，例如同一工程构建时候报错了，过一会又可以顺序编译了)，这是由于ControlFlow的随机问题造成的，如果您有耐心可以多尝试几次，如果一直在某一个报错，可以尝试在Config.json中添加该函数的名称，这样会让ControFlow跳过这个函数,例如以下这种情况
-   ![err1](pics/err1.png)
-   可以将HandleShoot函数添加到**ignore_ControlFlow_Method**中
-   ![config](pics/config.png)
-5. 本功能可以在IL2CPP执行之前对您的项目进行一次混淆(强度等同于O&Z Monoobfus)，可以使您的项目构建cpp时更加安全，即使您的程序收到了il2cppdumper之类的攻击，您的方法和字段任然处于混淆状态，而且il2cpp储存的代码文件任然被ControlFlow等功能混淆，使其可读性降低，最大程度保护您的游戏安全
-   > 配合**O&Z-IL2CPP**可以获得最佳效果哦
-## 预告
-1. ~~UI窗口界面即将完成！~~
-2. ~~正在测试对于所有unity版本il2cpp的支持,自动生成libil2cpp~~
-3. *我们准备重写Mono虚拟机，在底层对Unity Mono的JIT，AOT等进行加密*
+## How to use `O&Z IL2CPP Obfuscator` and how to deal with problems
 
-## 未来的规划
-1. 对AssetBundle资源进行加密
-2. 修改IL2CPP的运行机制
-3. 我们正常尝试对MonoBehave类进行修改以实现对Class的混淆
-4. ***我们正式准备上架Unity AssetStore啦!***
-5. . . . . . .
+1. Download our `UnityPackage` from [release](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases)
+2. Configure `Config.json` and `KeyFunc.json` properly, just as configuring `O&Z-MonoObfuscator` (if you don't know how to configure,please find out in [O&Z-MonoObfuscator](O%26Z_Obfuscator/README.md))
+3. You only need to build projects like normal ones, and O&Z will automatically help you complete the confusion of IL2CPP
+4. There are still some bugs in this function. At present, the following points are known:
+   - When you use O&Z IL2CPP Obfuscator to build your project, an error may occur in a function (and it may or may not occur during the construction, for example, an error may be reported during the construction of the same project, and it can be compiled in sequence later). This is caused by the random problem of ControlFlow. If you are patient, you can try several times. If you always report an error in a certain function, You can try to add the name of this function in Config.json, which will make ControlFlow skip this function, such as the following:
 
-敬请期待 awa！
+   - ![err1](pics/err1.png)
 
-## 特别鸣谢
-本项目参考的项目以及工程案例具体如下，对各位开源作者致以最高的感谢!
+   - You can add the HandleShoot function to `ignore_ControlFlow_Method`
+
+   - ![config](pics/config.png)
+5. This function can confuse your project before IL2CPP is executed (the strength is equivalent to `O&Z Monoobfus`), which can make your project more secure when building cpp. Even if your program receives attacks like `il2cppdumper`, your methods and fields are still in a confused state, and the code file stored in `il2Cpp` is still confused by functions like `ControlFlow`, which reduces its readability and protects your game security to the greatest extent
+   > The best effect can be obtained by cooperating with `O&Z-IL2CPP`
+
+## Preview
+
+1. ~~UI window interface is almost complete!~~
+2. ~~Testing support for all unit versions of `il2cpp`, automatically generating `libil2cpp`~~
+3. *We are going to rewrite the Mono virtual machine to encrypt Unity Mono's JIT, AOT, etc. at the bottom*
+
+## Todo List
+
+1. Encrypt `AssetBundle` resources
+2. Modify `IL2CPP` operating mechanism
+3. We are trying to modify the `MonoBehave` class to confuse `Class`
+4. ***We're ready to launch `Unity AssetStore`!***
+5. ......
+
+Coming soon awa！
+
+## Special Thanks
+
+The projects and project cases that this project refers to are as follows. Thank you very much to all open source authors!
 
 - [dnlib](https://github.com/0xd4d/dnlib)
 - [MindLate](https://github.com/Sato-Isolated/MindLated)
@@ -98,9 +108,12 @@ O&Z Protector 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.
 - BitMono
 - [BitDotNet(PEPacker)](https://github.com/0x59R11/BitDotNet)
 
-## 联系作者
-如果你有任何问题或者建议，可以联系作者的QQ账号进行反馈哦！
+## Contact
 
-也可以直接在issue提问
+If you have any questions or suggestions, you can contact the author's QQ account for feedback.
 
-期待你的建议！
+You can also ask questions directly in issue
+
+Looking forward to your suggestion!
+
+Group：957552913 (QQ)

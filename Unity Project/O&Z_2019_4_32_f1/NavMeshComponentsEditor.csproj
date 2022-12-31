@@ -268,6 +268,21 @@
     <Reference Include="OZ_Obfuscator">
       <HintPath>Assets\O&amp;ZProtector\Plugins\OZ_Obfuscator.dll</HintPath>
     </Reference>
+    <Reference Include="AssetProtection.Editor">
+      <HintPath>Assets\OPS\AssetProtection\Editor\Plugins\AssetProtection.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="AssetProtection">
+      <HintPath>Assets\OPS\AssetProtection\Plugins\AssetProtection.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Serialization.Hash">
+      <HintPath>Assets\OPS\Plugins\Hash\OPS.Serialization.Hash.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Serialization.Json">
+      <HintPath>Assets\OPS\Plugins\Json\OPS.Serialization.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Rsa">
+      <HintPath>Assets\OPS\Plugins\Rsa\Normal\OPS.Rsa.dll</HintPath>
+    </Reference>
     <Reference Include="log4netPlastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.12.5\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
     </Reference>
