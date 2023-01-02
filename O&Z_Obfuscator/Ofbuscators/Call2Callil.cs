@@ -6,12 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-namespace OZ_Obfuscator.Ofbuscators
+namespace OZ_Obfuscator.Obfuscators
 {
     //Thank to BitMono and sunnamed434
     //Thank to MindLated
     [Obsolete]
-    public class Call2Callil
+    public class Call2Callil : Obfuscator
     {
         ModuleDefMD ModuleDef;
         Importer importer;
@@ -20,7 +20,7 @@ namespace OZ_Obfuscator.Ofbuscators
             ModuleDef = module;
             importer = new Importer(module);
         }
-        public void Excute()
+        public void Execute()
         {
             ITypeDefOrRef hRuntimeMethod = importer.Import(typeof(RuntimeMethodHandle));
             IMethod _GetTypeFromHandle = importer.Import(typeof(Type).GetMethod(nameof(Type.GetTypeFromHandle), new Type[] { typeof(RuntimeTypeHandle) }));

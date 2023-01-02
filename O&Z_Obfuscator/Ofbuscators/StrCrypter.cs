@@ -4,10 +4,11 @@ using dnlib.PE;
 using System.Text;
 using System;
 using System.Security.Cryptography;
+using OZ_Obfuscator;
 
-namespace OZ_Obfus.obfuscators
+namespace OZ_Obfuscator.Obfuscators
 {
-    public class StrCrypter
+    public class StrCrypter : Obfuscator
     {
         public MethodDef DecryptStr;
         public ModuleDefMD moduleDef;

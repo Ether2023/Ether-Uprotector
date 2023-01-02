@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OZ_Obfuscator.Ofbuscators
+namespace OZ_Obfuscator.Obfuscators
 {
-    public class LocalVariables2Field
+    public class LocalVariables2Field : Obfuscator
     {
         private static Dictionary<Local, FieldDef> _convertedLocals = new Dictionary<Local, FieldDef>();
 		ModuleDef module;

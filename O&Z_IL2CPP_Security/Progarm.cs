@@ -3,10 +3,9 @@ using System.Reflection;
 using System.Text;
 using System.Security.Cryptography;
 using O_Z_IL2CPP_Security.LitJson;
-using OZ_Obfus.obfuscators;
 using System.Diagnostics;
-using OZ_Obfuscator.Ofbuscators;
-using OZ_Obfus;
+using OZ_Obfuscator.Obfuscators;
+using OZ_Obfuscator;
 
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
@@ -187,7 +186,7 @@ void _Test()
 {
     AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
     Call2Callil c2cil = new Call2Callil(loader.Module);
-    c2cil.Excute();
+    c2cil.Execute();
     loader.Save();
     //PEPacker.pack(loader.OutputPath);
 }
@@ -221,7 +220,7 @@ void MonoObfus()
     {
         ObfusFunc obfusFunc = new ObfusFunc(loader.Module);
         Console.WriteLine("Executing ObfusFunc...");
-        obfusFunc.Excute();
+        obfusFunc.Execute();
     }
     if (jsonManager.index.Obfus.NumObfus == 1)
     {

@@ -1,13 +1,12 @@
 ﻿using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using OZ_Obfus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OZ_Obfuscator.Ofbuscators
+namespace OZ_Obfuscator.Obfuscators
 {
     public class Block
     {
@@ -20,7 +19,7 @@ namespace OZ_Obfuscator.Ofbuscators
         public int Number { get; set; }
         public int Next { get; set; }
     }
-    public class ControlFlow
+    public class ControlFlow : Obfuscator
     {
         public ModuleDef Module;
         List<string> IgnoreMethod = new List<string>();

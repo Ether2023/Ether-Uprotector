@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using O_Z_IL2CPP_Security.LitJson;
-namespace OZ_Obfus
+namespace OZ_Obfuscator
 {
     public static class Extensions
     {

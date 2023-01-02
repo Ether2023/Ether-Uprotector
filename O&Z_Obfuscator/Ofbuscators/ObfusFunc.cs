@@ -9,9 +9,9 @@ using dnlib.DotNet.Emit;
 using O_Z_IL2CPP_Security.LitJson;
 using OZ_Obfus;
 
-namespace OZ_Obfuscator.Ofbuscators
+namespace OZ_Obfuscator.Obfuscators
 {
-    public class ObfusFunc
+    public class ObfusFunc : Obfuscator
     {
         ModuleDefMD module;
         List<string> ignoreMethod = new List<string>();
@@ -71,7 +71,7 @@ namespace OZ_Obfuscator.Ofbuscators
             foreach (var item in _obfusClass)
                 obfusClass.Add(item.ToLower());
         }
-        public void Excute()
+        public void Execute()
         {
             foreach (var type in module.Types.Where(x => !(x.Name.StartsWith("<"))))
             {

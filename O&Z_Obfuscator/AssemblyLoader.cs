@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OZ_Obfus
+namespace OZ_Obfuscator
 {
     public class AssemblyLoader
     {
@@ -34,6 +34,24 @@ namespace OZ_Obfus
             LoadAssemblyFromBytes(Assembly);
             LoadModuleDefMDFromBytes(Assembly);
             //LoadDependencies();
+            Tools.Importer = new Importer(Module);
+        }
+        public AssemblyLoader(string Assembly,bool loaddepend)
+        {
+            Path = Assembly.Replace("\"", "");
+            OutputPath = Path + "Protected";
+            LoadAssembly();
+            LoadModuleDefMD();
+            if(loaddepend)
+                LoadDependencies();
+            Tools.Importer = new Importer(Module);
+        }
+        public AssemblyLoader(byte[] Assembly,bool loaddepend)
+        {
+            LoadAssemblyFromBytes(Assembly);
+            LoadModuleDefMDFromBytes(Assembly);
+            if(loaddepend)
+                LoadDependencies();
             Tools.Importer = new Importer(Module);
         }
         public void LoadAssembly()

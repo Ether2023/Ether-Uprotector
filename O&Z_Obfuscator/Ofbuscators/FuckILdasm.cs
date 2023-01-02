@@ -8,9 +8,9 @@ using dnlib;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 
-namespace OZ_Obfuscator.Ofbuscators
+namespace OZ_Obfuscator.Obfuscators
 {
-    public class FuckILdasm
+    public class FuckILdasm : Obfuscator
     {
         ModuleDefMD module;
         public FuckILdasm(ModuleDefMD module)

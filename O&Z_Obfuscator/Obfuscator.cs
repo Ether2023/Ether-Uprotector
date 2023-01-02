@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OZ_Obfuscator.Runtime
+namespace OZ_Obfuscator
 {
-    public class Num2Modle
+    public interface Obfuscator
     {
-        public static int NUM;
+        public void Execute();
     }
 }

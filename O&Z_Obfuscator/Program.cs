@@ -2,14 +2,12 @@
 using dnlib.DotNet.Writer;
 using dnlib.DotNet.Emit;
 using System.Security.Cryptography;
-using OZ_Obfus.obfuscators;
 using System;
 using System.Linq;
-using OZ_Obfuscator.Ofbuscators;
-using OZ_Obfus.Rumtime;
+using OZ_Obfuscator.Obfuscators;
 using System.Text;
 
-namespace OZ_Obfus
+namespace OZ_Obfuscator
 {
     public class OZ_Obfuscator
     {
@@ -39,7 +37,7 @@ namespace OZ_Obfus
         {
             AssemblyLoader loader = new AssemblyLoader("C:\\Users\\22864\\Desktop\\2019Testbuild\\O&Z_2019_4_32_f1_Data\\Managed\\Assembly-CSharp - 副本.dll");
             Call2Callil c2cil = new Call2Callil(loader.Module);
-            c2cil.Excute();
+            c2cil.Execute();
             loader.Save();
             //Console.ReadKey();
             /*

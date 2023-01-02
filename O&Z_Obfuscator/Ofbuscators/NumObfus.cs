@@ -1,11 +1,12 @@
 ﻿using dnlib.DotNet;
 using dnlib.DotNet.Emit;
+using OZ_Obfuscator;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OZ_Obfus.obfuscators
+namespace OZ_Obfuscator.Obfuscators
 {
-    public class NumObfus
+    public class NumObfus : Obfuscator
     {
         public ModuleDef Module;
         public Dictionary<int, FieldDef> Numbers;

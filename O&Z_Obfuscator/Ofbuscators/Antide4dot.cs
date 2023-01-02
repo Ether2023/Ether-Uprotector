@@ -6,10 +6,10 @@ using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OZ_Obfuscator.Ofbuscators
+namespace OZ_Obfuscator.Obfuscators
 {
     //Thank to BitMono and sunnamed434
-    public class Antide4dot
+    public class Antide4dot : Obfuscator
     {
         ModuleDefMD ModuleDef;
         public Antide4dot(ModuleDefMD module)

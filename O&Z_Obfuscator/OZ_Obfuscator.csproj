@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <LangVersion>latest</LangVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,6 +28,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -81,11 +83,13 @@
     <Compile Include="LitJson\Lexer.cs" />
     <Compile Include="LitJson\Netstandard15Polyfill.cs" />
     <Compile Include="LitJson\ParserToken.cs" />
+    <Compile Include="Obfuscator.cs" />
     <Compile Include="Ofbuscators\Call2Callil.cs" />
     <Compile Include="Ofbuscators\ControlFlow.cs" />
     <Compile Include="Ofbuscators\Antide4dot.cs" />
     <Compile Include="Ofbuscators\FuckILdasm.cs" />
     <Compile Include="Ofbuscators\LocalVariables2Field.cs" />
+    <Compile Include="Ofbuscators\MethodError.cs" />
     <Compile Include="Ofbuscators\ObfusFunc.cs" />
     <Compile Include="Ofbuscators\PEPacker.cs" />
     <Compile Include="Runtime\Num2Modle.cs" />
