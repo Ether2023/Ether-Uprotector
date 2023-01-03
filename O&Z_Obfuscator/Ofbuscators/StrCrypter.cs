@@ -33,7 +33,7 @@ namespace OZ_Obfuscator.Obfuscators
                 string key = GetKeyHash(method.Rid.ToString());
                 if (method.Body.Instructions[i].OpCode == OpCodes.Ldstr&& method.Body.Instructions[i].Operand.ToString() != "")
                 {
-                    var cstype = Tools.GetRuntimeTypeSelf("OZ_Obfus.Rumtime.StringEncoder");
+                    var cstype = Tools.GetRuntimeTypeSelf("OZ_Obfuscator.Runtime.StringEncoder");
                     DecryptStr = cstype.FindMethod("DecryptString1");
                     NameGenerator.SetObfusName(DecryptStr, NameGenerator.Mode.FuncName, 7);
                     DecryptStr.DeclaringType = null;

@@ -6,7 +6,7 @@ using O_Z_IL2CPP_Security.LitJson;
 using System.Diagnostics;
 using OZ_Obfuscator.Obfuscators;
 using OZ_Obfuscator;
-
+#if NET6_0_OR_GREATER
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
 string OpenFilePath;
@@ -209,48 +209,43 @@ void Help()
 }
 void MonoObfus()
 {
+    List<Obfuscator> obfuscators= new List<Obfuscator>();
     AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
     if (jsonManager.index.Obfus.ControlFlow == 1)
     {
-        ControlFlow controlFlow = new ControlFlow(loader.Module, jsonManager.index.Obfus.ignore_ControlFlow_Method);
-        Console.WriteLine("Executing ControlFlow...");
-        controlFlow.Execute();
+        obfuscators.Add(new ControlFlow(loader.Module, jsonManager.index.Obfus.ignore_ControlFlow_Method));
     }
     if (jsonManager.index.Obfus.Obfusfunc == 1)
     {
-        ObfusFunc obfusFunc = new ObfusFunc(loader.Module);
-        Console.WriteLine("Executing ObfusFunc...");
-        obfusFunc.Execute();
+        obfuscators.Add(new ObfusFunc(loader.Module));
     }
     if (jsonManager.index.Obfus.NumObfus == 1)
     {
-        NumObfus numObfus = new NumObfus(loader.Module);
-        Console.WriteLine("Executing NumObfus...");
-        numObfus.Execute();
+        obfuscators.Add(new NumObfus(loader.Module));
     }
     if (jsonManager.index.Obfus.LocalVariables2Field == 1)
     {
-        LocalVariables2Field localVariables2Field = new LocalVariables2Field(loader.Module);
-        Console.WriteLine("Executing LocalVariables2Field...");
-        localVariables2Field.Execute();
+        obfuscators.Add(new LocalVariables2Field(loader.Module));
     }
     if (jsonManager.index.Obfus.StrCrypter == 1)
     {
-        StrCrypter strCrypter = new StrCrypter(loader.Module);
-        Console.WriteLine("Executing StrCrypter...");
-        strCrypter.Execute();
+        obfuscators.Add(new StrCrypter(loader.Module));
     }
     if(jsonManager.index.Obfus.AntiDe4dot == 1)
     {
-        Antide4dot antide4Dot = new Antide4dot(loader.Module);
-        Console.WriteLine("Executing Antide4dot...");
-        antide4Dot.Execute();
+        obfuscators.Add(new Antide4dot(loader.Module));
     }
     if(jsonManager.index.Obfus.FuckILdasm == 1)
     {
-        FuckILdasm fuck = new FuckILdasm(loader.Module);
-        Console.WriteLine("Executing FuckILdasm...");
-        fuck.Execute();
+        obfuscators.Add(new FuckILdasm(loader.Module));
+    }
+    foreach(var obfuscator in obfuscators)
+    {
+        string outstr = obfuscator.ToString();
+        int i = outstr.IndexOf("Obfuscators.");
+        outstr = outstr.Substring(i+12, outstr.Length-i-12);
+        Console.WriteLine(outstr + " Executing...");
+        obfuscator.Execute();
     }
     loader.Save();
     if(jsonManager.index.Obfus.PEPacker== 1)
@@ -259,6 +254,7 @@ void MonoObfus()
         PEPacker.pack(loader.OutputPath);
     }
 }
+#elif NETCOREAPP2_0_OR_GREATER
 namespace O_Z_IL2CPP_Security
 {
     public class O_Z_UnityProtector
@@ -348,3 +344,4 @@ namespace O_Z_IL2CPP_Security
         }
     }
 }
+#endif

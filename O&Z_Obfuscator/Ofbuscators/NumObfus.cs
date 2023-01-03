@@ -24,7 +24,7 @@ namespace OZ_Obfuscator.Obfuscators
         }
         public FieldDef AddNumberField(int num)
         {
-            var cstype = Tools.GetRuntimeTypeSelf("OZ_Obfus.Rumtime.Num2Modle");
+            var cstype = Tools.GetRuntimeTypeSelf("OZ_Obfuscator.Runtime.Num2Modle");
             FieldDef field = cstype.FindField("NUM");
             NameGenerator.SetObfusName(field, NameGenerator.Mode.Base64, 2);
             field.DeclaringType = null;

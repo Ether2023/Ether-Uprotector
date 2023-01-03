@@ -14,14 +14,14 @@ using O_Z_IL2CPP_Security.LitJson;
 using System;
 using System.Text.RegularExpressions;
 
-public class ObfusDLLs : IIl2CppProcessor , IPostBuildPlayerScriptDLLs, IPreprocessBuildWithReport , IPostprocessBuildWithReport
+public class ObfusDLLs : IPostBuildPlayerScriptDLLs, IPreprocessBuildWithReport , IPostprocessBuildWithReport
 {
     private static _OZ_Obfuscator _OZ = new _OZ_Obfuscator();
     private static OZ_Config config;
     public int callbackOrder { get { return 0; } }
+    /*
     public void OnBeforeConvertRun(BuildReport report, Il2CppBuildPipelineData data)
     {
-        /*
         if (!File.Exists(Application.dataPath + "/Assets/O&ZProtector/Config.asset"))
             Debug.LogError("Config Exists!");
         else
@@ -59,8 +59,8 @@ public class ObfusDLLs : IIl2CppProcessor , IPostBuildPlayerScriptDLLs, IPreproc
         File.Move(data.inputDirectory + "\\Assembly-CSharp.dllProtected", data.inputDirectory + "\\Assembly-CSharp.dll");
         Debug.Log("Protected Assembly-CSharp.dll Obfuscated!");
         Debug.Log("Obfuscation Done!");
-        */
     }
+*/
     public void OnPreprocessBuild(BuildReport report)
     {
         config = AssetDatabase.LoadAssetAtPath<OZ_Config>("Assets/O&ZProtector/Config.asset");
@@ -104,11 +104,14 @@ public class ObfusDLLs : IIl2CppProcessor , IPostBuildPlayerScriptDLLs, IPreproc
     {
         if(report.summary.platform == BuildTarget.StandaloneWindows || report.summary.platform == BuildTarget.StandaloneWindows64)
         {
-            Debug.Log(report.summary.outputPath);
-            string path = Path.GetDirectoryName(report.summary.outputPath)+"\\";
-            path = path + Path.GetFileNameWithoutExtension(report.summary.outputPath) + "_Data\\Managed\\Assembly-CSharp.dll";
+            if (config.Enable)
+            {
+                Debug.Log(report.summary.outputPath);
+                string path = Path.GetDirectoryName(report.summary.outputPath)+"\\";
+                path = path + Path.GetFileNameWithoutExtension(report.summary.outputPath) + "_Data\\Managed\\Assembly-CSharp.dll";
             
-            _OZ.Pack(path);
+                _OZ.Pack(path);
+            }
             //Debug.Log(path);
         }
     }

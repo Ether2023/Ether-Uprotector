@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using O_Z_IL2CPP_Security.LitJson;
-using OZ_Obfus;
 
 namespace OZ_Obfuscator.Obfuscators
 {
