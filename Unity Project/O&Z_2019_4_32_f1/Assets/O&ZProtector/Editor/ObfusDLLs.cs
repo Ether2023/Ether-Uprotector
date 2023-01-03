@@ -6,61 +6,18 @@ using UnityEditor.Build.Reporting;
 using UnityEditor;
 using UnityEditor.Il2Cpp;
 using UnityEditor.Callbacks;
-using OZ_Obfuscator.Ofbuscators;
-using OZ_Obfus;
-using OZ_Obfus.obfuscators;
+using OZ_Obfuscator.Obfuscators;
 using System.IO;
 using O_Z_IL2CPP_Security.LitJson;
 using System;
 using System.Text.RegularExpressions;
+using OZ_Obfuscator;
 
 public class ObfusDLLs : IPostBuildPlayerScriptDLLs, IPreprocessBuildWithReport , IPostprocessBuildWithReport
 {
     private static _OZ_Obfuscator _OZ = new _OZ_Obfuscator();
     private static OZ_Config config;
     public int callbackOrder { get { return 0; } }
-    /*
-    public void OnBeforeConvertRun(BuildReport report, Il2CppBuildPipelineData data)
-    {
-        if (!File.Exists(Application.dataPath + "/Assets/O&ZProtector/Config.asset"))
-            Debug.LogError("Config Exists!");
-        else
-        {
-            OZ_Config _Config = ScriptableObject.CreateInstance<OZ_Config>();
-            AssetDatabase.CreateAsset(_Config, "Assets/O&ZProtector/Config.asset");
-            Debug.LogError("Not Found Confgi,New Config Generated!Please reconfigure the Config ");
-            return;
-        }
-        OZ_Config config = AssetDatabase.LoadAssetAtPath<OZ_Config>("Assets/O&ZProtector/Config.asset");
-        AssemblyLoader loader = new AssemblyLoader(data.inputDirectory+ "\\Assembly-CSharp.dll");
-        OZ_Obfus.OZ_Obfuscator obfuscator = new OZ_Obfus.OZ_Obfuscator(loader.Module,config.Obfus, config.Keyfunc);
-        if (config.Obfus.ControlFlow)
-        {
-            obfuscator.controlFlow.Execute();
-        }
-        if (config.Obfus.Obfusfunc)
-        {
-            obfuscator.obfusFunc.Excute();
-        }
-        if (config.Obfus.NumObfus)
-        {
-            obfuscator.numObfus.Execute();
-        }
-        if (config.Obfus.LocalVariables2Field)
-        {
-            obfuscator.localVariables2Field.Execute();
-        }
-        if (config.Obfus.StrCrypter)
-        {
-            obfuscator.strCrypter.Execute();
-        }
-        loader.Save();
-        File.Delete(data.inputDirectory + "\\Assembly-CSharp.dll");
-        File.Move(data.inputDirectory + "\\Assembly-CSharp.dllProtected", data.inputDirectory + "\\Assembly-CSharp.dll");
-        Debug.Log("Protected Assembly-CSharp.dll Obfuscated!");
-        Debug.Log("Obfuscation Done!");
-    }
-*/
     public void OnPreprocessBuild(BuildReport report)
     {
         config = AssetDatabase.LoadAssetAtPath<OZ_Config>("Assets/O&ZProtector/Config.asset");
@@ -106,7 +63,7 @@ public class ObfusDLLs : IPostBuildPlayerScriptDLLs, IPreprocessBuildWithReport 
         {
             if (config.Enable)
             {
-                Debug.Log(report.summary.outputPath);
+                //Debug.Log(report.summary.outputPath);
                 string path = Path.GetDirectoryName(report.summary.outputPath)+"\\";
                 path = path + Path.GetFileNameWithoutExtension(report.summary.outputPath) + "_Data\\Managed\\Assembly-CSharp.dll";
             
@@ -165,36 +122,43 @@ public class _OZ_Obfuscator
             
         }
         AssemblyLoader loader = new AssemblyLoader(File.ReadAllBytes(asmpath));
-        OZ_Obfus.OZ_Obfuscator obfuscator = new OZ_Obfus.OZ_Obfuscator(loader.Module, config.Obfus, config.Keyfunc);
+        List<Obfuscator> obfuscators = new List<Obfuscator>();
         if (config.Obfus.ControlFlow)
         {
-            obfuscator.controlFlow.Execute();
+            obfuscators.Add(new ControlFlow(loader.Module, config.Obfus.ignore_ControlFlow_Method));
         }
         if (config.Obfus.Obfusfunc)
         {
-            obfuscator.obfusFunc.Excute();
+            obfuscators.Add(new ObfusFunc(loader.Module));
         }
         if (config.Obfus.NumObfus)
         {
-            obfuscator.numObfus.Execute();
+            obfuscators.Add(new NumObfus(loader.Module));
         }
         if (config.Obfus.LocalVariables2Field)
         {
-            obfuscator.localVariables2Field.Execute();
+            obfuscators.Add(new LocalVariables2Field(loader.Module));
         }
         if (config.Obfus.StrCrypter)
         {
-            obfuscator.strCrypter.Execute();
+            obfuscators.Add(new StrCrypter(loader.Module));
         }
         if (config.Obfus.AntiDe4dot)
         {
-            obfuscator.antide4dot.Execute();
+            obfuscators.Add(new Antide4dot(loader.Module));
         }
         if (config.Obfus.FuckILdasm)
         {
-            obfuscator.fuckILdasm.Execute();
+            obfuscators.Add(new FuckILdasm(loader.Module));
         }
-        //File.Delete(asmpath);
+        foreach (var obfuscator in obfuscators)
+        {
+            string outstr = obfuscator.ToString();
+            int i = outstr.IndexOf("Obfuscators.");
+            outstr = outstr.Substring(i + 12, outstr.Length - i - 12);
+            Debug.Log(outstr + " Executing...");
+            obfuscator.Execute();
+        }
         loader.Save(asmpath);
         IsSuccess = true;
         Obfuscated = true;
