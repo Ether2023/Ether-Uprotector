@@ -12,6 +12,7 @@ using O_Z_IL2CPP_Security.LitJson;
 using System;
 using System.Text.RegularExpressions;
 using OZ_Obfuscator;
+using System.Linq;
 
 public class ObfusDLLs : IPostBuildPlayerScriptDLLs, IPreprocessBuildWithReport , IPostprocessBuildWithReport
 {
@@ -189,7 +190,7 @@ public class _OZ_Obfuscator
     }
     private static string GetCompiledAssemblyLocation(string suffix)
     {
-        foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+        foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies().Where(x=>!x.IsDynamic))
         {
             //Debug.Log(assembly.Location);
             if (assembly.Location.EndsWith(suffix))
