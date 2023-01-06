@@ -36,7 +36,7 @@ namespace OZ_Obfuscator
         static void Main(string[] args)
         {
             AssemblyLoader loader = new AssemblyLoader("C:\\Users\\22864\\Desktop\\2019Testbuild\\O&Z_2019_4_32_f1_Data\\Managed\\Assembly-CSharp - 副本.dll");
-            Call2Callil c2cil = new Call2Callil(loader.Module);
+            Call2Calli c2cil = new Call2Calli(loader.Module);
             c2cil.Execute();
             loader.Save();
             //Console.ReadKey();

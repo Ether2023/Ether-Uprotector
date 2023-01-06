@@ -1,6 +1,10 @@
 # O-Z-Unity Protector
 
-O&Z Protector is a tool providing custom encryption for Unity, maintained by **Z1029 [QQ:3408708525]** and **[oRangeSumMer](https://space.bilibili.com/79045701) [QQ:2286401259]**
+![](https://img.shields.io/badge/oRangeSumMer(QQ)-2296401259-green) ![](https://img.shields.io/badge/Z1029(QQ)-3408708525-green) ![](https://img.shields.io/badge/QQGroup-957552913-orange) [![Bilibili](https://img.shields.io/badge/bilibili-%E6%A9%99%E4%B9%8B%E5%A4%8F-blue)](https://space.bilibili.com/79045701) ![](https://img.shields.io/badge/Email-2286401259%40qq.com-yellowgreen)
+
+![](https://img.shields.io/github/stars/Z1029-oRangeSumMer/O-Z-Unity-Protector?style=social) ![](https://img.shields.io/github/downloads/Z1029-oRangeSumMer/O-Z-Unity-Protector/total) ![](https://img.shields.io/github/v/tag/Z1029-oRangeSumMer/O-Z-Unity-Protector)
+
+**O&Z Protector** is a tool providing custom encryption for Unity, maintained by **Z1029** and **oRangeSumMer**
 
 **The program is based on [Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48), requires [Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48) environment, please make sure your computer has NET Runtime or NET SDK properly installed**
 
@@ -10,9 +14,10 @@ O&Z Protector is a tool providing custom encryption for Unity, maintained by **Z
 
 ## Project lists
 
-- [O&Z-IL2CPP](OZ_IL2CPP_GUI)
+- [O&Z-IL2CPP](O&Z_IL2CPP_Security)
 - [O&Z-MonoObfuscator](O%26Z_Obfuscator)
 - [O&Z-Auto Generate Console](OZ_Il2cpp_Console)
+- [O&Z-IL2CPP-GUI](OZ_IL2CPP_GUI)
 
 ## What's New (**O&Z IL2CPP Obfuscator Major Update!** && O&Z_Il2cpp_Console Released!)
 
@@ -32,7 +37,7 @@ O&Z Protector is a tool providing custom encryption for Unity, maintained by **Z
 |New                       |Description|
 |--------------------------|----|
 |Anti De4dot               |Invalidate anti-confuser|
-|Anti Anti-ILDASM          |Invalidate disassembler|
+|Anti ILDASM               |Invalidate disassembler|
 |PEPacker                  |Removing the NET flag makes ILSpy, DnSpy and other software unable to correctly recognize the NET assembly|
 
    > After de4dot:

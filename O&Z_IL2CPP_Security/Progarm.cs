@@ -185,7 +185,7 @@ bool CheckMetadataFile()
 void _Test()
 {
     AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
-    Call2Callil c2cil = new Call2Callil(loader.Module);
+    Call2Calli c2cil = new Call2Calli(loader.Module);
     c2cil.Execute();
     loader.Save();
     //PEPacker.pack(loader.OutputPath);

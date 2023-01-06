@@ -11,11 +11,11 @@ namespace OZ_Obfuscator.Obfuscators
     //Thank to BitMono and sunnamed434
     //Thank to MindLated
     [Obsolete]
-    public class Call2Callil : Obfuscator
+    public class Call2Calli : Obfuscator
     {
         ModuleDefMD ModuleDef;
         Importer importer;
-        public Call2Callil(ModuleDefMD module)
+        public Call2Calli(ModuleDefMD module)
         {
             ModuleDef = module;
             importer = new Importer(module);

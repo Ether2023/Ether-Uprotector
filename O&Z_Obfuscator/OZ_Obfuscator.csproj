@@ -84,7 +84,7 @@
     <Compile Include="LitJson\Netstandard15Polyfill.cs" />
     <Compile Include="LitJson\ParserToken.cs" />
     <Compile Include="Obfuscator.cs" />
-    <Compile Include="Ofbuscators\Call2Callil.cs" />
+    <Compile Include="Ofbuscators\Call2Calli.cs" />
     <Compile Include="Ofbuscators\ControlFlow.cs" />
     <Compile Include="Ofbuscators\Antide4dot.cs" />
     <Compile Include="Ofbuscators\FuckILdasm.cs" />
@@ -98,6 +98,7 @@
     <Compile Include="Ofbuscators\StrCrypter.cs" />
     <Compile Include="Runtime\StringEncoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runtime\VirtualCall.cs" />
     <Compile Include="utils.cs" />
   </ItemGroup>
   <ItemGroup>

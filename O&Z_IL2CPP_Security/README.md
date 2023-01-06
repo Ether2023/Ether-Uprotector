@@ -1,4 +1,7 @@
 # O-Z-IL2CPP
+
+**中文文档[请戳我](README_zh-cn.md)**
+
 ## Support Unity Version
 
 | Il2Cpp Version | Unity Version                | Support        |
@@ -13,75 +16,77 @@
 | 27.2           | 2021.1.x, 2021.2.x           |                |
 | 28             | 2021.3.x, 2022.1.x           |✔️             |
 
-如果需要了解您使用的unity Metadata版本，可以使用CheckVersion参数来查看您的Metadata版本 *（具体方法在下方）*
+If you need to know the `Metadata Version` you use, you can use the `CheckVersion` parameter to view your metadata version *(You can get more details below)*
 
-***如果你想让我们添加对您使用的Unity版本的支持，可以联系作者QQ哦***
+***If you want us to add support for the Unity version you use, you can contact my email(2286401259@qq.com) or put forward in the issue***
 
-## 加密流程
-1. 我们重新定义和声明了新的Header并且将他们加密后隐藏在了文件之中使得破解者获取获取原始Header的过程变得困难（此次改动基于第4条的混淆Header）
-2. 加密Metadata内的String部分防止关键的类和方法名被获取，这同样适用于防止IL2CPPDumper的攻击（即使头部的混淆失效，同样可以提供二次保护）
-3. 加密Metadata内的StringLiteral部分，防止您的游戏文本或者字符串密钥等关键字符串受到攻击
-4. 我们混淆了Header并且隐藏了sanity和verison等关键参数，使得IL2CPPDumper等软件无法正确识别Metadata文件
+## How will we encrypt your program
+1. We redefined and declared new `Header`, and hid them in the file after encryption, making it difficult for the cracker to obtain the original headers（This change is based on Article 4）
+2. Encrypt the `String` in the **Metadata** to prevent key class and method names from being obtained, which is also applicable to prevent IL2CPPDummper attacks (even if the header confusion fails, it can also provide secondary protection)
+3. Encrypt the `StringLiteral` in the **Metadata** to prevent your game text or string key and other key strings from being attacked
+4. We confuse `Header` and hide key parameters such as `Sanity` and `Verison`, which makes IL2CPPDumper and other software unable to correctly identify metadata files
 
 
-## 加密效果
-Il2CPP Dumper测试效果
+## Encryption effect
+After Il2CPP Dumper
 
-![IL2CPPTest](img/il2cppdumpertest2.png "IL2CPPDumper测试")
+![IL2CPPTest](img/il2cppdumpertest2.png "IL2CPPDumper Test")
 
-模拟受到攻击,攻击者还原头部之后
+Even if the hacker cracked the header confusion, your program is still in the confusion state
 
-![IL2CPPTest](img/il2cppdumpertest.png "IL2CPPDumper测试")
+![IL2CPPTest](img/il2cppdumpertest.png "IL2CPPDumper Test")
 
-还原头部后由IL2CPPDumper获取的Dump.cs展示
+Dump.cs obtained by hackers
 
 ![dump.cs](img/dump.cs.png "dump.cs")
 
-Origin_Header
+Origin Header
 
 ![OriginHeader](img/Header.png "Origin Header")
 
-O&Z_Header
+O&Z Header
 
 ![O&Z_Header](img/FrontHeader.png "After Crypted Header")
 
-## 使用方法
-1. 下载源代码并使用VS编译项目,或者直接下载[Release](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases)内的exe程序
-2. 首先打开 Config.json 正确配置您的Metadata版本 *(关于Unity对应版本图可以在上方查看)*
-   >也可以使用**CheckVersion**参数查看您的Metadata版本(需要提前生成一次您的工程以获取Metadata原始文件)
+## How to use O&Z_IL2CPP
+1. Download our program on the Release page [Release](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases) page,or you can clone our project and compile it yourself
+2. Configure your metadata version correctly in `Config.json` *(You can view the comparison chart between `Metadata version` and `Unity version` above)*
+   >Or you can use the `CheckVersion` parameter to view your metadata version(You need to build your project once in advance to get the original **Metadata**)
 
 ~~~
 O&Z_IL2CPP_Security Input CheckVersion
 
-例如:
+For exzample:
 O&Z_IL2CPP_Security global-metadata.dat CheckVersion
 ~~~
 
-![Version](img/CheckVersion.png "IL2CPP版本")
+![Version](img/CheckVersion.png "IL2CPP Version")
 
-1. 设置您的key以用于加密Metadata **(不可以超过int类型的最高上限)**
+1. First, you need to configure a key to encrypt the metadata **(The key cannot exceed the upper limit of `int`)**
    >![Config](img/config.png)
 
-2. 使用**Generate**参数生成配套的加密组件
+2. Use the `Generate` parameter to generate supporting encryption components
 
 ~~~
 O&Z_IL2CPP_Security Generate
 ~~~
 
->生成成功后，你可以在 *Generation\您的Metadata版本\\* 文件夹下找到对应组件(组件为**整个目录/文件夹**)
+>After successful generation, you can find the generated encryption component in **`Generation\Your Metadata Version\`** (⚠the component is `the entire directory`!)
 
 >![Generation](img/Generation.png)
 
->***tips: src-res文件夹内为组件模型，请不要去修改或者移动以防止出错***
+>***tips: The `src-res` folder contains the component model. Please do not modify or move it to prevent errors***
 
-5. 将生成的组件覆盖进入Unity的IL2CPP文件夹(**\Unity XXXXX\Editor\Data\il2cpp\libil2cpp\\**)内
+3. Overwrite the original folder with the newly generated folder (**\Unity XXXXX\Editor\Data\il2cpp\libil2cpp\\**)
 
-6. 启动Unity，重新生成一遍需要加密的项目
-7. 提取出生成项目的Metadata文件(global-metadata.dat)，使用**Crypt**参数加密此文件
+4. Rebuild your project in Unity
+5. Extract the generated **Metadata(global-metadata.dat)**，Use the `Crypt` parameter to encrypt this file
 ~~~
 "O&Z_IL2CPP_Security" input Crypt output
 
-例如 "O&Z_IL2CPP_Security" "global-metadata.dat" Crypt "global-metadata.dat.crypted"
+For exzample:
+
+"O&Z_IL2CPP_Security" "global-metadata.dat" Crypt "global-metadata.dat.crypted"
 ~~~
-8. 将加密输出的文件重命名为原始Metadata文件的名称并且替换掉原来的Metadata文件
-9. 享受**O&Z IL2cpp**给你带来的安全! :D
+1. Rename the encrypted output file to the name of the original Metadata and replace the original Metadata
+2. Enjoy the safety of **O&Z IL2cpp**!: D
