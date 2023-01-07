@@ -19,7 +19,7 @@ public class OZ_Config : ScriptableObject
     public int key = 114514;
     [Header("Unity对应的metadata版本")]
     [Tooltip("目前支持24.4和28")]
-    public SupportVerison Version = SupportVerison.V24_4;
+    public SupportVerison Metadata_Version = SupportVerison.V24_4;
     [Header("O&Z MonoObfuscator配置")]
     public ObfusConfig Obfus;
     [Header("Obfuscate Function配置")]

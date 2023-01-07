@@ -7,13 +7,14 @@ namespace OZ_Obfuscator.Obfuscators
 {
     public class MethodError : Obfuscator
     {
+        //Thank to BitMono and sunnamed434
         public ModuleDef Module;
         public MethodError(ModuleDef module) {
             Module = module;
         }
         public void Execute()
         {
-            foreach (TypeDef type in Module.Types.Where(x => x.HasMethods && !x.IsGlobalModuleType))
+            foreach (TypeDef type in Module.Types.Where(x => x.HasMethods))
             {
                     foreach (MethodDef method in type.Methods.Where(x=>x.HasBody))
                     {

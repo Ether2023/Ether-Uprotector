@@ -36,7 +36,7 @@
 
 |New                       |Description|
 |--------------------------|----|
-|Anti De4dot               |Invalidate anti-confuser|
+|Anti De4dot               |Invalidate De4dot|
 |Anti ILDASM               |Invalidate disassembler|
 |PEPacker                  |Removing the NET flag makes ILSpy, DnSpy and other software unable to correctly recognize the NET assembly|
 

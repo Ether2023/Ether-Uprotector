@@ -1,0 +1,23 @@
+{
+    "key":114514,
+    "Version":"24.4",
+    "//":"支持28 24.4",
+    "Obfus":
+    {
+        "ControlFlow":1,
+        "ignore_ControlFlow_Method":[
+        "",""
+        ],
+        "//":"部分方法可能混淆之后有小概率报错(大多数在IL2CPP构建之中插入了本混淆功能)，可以多尝试几次，如果你不想尝试，可以直接将报错的方法添加在此处，在执行ControlFlow时将不再对此方法进行混淆",
+        "//":"There is a probability of error after some methods are confused(It will happen in IL2CPP building in most cases), You can try several times. If you don't want to try, you can directly add the error reporting method here. This method will not be confused when you execute ControlFlow",
+        "NumObfus":1,
+        "LocalVariables2Field":1,
+        "StrCrypter":1,
+        "Obfusfunc":1,
+        "AntiDe4dot":1,
+        "FuckILdasm":1,
+        "PEPacker":1,
+        "MethodError":1,
+        "//":"0=enable 1=disable"
+    }
+}
