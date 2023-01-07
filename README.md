@@ -17,7 +17,7 @@ English | [简体中文](README_zh-cn.md)
 - [O&Z-Auto Generate Console](OZ_Il2cpp_Console)
 - [O&Z-IL2CPP-GUI](OZ_IL2CPP_GUI)
 
-## What's New (**O&Z IL2CPP Obfuscator Major Update!** && O&Z_Il2cpp_Console Released!)
+## What's New
 
 1. The [UnityPackge](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases) feature has been added to this update. Now you can import our UnityPackge and configure your encryption scheme in Unity's visual interface.
    > ***Now you can enjoy `O&Z-IL2CPP` and `O&Z-MonoObfuscator` dual-safety***
