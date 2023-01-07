@@ -278,6 +278,21 @@
     <Reference Include="System.IO.Compression.FileSystem">
       <HintPath>Library\PackageCache\com.unity.connect.share@2.0.3\Plugins\System.IO.Compression.FileSystem.dll</HintPath>
     </Reference>
+    <Reference Include="obfuscator">
+      <HintPath>Assets\Editor\Beebyte\Obfuscator\Plugins\obfuscator.dll</HintPath>
+    </Reference>
+    <Reference Include="Beebyte.Cecil.Pdb">
+      <HintPath>Assets\Editor\Beebyte\Obfuscator\Mono.Cecil\Beebyte.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Beebyte.Cecil.Mdb">
+      <HintPath>Assets\Editor\Beebyte\Obfuscator\Mono.Cecil\Beebyte.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Beebyte.Cecil">
+      <HintPath>Assets\Editor\Beebyte\Obfuscator\Mono.Cecil\Beebyte.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Beebyte.Cecil.Rocks">
+      <HintPath>Assets\Editor\Beebyte\Obfuscator\Mono.Cecil\Beebyte.Cecil.Rocks.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
     </Reference>

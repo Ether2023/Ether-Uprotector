@@ -1,35 +1,36 @@
 # OZ-Il2Cpp-Console
 
-## 实验性功能,暂时还不完善,敬请期待
+Experimental function, not perfect yet, please wait
 
-自动生成libil2cpp代码,一键加密global-metadata.dat,支持绝大多数unity版本
+Automatically generate `libil2cpp code`, encrypt `global-metadata.dat` with one key, and support most unity versions
 
-## 保护内容
+## Protect Content
 
-|功能                       |支持|
+|Function                       |Support|
 |---------------------------|----|
-|global-metadata文件加密保护|✔️   |
-|隐藏MetadataHeader         |✔️   |
-|混淆MetadataHeader顺序     |✔️   |
-|多指针防止dump出原文件     |✔️   |
-|字符串加密                 |    |
-|常量字符串加密             |    |
+|`global-metadata` file encryption protection|✔️   |
+|Hide `MetadataHeader`         |✔️   |
+|Confusing `MetadataHeader` order     |✔️   |
+|Multiple pointers prevent dump from leaving the original file     |✔️   |
+|String encryption                 |    |
+|Const string Encryption             |    |
 
-## 使用方法
+## Usage
 
-1.使用命令行调用(推荐)
+### Use command line calls (recommended)
 
-|命令                                                   |功能                       |
+|Command                                                   |Function                       |
 |-------------------------------------------------------|---------------------------|
-|--proclib-p     <libil2cpp_path>                       |生成ozlibil2cpp            |
-|--encmetadata-p <metadata_path> <metadata_output_path> |加密global-metadata.dat文件|
+|--proclib-p     <libil2cpp_path>                       |Generate `ozlibil2cpp`            |
+|--encmetadata-p <metadata_path> <metadata_output_path> |Encrypt `global-metadata.dat` file|
 
-我们正在全力开发GUI程序哦,敬请期待
+We're working on GUI programs. Please wait
 
-2.使用临时调试
-直接运行exe,输入临时代号直接使用
+### Use temporary debugging
 
-## 支持的Unity版本
+Run exe directly, enter temporary code and use it directly
+
+## Supported Unity Version
 
 | Il2Cpp Version | Unity Version                | Support        |
 | -------------- | ---------------------------- |--------------  |

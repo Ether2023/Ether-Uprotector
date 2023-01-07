@@ -24,6 +24,8 @@ namespace O_Z_IL2CPP_Security
         public int AntiDe4dot { get; set; }
         public int FuckILdasm { get; set; }
         public int PEPacker { get; set; }
+
+        public int MethodError { get; set; }
     }
     public class JsonManager
     {

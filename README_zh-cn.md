@@ -6,11 +6,11 @@ O&Z Protector 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.
 
 ***本程序基于[Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48)开发，运行需要[Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48)环境，请确保您的PC正确安装了NET Runtime或者NET SDK***
 
-## >>>[O&Z-IL2CPP(Click me!)](OZ_IL2CPP_GUI)<<<
-
-## >>>[O&Z-MonoObfuscator(Click me!)](O%26Z_Obfuscator)<<<
-
-## >>>[O&Z-Auto Generate Console(Click me!)](OZ_Il2cpp_Console)<<<
+## Project List
+- [O&Z-IL2CPP](O&Z_IL2CPP_Security)
+- [O&Z-Obfuscator](O%26Z_Obfuscator)
+- [O&Z-Auto Generate Console](OZ_Il2cpp_Console)
+- [O&Z-IL2CPP-GUI](OZ_IL2CPP_GUI)
 
 ## What's New (**O&Z IL2CPP Obfuscator 重大更新!** && O&Z_Il2cpp_Console Released!)
 1. 本次更新添加了UnityPackage功能,现在您可以导入我们的[UnityPackge](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases)，在unity的可视化界面配置您的加密方案
@@ -29,7 +29,7 @@ O&Z Protector 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.
 |New                       |说明|
 |--------------------------|----|
 |Anti De4dot               |使得反混淆器失效|
-|Anti Anti-ILDASM          |使得反汇编器失效|
+|Anti-ILDASM               |使得反汇编器失效|
 |PEPacker                  |去除NET标志使得ILSpy，DnSpy等软件无法正确识别NET程序集|
 
    > after de4dot: 

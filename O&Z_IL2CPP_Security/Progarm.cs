@@ -239,6 +239,10 @@ void MonoObfus()
     {
         obfuscators.Add(new FuckILdasm(loader.Module));
     }
+    if(jsonManager.index.Obfus.MethodError==1)
+    {
+        obfuscators.Add(new MethodError(loader.Module));
+    }
     foreach(var obfuscator in obfuscators)
     {
         string outstr = obfuscator.ToString();
@@ -251,7 +255,7 @@ void MonoObfus()
     if(jsonManager.index.Obfus.PEPacker== 1)
     {
         Console.WriteLine("PEPacking...");
-        PEPacker.pack(loader.OutputPath);
+        //PEPacker.pack(loader.OutputPath);
     }
 }
 #elif NETCOREAPP2_0_OR_GREATER

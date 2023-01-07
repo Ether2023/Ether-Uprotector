@@ -53,7 +53,8 @@ public class ObfusDLLs : IPostBuildPlayerScriptDLLs, IPreprocessBuildWithReport 
     [PostProcessScene(1)]
     public static void obfuscate()
     {
-        if(config.Enable)
+        if (!BuildPipeline.isBuildingPlayer) return;
+        if (config.Enable)
         {
             _OZ.obfus();
         }
