@@ -1,12 +1,6 @@
 # OZ-IL2CPP-GUI
 
-<<<<<<< HEAD
 ## Encryption Process
-=======
-## 加密流程
-1. 我们重新定义和声明了新的Header并且将他们加密后隐藏在了文件之中使得破解者获取获取原始Header的过程变得困难
-2. 我们混淆了Header并且隐藏了sanity和verison等关键参数，使得IL2CPPDumper等软件无法正确识别Metadata文件
->>>>>>> dev
 
 1. We redefined and declared new headers and hide them in files after encrypting them, making it difficult for crackers to get access to the original header
 2. We confused the Header and hide key parameters such as sanity and verison, which prevented software such as `IL2CPPDumper` from correctly identifying metadata files
