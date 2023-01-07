@@ -4,13 +4,11 @@
 
 ![star](https://img.shields.io/github/stars/Z1029-oRangeSumMer/O-Z-Unity-Protector?style=social) ![download](https://img.shields.io/github/downloads/Z1029-oRangeSumMer/O-Z-Unity-Protector/total) ![tag](https://img.shields.io/github/v/tag/Z1029-oRangeSumMer/O-Z-Unity-Protector)
 
-**O&Z Protector** is a tool providing custom encryption for Unity, maintained by **Z1029** and **oRangeSumMer**
+**O&Z Protector** is a tool providing custom encryption for **Unity**, maintained by **Z1029** and **oRangeSumMer**
 
 **The program is based on [Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48), requires [Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48) environment, please make sure your computer has NET Runtime or NET SDK properly installed**
 
 English | [简体中文](README_zh-cn.md)
-
-> ***Some documents have not been translated yet, so please look forward to it.***
 
 ## Project lists
 
@@ -24,51 +22,29 @@ English | [简体中文](README_zh-cn.md)
 1. The [UnityPackge](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases) feature has been added to this update. Now you can import our UnityPackge and configure your encryption scheme in Unity's visual interface.
    > ***Now you can enjoy `O&Z-IL2CPP` and `O&Z-MonoObfuscator` dual-safety***
    >
+   > *We support all versions of Unity after `2018.2`*
+   >
    > For datailed usage [O&Z-MonoObfuscator](O%26Z_Obfuscator)
 
    ![UnityConfig](pics/Unity%20Config.png)
 
-2. We have lowered the minimum version requirement of Unity, and now our obfuscator can support all versions after 2018.2
+2. In the `Mono Obfuscate` feature, We added the `ErrorMethod` function, it will prevent Dnspy and other decompilers from working properly (*See below picture*)
 
-   > You can use **O&Z IL2CPP Obfuscator** even if the O&Z-IL2CPP has not yet adapted to the Unity version you are using, because O&Z IL2CPP Obfuscator currently supports all Unity versions after **2018.2**
-
-3. In the `Mono Obfuscate` feature, we added the detection of the `De4dot antiobfuscator`. Configuring the `Anti-de4dot` feature prevents your assembly from being restored by `de4dot`! `PEPack` is also included, which removes your NET assembly flag and makes your assembly unrecognized by the decompiler (*See below picture*)
-
-|New                       |Description|
+|New                       |description|
 |--------------------------|----|
-|Anti De4dot               |Invalidate De4dot|
-|Anti ILDASM               |Invalidate disassembler|
-|PEPacker                  |Removing the NET flag makes ILSpy, DnSpy and other software unable to correctly recognize the NET assembly|
+|MethodError               |Break Method makes Dnspy and other decompilers unable to restore C # code|
 
-   > After de4dot:
-   >
-   > ![De4dot](pics/Antide4.png)
-   >
-   > After PEPacker
-   >
-   > ![PEPack](pics/pepack.png)
+   > after ErrorMethod: 
 
-1. For `OZ_ Il2cpp_ Console`We have successfully developed the `Auto-Genertate IL2cpp` feature and have been successful (temporarily in beta), now you can use `O&Z IL2CPP` to encrypt any version of Unity!
+   > ![ErrorMethod](pics/ErrorMethod.png)
 
-   **Support Unity version**
+3. Fixed the following bugs
 
-   | Il2Cpp Version | Unity Version                | Support        |
-   | -------------- | ---------------------------- |--------------  |
-   | 24.0           | 2017.x - 2018.2.x            | ✔️             |
-   | 24.1           | 2018.3.x - 2018.4.x          | ✔️             |
-   | 24.2           | 2019.1.x - 2019.2.x          | ✔️             |
-   | 24.3           | 2019.3.x, 2019.4.x, 2020.1.x | ✔️             |
-   | 24.4           | 2019.4.x and 2020.1.x        | ✔️             |
-   | 27.0           | 2021.2.x                     | ✔️             |
-   | 27.1           | 2020.2.x - 2020.3.x          | ✔️             |
-   | 27.2           | 2021.1.x, 2021.2.x           | ✔️             |
-   | 28             | 2021.3.x, 2022.1.x           | ✔️             |
+- Fix bug with invalid `Enable` switch
 
-   > `OZ_Il2cpp_Console` supports any original version of Unity (unmodified)
-   >
-   > If there are incompatibilities or bugs with your Unity version, welcome to propose issue or contact z9
-   >
-   > **Before testing this function, don't forget to manually back up your `libil2cpp` file to avoid inconvenience xD**
+- Error reported in Unity 2022
+
+- Fixed the problem of sometimes throwing `NullReferenceException` when switching scenes in Unity
 
 ## How to use `O&Z IL2CPP Obfuscator` and how to deal with problems
 
@@ -110,7 +86,7 @@ The projects and project cases that this project refers to are as follows. Thank
 - [MindLate](https://github.com/Sato-Isolated/MindLated)
 - [ConfuserEx](https://github.com/yck1509/ConfuserEx)
 - BeeByte Obfuscation
-- BitMono
+- [BitMono](https://github.com/sunnamed434/BitMono)
 - [BitDotNet(PEPacker)](https://github.com/0x59R11/BitDotNet)
 
 ## Contact

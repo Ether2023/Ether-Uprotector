@@ -55,6 +55,9 @@ public class ObfusConfig
     [Header("PEPacker(Only For MonoBuild)")]
     [Tooltip("修改NET程序的特征码使得反编译器无法正确识别")]
     public bool PEPacker = true;
+    [Header("加固方法")]
+    [Tooltip("加固后的方法无法被反编译(Dnspy等)")]
+    public bool MethodError = true;
 }
 [Serializable]
 public class ignore

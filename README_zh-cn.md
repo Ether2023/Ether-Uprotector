@@ -12,56 +12,30 @@ O&Z Protector 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.
 - [O&Z-Auto Generate Console](OZ_Il2cpp_Console)
 - [O&Z-IL2CPP-GUI](OZ_IL2CPP_GUI)
 
-## What's New (**O&Z IL2CPP Obfuscator 重大更新!** && O&Z_Il2cpp_Console Released!)
+## What's New
 1. 本次更新添加了UnityPackage功能,现在您可以导入我们的[UnityPackge](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases)，在unity的可视化界面配置您的加密方案
    > ***现在你可以同时享受O&Z-IL2CPP和O&Z-MonoObfuscator的双倍安全***
 
-   >详细的使用方法请看[O&Z-MonoObfuscator(Click me!)](O%26Z_Obfuscator)
+   >详细的使用方法请看[O&Z-MonoObfuscator](O%26Z_Obfuscator)
+
+   >我们支持Unity2018.2之后的所有版本
 
    ![UnityConfig](pics/Unity%20Config.png)
 
-2. 我们下放了对Unity版本的适配,现在我们的混淆器可以支持到2018.2后的所有版本
-
-   > 即使O&Z-IL2CPP暂时还没有适配您使用的Unity版本,您同样可以使用**O&Z IL2CPP Obfuscator**，因为O&Z IL2CPP Obfuscator目前支持**2018.2之后的所有Unity版本**
-
-3. 在MonoObfuscate功能中，我们添加了侦测 **De4dot** 反混淆器的侦测,通过配置Anti-de4dot功能可以使您的程序集无法被de4dot还原！同时也加入了PEPack功能，该功能可以去除您的NET程序集标志使得您的程序集无法被反编译器识别(*请看下方图片*)
+2. 在MonoObfuscate功能中，我们添加了方法加固,使得Dnspy等软件无法还原C#代码(*请看下方图片*)
    
 |New                       |说明|
 |--------------------------|----|
-|Anti De4dot               |使得反混淆器失效|
-|Anti-ILDASM               |使得反汇编器失效|
-|PEPacker                  |去除NET标志使得ILSpy，DnSpy等软件无法正确识别NET程序集|
+|MethodError               |加固方法使得Dnspy等反编译器无法还原C#代码|
 
-   > after de4dot: 
+   > after ErrorMethod: 
 
-   > ![After De4dot](pics/Antide4.png)
-   
-   > after PEPacker
+   > ![ErrorMethod](pics/ErrorMethod.png)
 
-   > ![After PEPack](pics/pepack.png)
-
-1. ***OZ_Il2cpp_Console***我们成功开发了**Auto-Genertate IL2cpp**功能,并且取得了成功(暂时处于测试阶段),现在你可以使用O&Z IL2CPP加密任何版本的Unity! 
-   
-   **支持的Unity版本**
-
-   | Il2Cpp Version | Unity Version                | Support        |
-   | -------------- | ---------------------------- |--------------  |   
-   | 24.0           | 2017.x - 2018.2.x            | ✔️             |
-   | 24.1           | 2018.3.x - 2018.4.x          | ✔️             |
-   | 24.2           | 2019.1.x - 2019.2.x          | ✔️             |
-   | 24.3           | 2019.3.x, 2019.4.x, 2020.1.x |✔️              |
-   | 24.4           | 2019.4.x and 2020.1.x        |✔️              |
-   | 27.0           | 2021.2.x                     | ✔️             |
-   | 27.1           | 2020.2.x - 2020.3.x          | ✔️             |
-   | 27.2           | 2021.1.x, 2021.2.x           | ✔️             |
-   | 28             | 2021.3.x, 2022.1.x           |✔️              |
-
-   > ***OZ_Il2cpp_Console*** 支持任何原版本的Unity(未经过修改的)
-   
-   > 如果对您的Unity版本出现不兼容或者存在Bug，欢迎提出issue或者联系z9(Q:3408708525)
-   
-   > ***在测试该项功能前,别忘了手动备份您的libil2cpp文件,避免造成不便xD***
-   
+3. 修复了以下bug
+   - 修复Enable开关无效的bug
+   - 在Unity 2022中报错的问题
+   - 修复了切换场景时有时会抛出NullReferenceException异常的问题
 
 ## 关于O&Z IL2CPP Obfuscator的使用方法以及问题处理
 1. 从[Release](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases)中下载我们的unitypackage
@@ -95,7 +69,7 @@ O&Z Protector 是由 **Z1029[QQ:3408708525]** **和[oRangeSumMer](https://space.
 - [MindLate](https://github.com/Sato-Isolated/MindLated)
 - [ConfuserEx](https://github.com/yck1509/ConfuserEx)
 - BeeByte Obfuscation
-- BitMono
+- [BitMono](https://github.com/sunnamed434/BitMono)
 - [BitDotNet(PEPacker)](https://github.com/0x59R11/BitDotNet)
 
 ## 联系作者

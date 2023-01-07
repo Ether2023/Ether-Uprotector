@@ -26,6 +26,7 @@ MonoBehaviour:
     AntiDe4dot: 1
     FuckILdasm: 1
     PEPacker: 1
+    MethodError: 1
   Keyfunc:
     ignoreMethod:
     - Awake

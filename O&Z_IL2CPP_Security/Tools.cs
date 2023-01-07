@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,6 +33,12 @@ namespace O_Z_IL2CPP_Security
                 }
             }
             return 0x100;
+        }
+        public static string DownloadText(string url)
+        {
+            WebClient webClient = new WebClient();
+            webClient.Encoding= Encoding.UTF8;
+            return webClient.DownloadString(url);
         }
     }
 }

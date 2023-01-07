@@ -27,14 +27,14 @@ namespace OZ_Obfuscator
             LoadAssembly();
             LoadModuleDefMD();
             //LoadDependencies();
-            Tools.Importer =  new Importer(Module);
+            Utils.Importer =  new Importer(Module);
         }
         public AssemblyLoader(byte[] Assembly)
         {
             LoadAssemblyFromBytes(Assembly);
             LoadModuleDefMDFromBytes(Assembly);
             //LoadDependencies();
-            Tools.Importer = new Importer(Module);
+            Utils.Importer = new Importer(Module);
         }
         public AssemblyLoader(string Assembly,bool loaddepend)
         {
@@ -44,7 +44,7 @@ namespace OZ_Obfuscator
             LoadModuleDefMD();
             if(loaddepend)
                 LoadDependencies();
-            Tools.Importer = new Importer(Module);
+            Utils.Importer = new Importer(Module);
         }
         public AssemblyLoader(byte[] Assembly,bool loaddepend)
         {
@@ -52,7 +52,7 @@ namespace OZ_Obfuscator
             LoadModuleDefMDFromBytes(Assembly);
             if(loaddepend)
                 LoadDependencies();
-            Tools.Importer = new Importer(Module);
+            Utils.Importer = new Importer(Module);
         }
         public void LoadAssembly()
         {

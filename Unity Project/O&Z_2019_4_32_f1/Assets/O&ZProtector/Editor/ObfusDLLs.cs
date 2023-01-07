@@ -153,6 +153,10 @@ public class _OZ_Obfuscator
         {
             obfuscators.Add(new FuckILdasm(loader.Module));
         }
+        if(config.Obfus.MethodError)
+        {
+            obfuscators.Add(new MethodError(loader.Module));
+        }
         foreach (var obfuscator in obfuscators)
         {
             string outstr = obfuscator.ToString();

@@ -9,6 +9,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using O_Z_IL2CPP_Security.LitJson;
+using System.Net;
+
 namespace OZ_Obfuscator
 {
     public static class Extensions
@@ -18,10 +20,10 @@ namespace OZ_Obfuscator
             return Convert.ToBase64String(Encoding.Default.GetBytes(str));
         }
     }
-    public class Tools
+    public class Utils
     {
         public static Importer Importer;
-        public static ModuleDefMD SelfModule = ModuleDefMD.Load(typeof(Tools).Assembly.Modules.First());
+        public static ModuleDefMD SelfModule = ModuleDefMD.Load(typeof(Utils).Assembly.Modules.First());
         public static ModuleDefMD RuntimeModule;
         public static TypeDef GetRuntimeTypeSelf(string fullName)
         {
@@ -151,7 +153,12 @@ namespace OZ_Obfuscator
 
             return newFieldDef;
         }
-        
+        public static string DownloadText(string url)
+        {
+            WebClient webClient = new WebClient();
+            webClient.Encoding = Encoding.UTF8;
+            return webClient.DownloadString(url);
+        }
     }
     public class NameGenerator
     {
