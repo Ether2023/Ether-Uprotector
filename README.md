@@ -1,14 +1,14 @@
 # O-Z-Unity Protector
 
-![](https://img.shields.io/badge/oRangeSumMer(QQ)-2296401259-green) ![](https://img.shields.io/badge/Z1029(QQ)-3408708525-green) ![](https://img.shields.io/badge/QQGroup-957552913-orange) [![Bilibili](https://img.shields.io/badge/bilibili-%E6%A9%99%E4%B9%8B%E5%A4%8F-blue)](https://space.bilibili.com/79045701) ![](https://img.shields.io/badge/Email-2286401259%40qq.com-yellowgreen)
+![qq](https://img.shields.io/badge/oRangeSumMer(QQ)-2296401259-green) ![qq](https://img.shields.io/badge/Z1029(QQ)-3408708525-green) ![qqgroup](https://img.shields.io/badge/QQGroup-957552913-orange) [![Bilibili](https://img.shields.io/badge/bilibili-%E6%A9%99%E4%B9%8B%E5%A4%8F-blue)](https://space.bilibili.com/79045701) ![email](https://img.shields.io/badge/Email-2286401259%40qq.com-yellowgreen)
 
-![](https://img.shields.io/github/stars/Z1029-oRangeSumMer/O-Z-Unity-Protector?style=social) ![](https://img.shields.io/github/downloads/Z1029-oRangeSumMer/O-Z-Unity-Protector/total) ![](https://img.shields.io/github/v/tag/Z1029-oRangeSumMer/O-Z-Unity-Protector)
+![star](https://img.shields.io/github/stars/Z1029-oRangeSumMer/O-Z-Unity-Protector?style=social) ![download](https://img.shields.io/github/downloads/Z1029-oRangeSumMer/O-Z-Unity-Protector/total) ![tag](https://img.shields.io/github/v/tag/Z1029-oRangeSumMer/O-Z-Unity-Protector)
 
 **O&Z Protector** is a tool providing custom encryption for Unity, maintained by **Z1029** and **oRangeSumMer**
 
 **The program is based on [Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48), requires [Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48) environment, please make sure your computer has NET Runtime or NET SDK properly installed**
 
-中文版本Readme请戳[这里](README_zh-cn.md)
+English | [简体中文](README_zh-cn.md)
 
 > ***Some documents have not been translated yet, so please look forward to it.***
 
