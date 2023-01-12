@@ -20,6 +20,14 @@ namespace OZ_Obfuscator.Obfuscators
         public void Execute()
         {
             AddAttr(module, typeof(SuppressIldasmAttribute).Namespace, nameof(SuppressIldasmAttribute));
+            var globaltype = module.GlobalType;
+            foreach(var type in module.Types)
+            {
+                if(type.DeclaringType == globaltype && type.IsNested)
+                {
+                    type.Attributes = dnlib.DotNet.TypeAttributes.Sealed | dnlib.DotNet.TypeAttributes.ExplicitLayout;
+                }
+            }
         }
         //Thank to BitMono and sunnamed434
         public CustomAttribute AddAttr(ModuleDefMD moduleDefMD, string @namespace, string @name)

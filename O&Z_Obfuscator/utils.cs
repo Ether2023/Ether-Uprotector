@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using O_Z_IL2CPP_Security.LitJson;
 using System.Net;
-
 namespace OZ_Obfuscator
 {
     public static class Extensions
@@ -164,6 +163,11 @@ namespace OZ_Obfuscator
     {
         public static void SetObfusName(IMemberDef member, Mode mode, int depth = 1, int sublength = 10)
         {
+            member.Name = GetObfusName(mode, depth, sublength);
+        }
+        public static void SetObfusName(IMemberDef member, Mode mode,out string OriginName ,int depth = 1, int sublength = 10)
+        {
+            OriginName = member.Name;
             member.Name = GetObfusName(mode, depth, sublength);
         }
 

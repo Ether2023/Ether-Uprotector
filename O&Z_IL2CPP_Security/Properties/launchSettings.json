@@ -10,7 +10,7 @@
     },
     "Test": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\22864\\Desktop\\2019Testbuild\\O&Z_2019_4_32_f1_Data\\Managed\\Assembly-CSharp.dll\" Test"
+      "commandLineArgs": "\"C:\\Users\\22864\\Desktop\\2019Testbuild\\O&Z_2019_4_32_f1_Data\\Managed\\Assembly-CSharp - 副本.dll\" Test"
     },
     "Generate": {
       "commandName": "Project",

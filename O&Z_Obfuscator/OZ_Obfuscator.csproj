@@ -70,6 +70,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnityEditor">
+      <HintPath>plugin\Unity2019.4.32\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>plugin\Unity2019.4.32\UnityEngine.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyLoader.cs" />
@@ -92,6 +98,7 @@
     <Compile Include="Ofbuscators\MethodError.cs" />
     <Compile Include="Ofbuscators\ObfusFunc.cs" />
     <Compile Include="Ofbuscators\PEPacker.cs" />
+    <Compile Include="Ofbuscators\UnityMonoBehavior\MonoUtils.cs" />
     <Compile Include="Runtime\Num2Modle.cs" />
     <Compile Include="Ofbuscators\NumObfus.cs" />
     <Compile Include="Program.cs" />
@@ -99,6 +106,8 @@
     <Compile Include="Runtime\StringEncoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\VirtualCall.cs" />
+    <Compile Include="Unity\AssetsFile.cs" />
+    <Compile Include="Unity\UnityFile.cs" />
     <Compile Include="utils.cs" />
   </ItemGroup>
   <ItemGroup>

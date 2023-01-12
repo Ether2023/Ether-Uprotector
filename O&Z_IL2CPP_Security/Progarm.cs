@@ -6,6 +6,11 @@ using O_Z_IL2CPP_Security.LitJson;
 using System.Diagnostics;
 using OZ_Obfuscator.Obfuscators;
 using OZ_Obfuscator;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using OZ_Obfuscator.Ofbuscators.UnityMonoBehavior;
+using OZ_Obfuscator.Unity;
 #if NET6_0_OR_GREATER
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
@@ -184,13 +189,15 @@ bool CheckMetadataFile()
 }
 void _Test()
 {
-    /*
     AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
-    Call2Calli c2cil = new Call2Calli(loader.Module);
-    c2cil.Execute();
+    List<MonoSwapMap> maps= new List<MonoSwapMap>();
+    ObfusFunc obfusFunc = new ObfusFunc(loader.Module,out maps);
+    obfusFunc.Execute();
+    AssetsFile assets = MonoUtils.LoadAsset("C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets.bak");
+    MonoUtils.SetMonoMapToAssetFile(assets, maps);
+    MonoUtils.SaveAssetsToFile(assets, "C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets.obfus");
+    Console.WriteLine("Fuck executing...");
     loader.Save();
-    */
-    File.WriteAllText("1.txt", Tools.DownloadText("https://raw.githubusercontent.com/Z1029-oRangeSumMer/O-Z-Unity-Protector/main/Configs/Config.json"));
 }
 void CheckVersion()
 {
@@ -260,9 +267,16 @@ void MonoObfus()
         PEPacker.pack(loader.OutputPath);
     }
 }
-#elif NETCOREAPP2_0_OR_GREATER
+#elif NET481_OR_GREATER
 namespace O_Z_IL2CPP_Security
 {
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            
+        }
+    }
     public class O_Z_UnityProtector
     {
         byte[] metadata_origin;

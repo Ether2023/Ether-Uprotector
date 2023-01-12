@@ -83,7 +83,7 @@ namespace OZ_Obfuscator
         }
         void CreateMethod(ModuleDefMD Module)
         {
-            MethodDefUser method = new MethodDefUser("OrangeHacked", new MethodSig(CallingConvention.Default, 0, Module.CorLibTypes.Void), MethodAttributes.Public | MethodAttributes.Static);
+            MethodDefUser method = new MethodDefUser("OrangeHacked", new MethodSig(CallingConvention.Default, 0, Module.CorLibTypes.Void), dnlib.DotNet.MethodAttributes.Public | dnlib.DotNet.MethodAttributes.Static);
             method.Body = new CilBody();
             Local lcl = new Local(Module.CorLibTypes.Int32);
             Local lcl2 = new Local(Module.CorLibTypes.String);

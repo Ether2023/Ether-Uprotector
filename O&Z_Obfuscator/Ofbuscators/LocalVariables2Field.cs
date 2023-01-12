@@ -39,7 +39,7 @@ namespace OZ_Obfuscator.Obfuscators
 					FieldDef def;
 					if (!_convertedLocals.ContainsKey(local))
 					{
-						def = new FieldDefUser(NameGenerator.GetObfusName(NameGenerator.Mode.FuncName,10), new FieldSig(local.Type), FieldAttributes.Public | FieldAttributes.Static);
+						def = new FieldDefUser(NameGenerator.GetObfusName(NameGenerator.Mode.FuncName,10), new FieldSig(local.Type), dnlib.DotNet.FieldAttributes.Public | dnlib.DotNet.FieldAttributes.Static);
                         module.GlobalType.Fields.Add(def);
 						_convertedLocals.Add(local, def);
 					}

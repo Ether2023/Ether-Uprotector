@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using System.Security.Cryptography;
 using O_Z_IL2CPP_Security;
+using System.IO;
 
 namespace O_Z_IL2CPP_Security
 {
@@ -283,7 +284,14 @@ namespace O_Z_IL2CPP_Security
             writer.Write(cryptHeader.frontHeader.offset); // 8
             writer.Write(cryptHeader.frontHeader.length); // 4
             writer.Write(cryptHeader.frontHeader.key); // 32
+#if NET6_0_OR_GREATER
             writer.Write(RandomNumberGenerator.GetBytes(cryptHeader.frontHeader.OriginLegnth - 68)); 
+#elif NET481
+            byte[] temp = new byte[cryptHeader.frontHeader.OriginLegnth - 68];
+            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+            rng.GetBytes(temp);
+            writer.Write(temp);
+#endif
             for (int i = 0; i < stringLiterals.Length; i++) //加密StringLiteral
             {
                 writer.BaseStream.Position = stringLiteralDataOffset + stringLiterals[i].Offset;

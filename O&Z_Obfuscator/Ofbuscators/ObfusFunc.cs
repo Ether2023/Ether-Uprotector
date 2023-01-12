@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using O_Z_IL2CPP_Security.LitJson;
-
+using OZ_Obfuscator.Ofbuscators.UnityMonoBehavior;
 namespace OZ_Obfuscator.Obfuscators
 {
     public class ObfusFunc : Obfuscator
@@ -16,6 +16,7 @@ namespace OZ_Obfuscator.Obfuscators
         List<string> ignoreMethod = new List<string>();
         List<string> ignoreField = new List<string>();
         List<string> obfusClass = new List<string>();
+        List<MonoSwapMap> swapMaps= new List<MonoSwapMap>();
         public ObfusFunc(ModuleDefMD module)
         {
             this.module = module;
@@ -77,6 +78,54 @@ namespace OZ_Obfuscator.Obfuscators
             foreach (var item in _obfusClass)
                 obfusClass.Add(item.ToLower());
         }
+        public ObfusFunc(ModuleDefMD module, string[] _ignoreMethod, string[] _ignoreField, string[] _custom_ignore_Method, string[] _custom_ignore_Field, string[] _obfusClass,out List<MonoSwapMap> maps)
+        {
+            this.module = module;
+            maps = swapMaps;
+            foreach (var item in _ignoreMethod)
+                ignoreMethod.Add(item.ToLower());
+            foreach (var item in _ignoreField)
+                ignoreField.Add(item.ToLower());
+            foreach (var item in _custom_ignore_Method)
+                ignoreMethod.Add(item.ToLower());
+            foreach (var item in _custom_ignore_Field)
+                ignoreField.Add(item.ToLower());
+            foreach (var item in _obfusClass)
+                obfusClass.Add(item.ToLower());
+        }
+        public ObfusFunc(ModuleDefMD module,out List<MonoSwapMap> maps)
+        {
+            this.module = module;
+            maps = swapMaps;
+            if (!File.Exists("keyfunc.json"))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("keyfunc.json not found!");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Download new keyfunc.json From Github...");
+                Console.WriteLine("If you do not want to use the default keyfunc.json, please reconfigure keyfunc.json");
+                Console.ForegroundColor = ConsoleColor.White;
+                File.WriteAllText("keyfunc.json", Utils.DownloadText("https://raw.githubusercontent.com/Z1029-oRangeSumMer/O-Z-Unity-Protector/main/Configs/keyfunc.json"));
+                if (!File.Exists("keyfunc.json"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Download Failed!");
+                    Console.WriteLine("ObfusFunc function will not work normally!");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            ignore ig = JsonMapper.ToObject<ignore>(File.ReadAllText("keyfunc.json"));
+            foreach (var item in ig.ignoreMethod)
+                ignoreMethod.Add(item.ToLower());
+            foreach (var item in ig.ignoreField)
+                ignoreField.Add(item.ToLower());
+            foreach (var item in ig.custom_ignore_Method)
+                ignoreMethod.Add(item.ToLower());
+            foreach (var item in ig.custom_ignore_Field)
+                ignoreField.Add(item.ToLower());
+            foreach (var item in ig.custom_obfus_Class)
+                obfusClass.Add(item.ToLower());
+        }
         public void Execute()
         {
             foreach (var type in module.Types.Where(x => !(x.Name.StartsWith("<"))))
@@ -85,7 +134,7 @@ namespace OZ_Obfuscator.Obfuscators
                 && !(x.Name.StartsWith("<"))))
                 {
                     if (ignoreField.FirstOrDefault(x => field.FullName.ToLower().Contains(x)) == null)
-                        NameGenerator.SetObfusName(field, NameGenerator.Mode.FuncName, 3);
+                        NameGenerator.SetObfusName(field, NameGenerator.Mode.FuncName, 4);
                 }
                 foreach (var method in type.Methods.Where(x => !x.IsConstructor && !x.IsVirtual
                 && !x.IsRuntime && !x.IsRuntimeSpecialName && !x.IsAbstract
@@ -98,18 +147,29 @@ namespace OZ_Obfuscator.Obfuscators
                     {
                         foreach (var p in method.Parameters)
                         {
-                            p.Name = NameGenerator.GetName(NameGenerator.Mode.FuncName, 4);
+                            p.Name = NameGenerator.GetName(NameGenerator.Mode.FuncName, 3);
                         }
                     }
                 }
                 foreach (var p in type.Properties.Where(x => !x.IsRuntimeSpecialName && !x.IsSpecialName))
                     NameGenerator.SetObfusName(p, NameGenerator.Mode.Base64, 5);
-                //NameGenerator.SetObfusName(type, NameGenerator.Mode.FuncName, 6);
-
+                if (obfusClass.FirstOrDefault(x => type.FullName.ToLower().Contains(x)) == null)
+                {
+                    string TempName;
+                    NameGenerator.SetObfusName(type, NameGenerator.Mode.FuncName, out TempName, 6);
+                    if(MonoUtils.MonoTypeCheck(type))
+                    swapMaps.Add(new MonoSwapMap
+                    {
+                        OriginName = TempName,
+                        ObfusName = type.Name,
+                    });
+                }
+                /*
                 if (obfusClass.FirstOrDefault(x => type.FullName.ToLower().Contains(x)) != null)
                 {
-                    NameGenerator.SetObfusName(type, NameGenerator.Mode.FuncName, 6);
+                    NameGenerator.SetObfusName(type, NameGenerator.Mode.FuncName, 4);
                 }
+                */
             }
         }
     }
