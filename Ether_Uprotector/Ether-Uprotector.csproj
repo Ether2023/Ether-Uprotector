@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Ether_Uprotector</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <BaseOutputPath>..\bin</BaseOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ether_IL2CPP\Ether-IL2CPP.csproj" />
+    <ProjectReference Include="..\Ether_Obfuscator\Ether-Obfuscator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="dnlib">
+      <HintPath>..\Ether_Obfuscator\plugin\dnlib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
