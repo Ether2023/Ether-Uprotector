@@ -18,6 +18,18 @@
     <Reference Include="dnlib">
       <HintPath>..\Ether_Obfuscator\plugin\dnlib.dll</HintPath>
     </Reference>
+    <Reference Include="Spectre.Console">
+      <HintPath>Plugin\Spectre.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="Spectre.Console.Cli">
+      <HintPath>Plugin\Spectre.Console.Cli.dll</HintPath>
+    </Reference>
+    <Reference Include="Spectre.Console.ImageSharp">
+      <HintPath>Plugin\Spectre.Console.ImageSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Spectre.Console.Json">
+      <HintPath>Plugin\Spectre.Console.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

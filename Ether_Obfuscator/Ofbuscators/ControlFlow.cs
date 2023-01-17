@@ -26,6 +26,7 @@ namespace Ether_Obfuscator.Obfuscators
         public ControlFlow(ModuleDef module, string[] ignoreMethod)
         {
             Module = module;
+            if(ignoreMethod != null)
             foreach (var item in ignoreMethod)
                 IgnoreMethod.Add(item.ToLower());
         }
@@ -41,7 +42,7 @@ namespace Ether_Obfuscator.Obfuscators
                         if (!mDef.Name.StartsWith("get_") && !mDef.Name.StartsWith("set_"))
                         {
                             if (!mDef.HasBody || mDef.IsConstructor) continue;
-                            if (IgnoreMethod.FirstOrDefault(x => mDef.FullName.ToLower().Contains(x)) != null) continue;
+                            if (IgnoreMethod.Count>0 && IgnoreMethod.FirstOrDefault(x => mDef.FullName.ToLower().Contains(x)) != null) continue;
                             mDef.Body.SimplifyBranches();
                             ObfusMethod(mDef);
                         }

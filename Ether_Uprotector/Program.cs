@@ -1,30 +1,23 @@
 ﻿using Ether_IL2CPP;
-using System.Reflection;
-using System.Text;
-using System.Security.Cryptography;
 using Ether_IL2CPP.LitJson;
-using System.Diagnostics;
 using Ether_Obfuscator.Obfuscators;
 using Ether_Obfuscator;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using Ether_Obfuscator.Ofbuscators.UnityMonoBehavior;
-using Ether_Obfuscator.Unity;
-#if NET6_0_OR_GREATER
+using Spectre.Console;
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
 string OpenFilePath;
 byte[]? metadata_origin = null;
 
-Console.WriteLine("O&Z_IL2CPP_Security");
+AnsiConsole.Write(new Panel("Ether Uprotector"));
 if (!File.Exists("Config.json"))
 {
-    Console.ForegroundColor = ConsoleColor.Red;
-    Console.WriteLine("Config.json not found!");
-    Console.ForegroundColor = ConsoleColor.Yellow;
-    Console.WriteLine("Download Config.json From Github...");
-    File.WriteAllText("Config.json", Ether_IL2CPP.Utils.DownloadText("https://raw.githubusercontent.com/Z1029-oRangeSumMer/O-Z-Unity-Protector/main/Configs/Config.json"));
+    AnsiConsole.Foreground = ConsoleColor.Red;
+    AnsiConsole.WriteLine("Config.json NOT FOUND!");
+    AnsiConsole.Foreground = ConsoleColor.Yellow;
+    AnsiConsole.WriteLine("Regenerate Config.json...");
+    AnsiConsole.Foreground = ConsoleColor.White;
+    await Task.Delay(3000);
+    _GenerateConfig();
     if (File.Exists("Config.json")) Console.WriteLine("Download succeeded!");
     Console.ForegroundColor = ConsoleColor.White;
 }
@@ -118,7 +111,7 @@ void _Crypt()
             break;
         default: Console.WriteLine("Version error! Please ensure that you have configured the correct and supported metadata version!"); return;
     }
-    Console.WriteLine("Creating O&Z Metadata...");
+    Console.WriteLine("Creating Ether Metadata...");
     Metadata metadata = new Metadata(Loader.GetType().GetField("metadatastream").GetValue(Loader) as Stream, Loader.GetType().GetField("Header").GetValue(Loader).GetType(), Loader.GetType().GetField("Header").GetValue(Loader), ver);
     Console.WriteLine("Encrypting StringLiteral...");
     StringLiteraBytes = metadata.GetBytesFromStringLiteral(metadata.stringLiterals);
@@ -189,6 +182,13 @@ bool CheckMetadataFile()
 }
 void _Test()
 {
+    _GenerateConfig();
+    AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
+    foreach (var type in loader.Module.Types.Where(x => !(x.Name.StartsWith("<"))))
+    {
+
+    }
+    /*
     AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
     List<MonoSwapMap> maps = new List<MonoSwapMap>();
     ObfusFunc obfusFunc = new ObfusFunc(loader.Module, out maps);
@@ -206,6 +206,7 @@ void _Test()
     Console.WriteLine("Fuck executing...");
     loader.Save();
     Console.WriteLine(loader.OutputPath);
+    */
 }
 void CheckVersion()
 {
@@ -275,101 +276,78 @@ void MonoObfus()
         PEPacker.pack(loader.OutputPath);
     }
 }
-#elif NET481_OR_GREATER
-namespace O_Z_IL2CPP_Security
+
+void _GenerateConfig()
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            
-        }
-    }
-    public class O_Z_UnityProtector
-    {
-        byte[] metadata_origin;
-        List<byte[]> StringLiteraBytes = new List<byte[]>();
-        List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
-        public O_Z_UnityProtector()
-        {
+    Console.Clear();
+    AnsiConsole.Write(new Panel("Generate Your Config"));
+    AnsiConsole.Write(new Rule("[yellow]KEY[/]").RuleStyle("grey").LeftJustified());
+    var key = AnsiConsole.Ask<int>("What's your [green]KEY[/]?");
+    AnsiConsole.Write(new Rule("[yellow]MetadataVersion[/]").RuleStyle("grey").LeftJustified());
+    var Version = AnsiConsole.Prompt(
+                new TextPrompt<string>("What's your [green]MetadataVersion[/]?")
+                    .InvalidChoiceMessage("[red]Version error! Please ensure that you have configured the correct and supported metadata version![/]")
+                    .DefaultValue("Version?")
+                    .AddChoice("24.4")
+                    .AddChoice("28"));
+    AnsiConsole.Write(new Rule("[yellow]Obfuscator Config[/]").RuleStyle("grey").LeftJustified());
+    var Obfuscations = AnsiConsole.Prompt(
+                new MultiSelectionPrompt<string>()
+                    .PageSize(10)
+                    .Title("Configure Your Obfuscator:")
+                    .MoreChoicesText("[grey](Move up and down to reveal more Obfuscations)[/]")
+                    .InstructionsText("[grey](Press [blue]<space>[/] to toggle a Obfuscations, [green]<enter>[/] to accept)[/]")
+                    .AddChoices(new[]
+                    {
+                        "ControlFlow","NumObfus","LocalVariables2Field","StrCrypter","Obfusfunc","AntiDe4dot","FuckILdasm","PEPacker","MethodError"
+                    }));
+    AnsiConsole.WriteLine();
+    AnsiConsole.Write(new Rule("[yellow]Your Config[/]").RuleStyle("grey").LeftJustified());
+    AnsiConsole.Write(new Table().AddColumns("[grey]Config[/]", "[grey]Key[/]")
+        .RoundedBorder().BorderColor(Spectre.Console.Color.Grey)
+        .AddRow("[grey]KEY[/]", key.ToString())
+        .AddRow("[grey]MetadataVersion[/]", Version)
+        .AddRow("[grey]Obfuscations[/]",ListtoString(Obfuscations)));
+    AnsiConsole.Foreground = ConsoleColor.Green;
+    AnsiConsole.WriteLine("Generate Successful!");
+    AnsiConsole.Foreground = Color.White;
+    JsonIndex config = new JsonIndex();
+    config.key = key;
+    config.Version = Version;
+    config.Obfus = new ObfusConfig();
+    if (Obfuscations.Contains("ControlFlow"))
+        config.Obfus.ControlFlow = 1;
+    if (Obfuscations.Contains("NumObfus"))
+        config.Obfus.NumObfus = 1;
+    if (Obfuscations.Contains("LocalVariables2Field"))
+        config.Obfus.LocalVariables2Field = 1;
+    if (Obfuscations.Contains("StrCrypter"))
+        config.Obfus.StrCrypter = 1;
+    if (Obfuscations.Contains("Obfusfunc"))
+        config.Obfus.Obfusfunc = 1;
+    if (Obfuscations.Contains("AntiDe4dot"))
+        config.Obfus.AntiDe4dot = 1;
+    if (Obfuscations.Contains("FuckILdasm"))
+        config.Obfus.FuckILdasm = 1;
+    if (Obfuscations.Contains("PEPacker"))
+        config.Obfus.PEPacker = 1;
+    if (Obfuscations.Contains("MethodError"))
+        config.Obfus.MethodError = 1;
+    File.WriteAllText("Config.json", JsonMapper.ToJson(config));
 
-        }
-        void _Crypt(string OpenFilePath,string OutPath ,IL2CPP_Version version,int key)
-        {
-            IL2CPP_Version ver;
-            if (!File.Exists(OpenFilePath))
-            {
-                throw new Exception("File is not EXISTS!");
-            }
-            metadata_origin = File.ReadAllBytes(OpenFilePath);
-            if (!CheckMetadataFile(metadata_origin))
-            {
-                throw new Exception("This is not a Metadata File!");
-            }
-
-            switch (version)
-            {
-                case IL2CPP_Version.V24_4:
-                    {
-                        ver = IL2CPP_Version.V24_4;
-                    }
-                    break;
-                case IL2CPP_Version.V28:
-                    {
-                        ver = IL2CPP_Version.V28;
-                    }
-                    break;
-                case IL2CPP_Version.V24_1:
-                    {
-                        ver = IL2CPP_Version.V24_1;
-                    }
-                    break;
-                default: throw new Exception("Metadata Version is not supported or Error Version!");
-            }
-            object Loader;
-            switch (ver)
-            {
-                case IL2CPP_Version.V24_4:
-                    {
-                        Loader = new LoadMetadata_v24_4(new MemoryStream(metadata_origin));
-                    }
-                    break;
-                case IL2CPP_Version.V28:
-                    {
-                        Loader = new LoadMetadata_v28(new MemoryStream(metadata_origin));
-                    }
-                    break;
-                case IL2CPP_Version.V24_1:
-                    {
-                        Loader = new LoadMetadata_v24_1(new MemoryStream(metadata_origin));
-                    }
-                    break;
-                default: Console.WriteLine("版本错误!请确保你配置了正确且受支持的Metadata版本!"); return;
-            }
-            Metadata metadata = new Metadata(Loader.GetType().GetField("metadatastream").GetValue(Loader) as Stream, Loader.GetType().GetField("Header").GetValue(Loader).GetType(), Loader.GetType().GetField("Header").GetValue(Loader), ver);
-            StringLiteraBytes = metadata.GetBytesFromStringLiteral(metadata.stringLiterals);
-            StringLiteraBytes_Crypted = Crypt.Cryptstring(StringLiteraBytes, key);
-            byte[] allstring = metadata.GetAllStringFromMeta();
-            Stream stream = metadata.SetCryptedStreamToMetadata(StringLiteraBytes_Crypted, Crypt.CryptWithSkipNULL(allstring, (byte)O_Z_IL2CPP_Security.Tools.CheckNull(key), key), ver);
-            byte[] tmp = O_Z_IL2CPP_Security.Tools.StreamToBytes(stream);
-            File.WriteAllBytes(OutPath, tmp);
-        }
-        bool CheckMetadataFile(byte[] data)
-        {
-            if (BitConverter.ToUInt32(data, 0) != 4205910959)
-            {
-                return false;
-            }
-            else
-                return true;
-        }
-        public double CheckVersion(string OpenFilePath)
-        {
-            byte[] data = File.ReadAllBytes(OpenFilePath);
-            if (!CheckMetadataFile(data)) throw new Exception("This is not a Metadata File!");
-            MetadataCheck metadataCheck = new MetadataCheck(new MemoryStream(data));
-            return metadataCheck.Version;
-        }
-    }
 }
-#endif
+string ListtoString(List<string> list)
+{
+    string ret = "";
+    foreach(var str in list)
+    {
+        ret += (str + " ");
+    }
+    return ret;
+}
+void WriteLineColor(string str,Color color)
+{
+    AnsiConsole.Foreground = color;
+    AnsiConsole.WriteLine(str);
+    AnsiConsole.Foreground = Color.White;
+}
