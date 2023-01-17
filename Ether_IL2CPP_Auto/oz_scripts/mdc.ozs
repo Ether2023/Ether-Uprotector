@@ -1,0 +1,43 @@
+#通过这些脚本来编辑libil2cpp代码,可轻松适配更多版本
+
+#删除版本校验
+find_method_in_file Initialize $lineInit
+
+prints Initialize_at_line_
+printd $lineInit
+prints \n
+
+find_str_in_file Header->sanity $lineInit $sanity
+find_str_in_file Il2CppGlobalMetadataHeader*)s_GlobalMetadata; $lineInit $setHead
+$check_ver = $sanity
+$check_ver += 1
+repl_line_from_file $sanity mdc_init_assert.cpp
+repl_line_from_file $check_ver mdc_init_assert.cpp
+repl_line_from_file $setHead mdc_init_assert.cpp
+
+printsn Remove_check_sum_finished
+
+#变量
+find_str_in_file s_GlobalMetadata 0 $head
+insert_from_file $head mdc.cpp
+
+#头引用
+#oz_encryption
+insert_header encryption.h
+
+#解密方法
+insert_method_at_from_file Initialize s_GlobalMetadata mdc_init.cpp
+
+printsn Write_decryption_method_finished
+
+#加密固定字符串
+enc_cstr_all global-metadata.dat
+#enc_cstr_all GameAssembly.dll
+#有bug不知道为啥
+
+#调试用!加密key
+enc_cstr_all REPLACE_THIS_FOR_A_CUSTOM_KEY
+
+#下面这两个strings就算了吧
+#insert_method_at_from_file GetStringFromIndex strings mdc_getstr.cpp
+#insert_method_at_from_file GetStringLiteralFromIndex GarbageCollector::SetWriteBarrier mdc_getstrlit.cpp
