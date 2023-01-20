@@ -1,0 +1,135 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Uprotector_Hub.ViewModels"
+        xmlns:models="using:Uprotector_Hub.Models"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Uprotector_Hub.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Uprotector Hub">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+    <Grid ColumnDefinitions="300, *">
+        <Border Classes="SidebarBorder">
+            <Grid RowDefinitions="60, *">
+                <Label
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontSize="20">
+                    Uprotector Hub
+                </Label>
+
+                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical"
+                            Classes="Sidebar">
+                    <Button>
+                        Projects
+                        <Button.CommandParameter>
+                            <x:Int32>0</x:Int32>
+                        </Button.CommandParameter>
+                    </Button>
+
+                    <Button>
+                        Editors
+                        <Button.CommandParameter>
+                            <x:Int32>1</x:Int32>
+                        </Button.CommandParameter>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Carousel Grid.Column="1"
+                  SelectedIndex="{Binding Page}"
+                  Padding="16,8,16,8">
+
+            <Rectangle Width="100" Height="100"
+                       Fill="#ff0000">
+            </Rectangle>
+
+            <Grid RowDefinitions="64, *">
+                <TextBlock FontSize="30" Margin="0,16,0,16">Editors</TextBlock>
+                <ScrollViewer Grid.Row="1">
+                    <ItemsControl ItemTemplate="{DynamicResource EditorEntry}"
+                                  Items="{Binding EditorModels}" />
+                </ScrollViewer>
+            </Grid>
+        </Carousel>
+    </Grid>
+
+    <Window.Styles>
+        <Style Selector=".Sidebar > Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="TextBlock.Foreground" Value="#000000"/>
+        </Style>
+        <Style Selector="Border.SidebarBorder">
+            <Setter Property="BorderBrush" Value="#e5e5e5" />
+            <Setter Property="BorderThickness" Value="0,0,1,0" />
+            <Setter Property="Background" Value="#f5f5f5" />
+        </Style>
+        <Style Selector=".Sidebar > Button">
+            <Setter Property="Background" Value="#00000000"/>
+            <Setter Property="Foreground" Value="#1d1d1d"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Command" Value="{Binding PageSelectCommand}" />
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="Border.EditorEntry">
+            <Setter Property="Background" Value="#f5f5f5" />
+            <Setter Property="Margin" Value="0,0,0,8" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="BorderBrush" Value="#eeeeee" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="12" />
+        </Style>
+        <Style Selector="Border.EditorComponentEntry">
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#d0d0d0"/>
+            <Setter Property="Padding" Value="8,4,8,4"/>
+        </Style>
+    </Window.Styles>
+
+    <Window.Resources>
+        <DataTemplate x:Key="EditorEntry">
+            <Border Classes="EditorEntry">
+                <Design.DataContext>
+                    <models:EditorModel />
+                </Design.DataContext>
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{Binding Version}"
+                               FontWeight="Bold"
+                               Margin="0,0,0,2" />
+                    <TextBlock Text="{Binding Location[0]}"
+                               Foreground="#3f3f3f" />
+                    <ItemsControl 
+                        ItemTemplate="{DynamicResource EditorComponentEntry}"
+                        Items="{Binding BuildPlatforms}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="EditorComponentEntry">
+            <Border Classes="EditorComponentEntry">
+                <Design.DataContext>
+                    <models:EditorBuildPlatform />
+                </Design.DataContext>
+                <TextBlock Text="{Binding Name}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="12"
+                           Foreground="#888888"/>
+            </Border>
+        </DataTemplate>
+    </Window.Resources>
+</Window>
