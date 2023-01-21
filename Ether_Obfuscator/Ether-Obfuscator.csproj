@@ -62,6 +62,9 @@
     <Reference Include="dnlib">
       <HintPath>plugin\dnlib.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -70,11 +73,17 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEditor">
+    <Reference Include="UnityEditor, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>plugin\Unity2019.4.32\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine">
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>plugin\Unity2019.4.32\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>plugin\Unity2019.4.32\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -90,19 +99,20 @@
     <Compile Include="LitJson\Netstandard15Polyfill.cs" />
     <Compile Include="LitJson\ParserToken.cs" />
     <Compile Include="Obfuscator.cs" />
-    <Compile Include="Ofbuscators\Call2Calli.cs" />
-    <Compile Include="Ofbuscators\ControlFlow.cs" />
-    <Compile Include="Ofbuscators\Antide4dot.cs" />
-    <Compile Include="Ofbuscators\FuckILdasm.cs" />
-    <Compile Include="Ofbuscators\LocalVariables2Field.cs" />
-    <Compile Include="Ofbuscators\MethodError.cs" />
-    <Compile Include="Ofbuscators\ObfusFunc.cs" />
-    <Compile Include="Ofbuscators\PEPacker.cs" />
-    <Compile Include="Ofbuscators\UnityMonoBehavior\MonoUtils.cs" />
+    <Compile Include="Obfuscators\Call2Calli.cs" />
+    <Compile Include="Obfuscators\ControlFlow.cs" />
+    <Compile Include="Obfuscators\Antide4dot.cs" />
+    <Compile Include="Obfuscators\FuckILdasm.cs" />
+    <Compile Include="Obfuscators\LocalVariables2Field.cs" />
+    <Compile Include="Obfuscators\MethodError.cs" />
+    <Compile Include="Obfuscators\ObfusFunc.cs" />
+    <Compile Include="Obfuscators\PEPacker.cs" />
+    <Compile Include="Obfuscators\UnityMonoBehavior\MonoUtils.cs" />
+    <Compile Include="Obfuscators\Resolver\ReflectionResolver.cs" />
     <Compile Include="Runtime\Num2Modle.cs" />
-    <Compile Include="Ofbuscators\NumObfus.cs" />
+    <Compile Include="Obfuscators\NumObfus.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Ofbuscators\StrCrypter.cs" />
+    <Compile Include="Obfuscators\StrCrypter.cs" />
     <Compile Include="Runtime\StringEncoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\VirtualCall.cs" />

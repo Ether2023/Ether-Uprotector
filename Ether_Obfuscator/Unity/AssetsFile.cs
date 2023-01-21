@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using UnityEditor;
+using UnityEngine;
 
 namespace Ether_Obfuscator.Unity
 {

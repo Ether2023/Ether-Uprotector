@@ -4,6 +4,6 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>Obfus</ActiveDebugProfile>
+    <ActiveDebugProfile>Test</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

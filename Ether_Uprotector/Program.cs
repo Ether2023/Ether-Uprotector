@@ -3,6 +3,9 @@ using Ether_IL2CPP.LitJson;
 using Ether_Obfuscator.Obfuscators;
 using Ether_Obfuscator;
 using Spectre.Console;
+using Ether_Obfuscator.Ofbuscators.UnityMonoBehavior;
+using Ether_Obfuscator.Unity;
+
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
 string OpenFilePath;
@@ -182,31 +185,35 @@ bool CheckMetadataFile()
 }
 void _Test()
 {
-    _GenerateConfig();
+    //_GenerateConfig();
+    /*
     AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
     foreach (var type in loader.Module.Types.Where(x => !(x.Name.StartsWith("<"))))
     {
-
+        if (type.Name == "EnemyController") type.Name = "abc123";
     }
-    /*
-    AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
-    List<MonoSwapMap> maps = new List<MonoSwapMap>();
-    ObfusFunc obfusFunc = new ObfusFunc(loader.Module, out maps);
-    obfusFunc.Execute();
     AssetsFile assets = MonoUtils.LoadAsset("C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets.bak");
     List<MonoScript> MonoScriptList = assets.GetObjects<MonoScript>();
+    foreach(var Mono in MonoScriptList)
+    {
+        if (Mono.Name == "EnemyController") Mono.UpdateType(Mono.AssemblyName, Mono.Namespace, "abc123");
+    }
+    MonoUtils.SaveAssetsToFile(assets, "C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets.obfus");
+    loader.Save();
+    */
+    AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
+    AssetsFile assets = MonoUtils.LoadAsset("C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets.bak");
+
+    List<MonoSwapMap> maps = new List<MonoSwapMap>();
+    List<String> mono = MonoUtils.GetMonoBehaviorClass(assets);
+    ObfusFunc obfusFunc = new ObfusFunc(loader.Module, out maps , mono);
+    obfusFunc.Execute();
+
     MonoUtils.SetMonoMapToAssetFile(assets, maps);
     MonoUtils.SaveAssetsToFile(assets, "C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets.obfus");
-    AssetsFile assets1 = MonoUtils.LoadAsset("C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets.obfus");
-    List<MonoScript> MonoScriptList1 = assets1.GetObjects<MonoScript>();
-    for (int i = 0; i < MonoScriptList1.Count; i++)
-    {
-        Console.WriteLine(MonoScriptList[i].Name + " " + MonoScriptList1[i].Name);
-    }
-    Console.WriteLine("Fuck executing...");
     loader.Save();
     Console.WriteLine(loader.OutputPath);
-    */
+    
 }
 void CheckVersion()
 {

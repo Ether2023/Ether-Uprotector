@@ -59,8 +59,6 @@
     <Compile Include="Assets\FPS\Scripts\Editor\MiniProfiler.cs" />
     <Compile Include="Assets\FPS\Scripts\Editor\PrefabReplacerEditor.cs" />
     <Compile Include="Assets\FPS\Scripts\Editor\ShaderBuildStripping.cs" />
-    <Compile Include="Assets\O&amp;ZProtector\Editor\OZ_Config.cs" />
-    <Compile Include="Assets\O&amp;ZProtector\Editor\ObfusDLLs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -259,10 +257,16 @@
       <HintPath>C:\Program Files\Unity 2019.4.32f1\Editor\Data\PlaybackEngines\AndroidPlayer\UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="dnlib">
-      <HintPath>Assets\O&amp;ZProtector\Plugins\dnlib.dll</HintPath>
+      <HintPath>Assets\Plugins\Ether\Plugins\dnlib.dll</HintPath>
+    </Reference>
+    <Reference Include="Ether_Obfuscator">
+      <HintPath>Assets\Plugins\Ether\Plugins\Ether_Obfuscator.dll</HintPath>
     </Reference>
     <Reference Include="OZ_Obfuscator">
-      <HintPath>Assets\O&amp;ZProtector\Plugins\OZ_Obfuscator.dll</HintPath>
+      <HintPath>Assets\Plugins\Ether\Plugins\OZ_Obfuscator.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>Assets\Plugins\Ether\Plugins\System.Windows.Forms.dll</HintPath>
     </Reference>
     <Reference Include="log4netPlastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.12.5\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
@@ -710,6 +714,10 @@
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{BFCAE09F-5569-692D-B762-064F19D642C1}</Project>
       <Name>Assembly-CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="Assembly-CSharp-Editor-firstpass.csproj">
+      <Project>{75F9E39D-DA28-9BF0-782C-870CE8C570F8}</Project>
+      <Name>Assembly-CSharp-Editor-firstpass</Name>
     </ProjectReference>
     <ProjectReference Include="NavMeshComponentsEditor.csproj">
       <Project>{C42E5029-F5D9-D33C-BEB6-BECA95FE4E66}</Project>

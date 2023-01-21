@@ -261,10 +261,16 @@
       <HintPath>C:\Program Files\Unity 2019.4.32f1\Editor\Data\PlaybackEngines\AndroidPlayer\UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="dnlib">
-      <HintPath>Assets\O&amp;ZProtector\Plugins\dnlib.dll</HintPath>
+      <HintPath>Assets\Plugins\Ether\Plugins\dnlib.dll</HintPath>
+    </Reference>
+    <Reference Include="Ether_Obfuscator">
+      <HintPath>Assets\Plugins\Ether\Plugins\Ether_Obfuscator.dll</HintPath>
     </Reference>
     <Reference Include="OZ_Obfuscator">
-      <HintPath>Assets\O&amp;ZProtector\Plugins\OZ_Obfuscator.dll</HintPath>
+      <HintPath>Assets\Plugins\Ether\Plugins\OZ_Obfuscator.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>Assets\Plugins\Ether\Plugins\System.Windows.Forms.dll</HintPath>
     </Reference>
     <Reference Include="log4netPlastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.12.5\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
@@ -638,11 +644,11 @@
     <Reference Include="Boo.Lang">
       <HintPath>C:\Program Files\Unity 2019.4.32f1\Editor\Data\MonoBleedingEdge\lib\mono\unityscript\Boo.Lang.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

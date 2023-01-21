@@ -193,6 +193,8 @@ namespace Ether_Obfuscator
                     return GetERRORString(length);
                 case Mode.FuncName:
                     return GenertateRandomFuncName();
+                case Mode.RandomString:
+                    return GetRandomString(length);
                 default:
                     throw new InvalidOperationException();
             }
@@ -203,23 +205,33 @@ namespace Ether_Obfuscator
             Base64,
             Chinese,
             ERRORCharacter,
-            FuncName
+            FuncName,
+            RandomString
         }
         public static string GetZH_CNString(int len)
         {
-            string shit = "";
+            string str = "";
             for (int i = 0; i < len; i++)
-{
-                shit += ChineseCharacters[RandomGenerator.Generate(ChineseCharacters.Length)];
+            {
+                str += ChineseCharacters[RandomGenerator.Generate(ChineseCharacters.Length)];
             }
-            return shit;
+            return str;
+        }
+        public static string GetRandomString(int len)
+        {
+            string str = "";
+            for (int i = 0; i < len; i++)
+            {
+                str += WordList[RandomGenerator.Generate(WordList.Length)];
+            }
+            return str;
         }
         public static char[] ChineseCharacters => new char[]
         {
             '囖','囋','㐂','墼','姵','嬧','㐆','尐','巎','彟','廅'
         };
         public static string GenertateRandomFuncName()
-{
+        {
             return FuncNames[RandomGenerator.Generate(FuncNames.Length)];
         }
         public static string[] FuncNames =
@@ -241,7 +253,8 @@ namespace Ether_Obfuscator
             "OnPlayerConnected","OnPostRender","__"
         };
         public const string ERROR = ";̥͓̠̙̠̺̫̱̹̮͈͈͓͍̟̻͆ͧ͒ͩͨ̉ͯ̂̈̉̽̉͑̔̊́͟͜;̢̧͔͓͉̝̆̒ͣͣ̄ͣ̊̈́̎̓͛̇͆ͯͪ̿͟;ͫͭ͒̉̐͑̀҉̭̭͕̟͇̰̺͖͎̗̰̩͉;̸̛̘̬̫̫͔̜͙̣̯̠̯̻͍̰͍̥͓ͦ̎ͯͯ͂ͤ̉̃̊͐̐̽͜;̵̧̂͐̉̆́̚̚҉̜̦̳͇͍;̙͈̞̪̖͚̬͍͙̹ͭ̿͒ͧͧͨ̀;͐̇̋̍̿̎̀͌ͣ͌҉ ̞̙̘̱͟͠_̍̽̋̑͒ͧ̌͐̿͞͡҉̯̣̥̹̗̫̥̩͈̘͟ͅͅ_̈͛̈͊̈́ͥͬ̌ͪ̃̽͑̓͋͛̆̈͋̽҉̸̛̠̝̜͈̮͢_͒͂̋̈́͋̉͒ͦ̊ͯ̐̾̂̐҉҉̧̯̜̣̮̦̱̦̖̗͡_̧̨̹̳̘̯̱͖͙̘̍ͥ͊͌̌ͧͥ̍ͨ̐͡_̵̺̮̞̖̰͔̮̺̳͖̳̳̥͖͖͊͐͛ͥͪ͛͑͠ͅ_ͧ̓ ̴̡̪͎̣̘̳̤̬͔̟̺̳̻̥͇ͧͫ̽͐̄ͤ̎̔_̸̠̪̺͕̩̮̹̦͇̫͙͖̦̻̏̈́̅ͦ͐_̴̸̢͚̤͙͓̱̬̫̝̞̣̥̽͛͊ͥͬ̍͆ͨ͑͋̍͊ͭ͗́ͅ^̵͖̖̹̦͎̦̜͋̉͋͐̈́ͪ̋̊̄́͘͟ ̨͚͙͖̫͚̙̊̏̍̐ͥ̅̏̎͆͗ͧ́̚͞!̧͕͈͕͙̱̟̆ͭ͋ͫ̕͢͞;̛̣̭̖̹̜̘̮̜̭͓̰̫͙͋̏ͯͤ̂ͬ͗ͥ̌ͥ̓ͮͪ͗́͞ͅ;̪̳̼̱̽ͨ͋͛̔ͪͬ̃͌̂̌͐̀ͧͬ̾ͨ̚̚;̛͍̘̗̣͉͓̘͖͙̪͙̦͇̩͈ͩ͋̄̓ͣ́̃ͦͫ͒̑͋̃ͣͥ̋̀;̢͚̰͈͍ͮͤͣ͂̆͋ͨ̀̐̕͞͞ͅ;̨̢̬̹̯̯̤͕͍̺̩̫͈͉̙̪̪̜̻͚̂͋̏̓͛ͣ͟;̥̖̭͕͔̝͇̞̠̰͐̿̆ͣ̈͟͡;̵̸̻̫͔̼͚̤͇̝̞̬̞͚͇̓̐͆̾ͭ̈́ͫ̈́́͜͞;̌ͨ͌̐̉̂̃̅̃̋ͤͤͣͯ҉̧̹̗̺̹͈̙͇̦̣ͅ;̸̫̙͈̫̮̻͎̱͓̗̍&a_̈͛̈͊̈́ͥͬ̌ͪ̃̽͑̓͋͛̆̈͋̽҉̸̛̠̝̜͈̮͢_͒&‮‮‮‮‮‮‮‮‮‮‮";
-
+        public static string[] WordList = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+        "a","b","c","d","e","f","g","h","i","j","k","m","n","o","p","q","r","s","t","u","v","w","x","y","z","1","2","3","4","5","6","7","8","9","0"};
 
         public static string GetERRORString(int len)
         {
