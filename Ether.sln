@@ -11,9 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ether-Obfuscator", "Ether_O
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ether-Uprotector", "Ether_Uprotector\Ether-Uprotector.csproj", "{FC8338C2-D776-471D-A280-B54031811FE3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ether_IL2CPP_Auto", "Ether_IL2CPP_Auto\OZ_Il2cpp_Console.vcxproj", "{E248DDB8-1CB8-4093-B9F9-E62CFB7502CE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uprotector-Hub", "Uprotector-Hub\Uprotector-Hub.csproj", "{699C633B-F8D9-4872-813E-C1C030901955}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uprotector-Hub", "Uprotector-Hub\Uprotector-Hub.csproj", "{699C633B-F8D9-4872-813E-C1C030901955}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,18 +71,6 @@ Global
 		{FC8338C2-D776-471D-A280-B54031811FE3}.Release|x64.Build.0 = Release|Any CPU
 		{FC8338C2-D776-471D-A280-B54031811FE3}.Release|x86.ActiveCfg = Release|Any CPU
 		{FC8338C2-D776-471D-A280-B54031811FE3}.Release|x86.Build.0 = Release|Any CPU
-		{E248DDB8-1CB8-4093-B9F9-E62CFB7502CE}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{E248DDB8-1CB8-4093-B9F9-E62CFB7502CE}.Debug|Any CPU.Build.0 = Debug|x64
-		{E248DDB8-1CB8-4093-B9F9-E62CFB7502CE}.Debug|x64.ActiveCfg = Debug|x64
-		{E248DDB8-1CB8-4093-B9F9-E62CFB7502CE}.Debug|x64.Build.0 = Debug|x64
-		{E248DDB8-1CB8-4093-B9F9-E62CFB7502CE}.Debug|x86.ActiveCfg = Debug|Win32
-		{E248DDB8-1CB8-4093-B9F9-E62CFB7502CE}.Debug|x86.Build.0 = Debug|Win32
-		{E248DDB8-1CB8-4093-B9F9-E62CFB7502CE}.Release|Any CPU.ActiveCfg = Release|x64
-		{E248DDB8-1CB8-4093-B9F9-E62CFB7502CE}.Release|Any CPU.Build.0 = Release|x64
-		{E248DDB8-1CB8-4093-B9F9-E62CFB7502CE}.Release|x64.ActiveCfg = Release|x64
-		{E248DDB8-1CB8-4093-B9F9-E62CFB7502CE}.Release|x64.Build.0 = Release|x64
-		{E248DDB8-1CB8-4093-B9F9-E62CFB7502CE}.Release|x86.ActiveCfg = Release|Win32
-		{E248DDB8-1CB8-4093-B9F9-E62CFB7502CE}.Release|x86.Build.0 = Release|Win32
 		{699C633B-F8D9-4872-813E-C1C030901955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{699C633B-F8D9-4872-813E-C1C030901955}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{699C633B-F8D9-4872-813E-C1C030901955}.Debug|x64.ActiveCfg = Debug|Any CPU
