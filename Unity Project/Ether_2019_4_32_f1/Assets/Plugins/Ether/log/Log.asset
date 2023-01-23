@@ -1,0 +1,161 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10a39ab5310b0b4d8823848e7e97db3, type: 3}
+  m_Name: Log
+  m_EditorClassIdentifier: 
+  Map:
+  - OriginName: Actor
+    ObfusName: qeJsz
+  - OriginName: ActorsManager
+    ObfusName: VhuWP
+  - OriginName: AudioManager
+    ObfusName: kuzSA
+  - OriginName: ChargedProjectileEffectsHandler
+    ObfusName: VZMzb
+  - OriginName: ChargedWeaponEffectsHandler
+    ObfusName: vf1Q8
+  - OriginName: ConstantRotation
+    ObfusName: ui2I8
+  - OriginName: DamageArea
+    ObfusName: iq3Te
+  - OriginName: Damageable
+    ObfusName: EW4qH
+  - OriginName: Destructable
+    ObfusName: g3Zw8
+  - OriginName: DetectionModule
+    ObfusName: osaX8
+  - OriginName: EnemyController
+    ObfusName: MC4d9
+  - OriginName: EnemyManager
+    ObfusName: JF6Fs
+  - OriginName: EnemyMobile
+    ObfusName: MKdyN
+  - OriginName: EnemyTurret
+    ObfusName: dYEbD
+  - OriginName: FollowPlayer
+    ObfusName: JfEK8
+  - OriginName: FramerateCounter
+    ObfusName: Mkb8x
+  - OriginName: GameFlowManager
+    ObfusName: d2tqm
+  - OriginName: Health
+    ObfusName: BaNAO
+  - OriginName: HealthPickup
+    ObfusName: qDjLM
+  - OriginName: IgnoreHeatMap
+    ObfusName: Zmbz4
+  - OriginName: IgnoreHitDetection
+    ObfusName: DDKov
+  - OriginName: InGameMenuManager
+    ObfusName: DkIcU
+  - OriginName: Jetpack
+    ObfusName: v93JK
+  - OriginName: JetpackPickup
+    ObfusName: c6YHD
+  - OriginName: MeshCombiner
+    ObfusName: sD8Nh
+  - OriginName: NavigationModule
+    ObfusName: 501W3
+  - OriginName: Objective
+    ObfusName: 35vT3
+  - OriginName: ObjectiveKillEnemies
+    ObfusName: HgrhF
+  - OriginName: ObjectiveManager
+    ObfusName: BkaDp
+  - OriginName: ObjectivePickupItem
+    ObfusName: COxwP
+  - OriginName: ObjectiveReachPoint
+    ObfusName: dDSzy
+  - OriginName: OverheatBehavior
+    ObfusName: OkUwx
+  - OriginName: PatrolPath
+    ObfusName: OPiLf
+  - OriginName: Pickup
+    ObfusName: 5pk5p
+  - OriginName: PlayerCharacterController
+    ObfusName: BZUe0
+  - OriginName: PlayerInputHandler
+    ObfusName: G5waW
+  - OriginName: PlayerWeaponsManager
+    ObfusName: JQ1eN
+  - OriginName: PositionBobbing
+    ObfusName: TMIur
+  - OriginName: PrefabReplacer
+    ObfusName: REPiB
+  - OriginName: PrefabReplacerOnInstance
+    ObfusName: 332is
+  - OriginName: ProjectileBase
+    ObfusName: yzmAi
+  - OriginName: ProjectileChargeParameters
+    ObfusName: EgI6R
+  - OriginName: ProjectileStandard
+    ObfusName: uEE8z
+  - OriginName: TakeScreenshot
+    ObfusName: 3LLyO
+  - OriginName: TeleportPlayer
+    ObfusName: 9jUfp
+  - OriginName: TemplateObject
+    ObfusName: N0v0G
+  - OriginName: test
+    ObfusName: X3W63
+  - OriginName: TimedSelfDestruct
+    ObfusName: noP8o
+  - OriginName: AmmoCounter
+    ObfusName: G9Rfk
+  - OriginName: Compass
+    ObfusName: 1krv9
+  - OriginName: CompassElement
+    ObfusName: DKmPb
+  - OriginName: CompassMarker
+    ObfusName: PHDAs
+  - OriginName: CrosshairManager
+    ObfusName: vjomY
+  - OriginName: DisplayMessage
+    ObfusName: iu5OS
+  - OriginName: DisplayMessageManager
+    ObfusName: F5Sh6
+  - OriginName: EnemyCounter
+    ObfusName: CbW42
+  - OriginName: FeedbackFlashHUD
+    ObfusName: ehRD4
+  - OriginName: FillBarColorChange
+    ObfusName: qBIgR
+  - OriginName: JetpackCounter
+    ObfusName: ZYpW0
+  - OriginName: LoadSceneButton
+    ObfusName: ZDMXM
+  - OriginName: MenuNavigation
+    ObfusName: 4gqf6
+  - OriginName: NotificationHUDManager
+    ObfusName: S0Wjx
+  - OriginName: NotificationToast
+    ObfusName: 9Fs05
+  - OriginName: ObjectiveHUDManger
+    ObfusName: iyLYF
+  - OriginName: ObjectiveToast
+    ObfusName: AftYP
+  - OriginName: PlayerHealthBar
+    ObfusName: Fpuvu
+  - OriginName: StanceHUD
+    ObfusName: bgE6k
+  - OriginName: ToggleGameObjectButton
+    ObfusName: E7RJw
+  - OriginName: WeaponHUDManager
+    ObfusName: hud4o
+  - OriginName: WorldspaceHealthBar
+    ObfusName: oHWWg
+  - OriginName: WeaponController
+    ObfusName: C8vr2
+  - OriginName: WeaponFuelCellHandler
+    ObfusName: iiCIj
+  - OriginName: WeaponPickup
+    ObfusName: PLeVz
