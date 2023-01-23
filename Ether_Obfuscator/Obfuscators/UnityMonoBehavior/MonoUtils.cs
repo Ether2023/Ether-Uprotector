@@ -12,12 +12,6 @@ using UnityEditor;
 using MonoScript = Ether_Obfuscator.Unity.MonoScript;
 namespace Ether_Obfuscator.Obfuscators.UnityMonoBehavior
 {
-    public struct MonoSwapMap
-    {
-        public string OriginName;
-        public string ObfusName;
-        public bool Set;
-    }
     public static class MonoUtils
     {
         public static AssetsFile LoadAsset(string path)
@@ -27,9 +21,34 @@ namespace Ether_Obfuscator.Obfuscators.UnityMonoBehavior
             var_Reader.Close();
             return var_AssetsFile;
         }
-        public static bool MonoTypeCheck(TypeDef type)
+        public static bool IsMonoBehaviour(TypeDef type)
         {
             if (type.BaseType.FullName == "UnityEngine.MonoBehaviour") return true;
+            else return false;
+        }
+        public static bool IsNetworkBehaviour(TypeDef type)
+        {
+            if (type.BaseType.FullName == "UnityEngine.Networking.NetworkBehaviour") return true;
+            else return false;
+        }
+        public static bool IsScriptableObject(TypeDef type)
+        {
+            if (type.BaseType.FullName == "UnityEngine.ScriptableObject") return true;
+            else return false;
+        }
+        public static bool IsPlayable(TypeDef type)
+        {
+            if (type.BaseType.FullName == "UnityEngine.Playables.Playable") return true;
+            else return false;
+        }
+        public static bool IsPlayableAsset(TypeDef type)
+        {
+            if (type.BaseType.FullName == "UnityEngine.Playables.PlayableAsset") return true;
+            else return false;
+        }
+        public static bool IsPlayableBehaviour(TypeDef type)
+        {
+            if (type.BaseType.FullName == "UnityEngine.Playables.PlayableBehaviour") return true;
             else return false;
         }
         public static List<string> GetMonoBehaviorClass(AssetsFile assetsFile)
@@ -43,40 +62,18 @@ namespace Ether_Obfuscator.Obfuscators.UnityMonoBehavior
             }
             return result;
         }
-        public static void SetMonoMapToAssetFile(AssetsFile assetsFile,List<MonoSwapMap> Maps)
+        public static void SetMonoMapToAssetFile(AssetsFile assetsFile, Dictionary<string, string> Maps)
         {
             List<MonoScript> MonoScriptList = assetsFile.GetObjects<MonoScript>();
-            for (int i = 0; i < Maps.Count; i++)
+
+            for(int i = 0; i < MonoScriptList.Count; i++)
             {
-                for (int j = 0; j < MonoScriptList.Count; j++)
+                string str;
+                if (Maps.ContainsKey(MonoScriptList[i].Name) && MonoScriptList[i].AssemblyName == "Assembly-CSharp.dll" && Maps.TryGetValue(MonoScriptList[i].Name,out str))
                 {
-                    if(MonoScriptList[j].Name == Maps[i].OriginName && MonoScriptList[j].AssemblyName == "Assembly-CSharp.dll")
-                    {
-                        MonoScriptList[j].UpdateType(MonoScriptList[j].AssemblyName, MonoScriptList[j].Namespace, Maps[i].ObfusName);
-                        //Maps.Remove(Maps[i]);
-                        Maps[i] = new MonoSwapMap
-                        {
-                            OriginName = Maps[i].OriginName,
-                            ObfusName = Maps[i].ObfusName,
-                            Set = true
-                        };
-                    }
+                    MonoScriptList[i].UpdateType(MonoScriptList[i].AssemblyName, string.IsNullOrEmpty(MonoScriptList[i].Namespace) ? "" : MonoScriptList[i].Namespace, string.IsNullOrEmpty(str) ? "" : str);
                 }
             }
-            /*
-            for (int i = 0; i < MonoScriptList.Count; i++)
-            {
-                string Name = MonoScriptList[i].Name;
-                for(int j=0;j< Maps.Count;j++)
-                {
-                    if(Name == Maps[j].OriginName && MonoScriptList[j].AssemblyName == "Assembly-CSharp.dll")
-                    {
-                        MonoScriptList[j].UpdateType("Assembly-CSharp.dll", MonoScriptList[j].Namespace, Maps[j].ObfusName);
-                        Maps.Remove(Maps[j]);
-                    }
-                }
-            }
-            */
         }
         public static void SaveAssetsToFile(AssetsFile _AssetsFile, string _FilePath, bool _Override = true)
         {
@@ -102,11 +99,12 @@ namespace Ether_Obfuscator.Obfuscators.UnityMonoBehavior
             }
         }
     }
+    [Serializable]
     public class MonoClass
     {
-        public string Assembly { get; set; }
-        public string Namespace { get; set; }
-        public string Name { get; set; }
+        public string Assembly;
+        public string Namespace;
+        public string Name;
         public MonoClass(string _assembly,string _namespace,string name) {
             Assembly = _assembly;
             Namespace = _namespace;

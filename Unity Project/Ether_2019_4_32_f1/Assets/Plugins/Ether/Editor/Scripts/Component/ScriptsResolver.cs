@@ -14,6 +14,15 @@ using MonoScript = UnityEditor.MonoScript;
 public class ScriptsResolver
 {
     public List<MonoClass> ReferencedMonoScriptTypeList = new List<MonoClass>();
+    public List<string> ProjectScripts = new List<string>();
+    public void ResolveProjectScripts(UnityAssetReference AssetReference)
+    {
+        if(AssetReference.FileExtension == ".cs" && AssetReference.Path.StartsWith("Assets"))
+        {
+            ProjectScripts.Add(AssetReference.FileName);
+        }
+        return;
+    }
     public bool ResolveComponent(Component _Component)
     {
         if (_Component is MonoBehaviour)

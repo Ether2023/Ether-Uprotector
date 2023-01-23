@@ -8,53 +8,21 @@ using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using Ether_IL2CPP.LitJson;
 using Ether_Obfuscator.Obfuscators.UnityMonoBehavior;
+
 namespace Ether_Obfuscator.Obfuscators
 {
     public class ObfusFunc : Obfuscator
     {
+        bool ObfusType;
         ModuleDefMD module;
         List<string> ignoreMethod = new List<string>();
         List<string> ignoreField = new List<string>();
-        List<string> obfusClass = new List<string>();
-        List<MonoSwapMap> swapMaps= new List<MonoSwapMap>();
+        List<string> ignoreClass = new List<string>();
+        Dictionary<string, string> swapMaps= new Dictionary<string, string>();
         List<string> jumpName = new List<string>();
         List<string> Mono;
         ReflectionResolver ReflectionResolver;
-        public ObfusFunc(ModuleDefMD module, List<String> MonoClass = null)
-        {
-            ReflectionResolver = new ReflectionResolver(module);
-            this.module = module;
-            if(!File.Exists("keyfunc.json"))
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("keyfunc.json not found!");
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Download new keyfunc.json From Github...");
-                Console.WriteLine("If you do not want to use the default keyfunc.json, please reconfigure keyfunc.json");
-                Console.ForegroundColor = ConsoleColor.White;
-                File.WriteAllText("keyfunc.json", Utils.DownloadText("https://raw.githubusercontent.com/Z1029-oRangeSumMer/O-Z-Unity-Protector/main/Configs/keyfunc.json"));
-                if(!File.Exists("keyfunc.json"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Download Failed!");
-                    Console.WriteLine("ObfusFunc function will not work normally!");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-            }
-            ignore ig = JsonMapper.ToObject<ignore>(File.ReadAllText("keyfunc.json"));
-            foreach (var item in ig.ignoreMethod)
-                ignoreMethod.Add(item);
-            foreach (var item in ig.ignoreField)
-                ignoreField.Add(item);
-            foreach(var item in ig.custom_ignore_Method)
-                ignoreMethod.Add(item);
-            foreach (var item in ig.custom_ignore_Field)
-                ignoreField.Add(item);
-            foreach (var item in ig.custom_obfus_Class)
-                obfusClass.Add(item);
-            Mono = MonoClass;
-        }
-        public ObfusFunc(ModuleDefMD module,string Keyfunc, List<String> MonoClass = null)
+        public ObfusFunc(ModuleDefMD module,string Keyfunc, List<String> MonoClass = null, bool ObufsType = true)
         {
             ReflectionResolver = new ReflectionResolver(module);
             this.module = module;
@@ -68,10 +36,11 @@ namespace Ether_Obfuscator.Obfuscators
             foreach (var item in ig.custom_ignore_Field)
                 ignoreField.Add(item);
             foreach (var item in ig.custom_obfus_Class)
-                obfusClass.Add(item);
+                ignoreClass.Add(item);
             Mono = MonoClass;
+            ObfusType = ObufsType;
         }
-        public ObfusFunc(ModuleDefMD module, string[] _ignoreMethod, string[] _ignoreField, string[] _custom_ignore_Method, string[] _custom_ignore_Field, string[] _obfusClass, List<String> MonoClass = null)
+        public ObfusFunc(ModuleDefMD module, string[] _ignoreMethod, string[] _ignoreField, string[] _ignoreClass, List<String> MonoClass = null, bool ObufsType = true)
         {
             ReflectionResolver = new ReflectionResolver(module);
             this.module = module;
@@ -79,52 +48,35 @@ namespace Ether_Obfuscator.Obfuscators
                 ignoreMethod.Add(item);
             foreach (var item in _ignoreField)
                 ignoreField.Add(item);
-            foreach (var item in _custom_ignore_Method)
-                ignoreMethod.Add(item);
-            foreach (var item in _custom_ignore_Field)
-                ignoreField.Add(item);
-            foreach (var item in _obfusClass)
-                obfusClass.Add(item);
+            foreach (var item in _ignoreClass)
+                ignoreClass.Add(item);
             Mono = MonoClass;
+            ObfusType = ObufsType;
         }
-        public ObfusFunc(ModuleDefMD module, string[] _ignoreMethod, string[] _ignoreField, string[] _custom_ignore_Method, string[] _custom_ignore_Field, string[] _obfusClass,out List<MonoSwapMap> maps ,List<String> MonoClass = null)
+        public ObfusFunc(ModuleDefMD module, string[] _ignoreMethod, string[] _ignoreField, string[] _ignoreClass,out Dictionary<string,string> Map ,List<String> MonoClass = null,bool ObufsType = true)
         {
             ReflectionResolver = new ReflectionResolver(module);
             this.module = module;
-            maps = swapMaps;
+            Map = swapMaps;
             foreach (var item in _ignoreMethod)
                 ignoreMethod.Add(item);
             foreach (var item in _ignoreField)
                 ignoreField.Add(item);
-            foreach (var item in _custom_ignore_Method)
-                ignoreMethod.Add(item);
-            foreach (var item in _custom_ignore_Field)
-                ignoreField.Add(item);
-            foreach (var item in _obfusClass)
-                obfusClass.Add(item);
+            foreach (var item in _ignoreClass)
+                ignoreClass.Add(item);
             Mono = MonoClass;
+            ObfusType = ObufsType;
         }
-        public ObfusFunc(ModuleDefMD module,out List<MonoSwapMap> maps ,List<String> MonoClass = null)
+        public ObfusFunc(ModuleDefMD module, Dictionary<string, string> Map, List<String> MonoClass = null, bool ObufsType = true)
         {
             ReflectionResolver = new ReflectionResolver(module);
             this.module = module;
-            maps = swapMaps;
+            Map = swapMaps;
             if (!File.Exists("keyfunc.json"))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("keyfunc.json not found!");
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Download new keyfunc.json From Github...");
-                Console.WriteLine("If you do not want to use the default keyfunc.json, please reconfigure keyfunc.json");
-                Console.ForegroundColor = ConsoleColor.White;
-                File.WriteAllText("keyfunc.json", Utils.DownloadText("https://raw.githubusercontent.com/Z1029-oRangeSumMer/O-Z-Unity-Protector/main/Configs/keyfunc.json"));
-                if (!File.Exists("keyfunc.json"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Download Failed!");
-                    Console.WriteLine("ObfusFunc function will not work normally!");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
+                throw (new Exception("keyfunc.json not found!"));
             }
             ignore ig = JsonMapper.ToObject<ignore>(File.ReadAllText("keyfunc.json"));
             foreach (var item in ig.ignoreMethod)
@@ -136,8 +88,9 @@ namespace Ether_Obfuscator.Obfuscators
             foreach (var item in ig.custom_ignore_Field)
                 ignoreField.Add(item);
             foreach (var item in ig.custom_obfus_Class)
-                obfusClass.Add(item);
+                ignoreClass.Add(item);
             Mono = MonoClass;
+            ObfusType = ObufsType;
         }
         public void Execute()
         {
@@ -166,10 +119,10 @@ namespace Ether_Obfuscator.Obfuscators
                 }
                 foreach (var p in type.Properties.Where(x => !x.IsRuntimeSpecialName && !x.IsSpecialName))
                     NameGenerator.SetObfusName(p, NameGenerator.Mode.RandomString, 4);
-                if (Mono != null && obfusClass.FirstOrDefault(x => type.FullName.Contains(x)) == null && !type.IsGlobalModuleType 
-                    && Mono.Contains(type.Name) && !type.Name.Contains("`") && !type.IsAbstract)
+
+                if(ObfusType && ignoreClass.FirstOrDefault(x => type.FullName.Contains(x)) == null && !type.IsGlobalModuleType && !type.Name.Contains("`") && !type.IsAbstract && Mono == null)
                 {
-                    if (MonoUtils.MonoTypeCheck(type))
+                    if (MonoUtils.IsMonoBehaviour(type))
                     {
                         string TempName;
                         do
@@ -177,20 +130,22 @@ namespace Ether_Obfuscator.Obfuscators
                             NameGenerator.SetObfusName(type, NameGenerator.Mode.RandomString, out TempName, 1, 5);
                         } while (jumpName.Contains(type.Name));
                         jumpName.Add(type.Name);
-                        swapMaps.Add(new MonoSwapMap
-                        {
-                            OriginName = TempName,
-                            ObfusName = type.Name,
-                            Set = false
-                        });
+                        swapMaps.Add(TempName, type.Name);
                     }
                 }
-                /*
-                if (obfusClass.FirstOrDefault(x => type.FullName.Contains(x)) != null)
+                else if (ObfusType && ignoreClass.FirstOrDefault(x => type.FullName.Contains(x)) == null && !type.IsGlobalModuleType && !type.Name.Contains("`") && !type.IsAbstract && Mono != null)
                 {
-                    NameGenerator.SetObfusName(type, NameGenerator.Mode.FuncName, 4);
+                    if(Mono.Contains(type.Name) && MonoUtils.IsMonoBehaviour(type))
+                    {
+                        string TempName;
+                        do
+                        {
+                            NameGenerator.SetObfusName(type, NameGenerator.Mode.RandomString, out TempName, 1, 5);
+                        } while (jumpName.Contains(type.Name));
+                        jumpName.Add(type.Name);
+                        swapMaps.Add(TempName, type.Name);
+                    }
                 }
-                */
             }
         }
     }

@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{75F9E39D-DA28-9BF0-782C-870CE8C570F8}</ProjectGuid>
+    <ProjectGuid>{1BA226FD-C318-45AF-96F7-D565473BE4A5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor-firstpass</AssemblyName>
@@ -47,7 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Package</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>2.0.16</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>2.0.17</UnityProjectGeneratorVersion>
     <UnityProjectType>EditorPlugins:7</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2019.4.32f1</UnityVersion>
@@ -58,10 +58,11 @@
   <ItemGroup>
     <Compile Include="Assets\Plugins\Ether\Editor\EtherConfig.cs" />
     <Compile Include="Assets\Plugins\Ether\Editor\EtherConfigInspector.cs" />
+    <Compile Include="Assets\Plugins\Ether\Editor\EtherLog.cs" />
     <Compile Include="Assets\Plugins\Ether\Editor\EtherPipelineBuildProcessor.cs" />
-    <Compile Include="Assets\Plugins\Ether\Editor\ObfusDLLs.cs" />
     <Compile Include="Assets\Plugins\Ether\Editor\Scripts\AssemblyResolver.cs" />
     <Compile Include="Assets\Plugins\Ether\Editor\Scripts\AssetsResolver.cs" />
+    <Compile Include="Assets\Plugins\Ether\Editor\Scripts\BuildResolver.cs" />
     <Compile Include="Assets\Plugins\Ether\Editor\Scripts\Component\AnimationResolver.cs" />
     <Compile Include="Assets\Plugins\Ether\Editor\Scripts\Component\GUIComponetResolver.cs" />
     <Compile Include="Assets\Plugins\Ether\Editor\Scripts\Component\ScriptsResolver.cs" />
@@ -269,9 +270,6 @@
     </Reference>
     <Reference Include="Ether_Obfuscator">
       <HintPath>Assets\Plugins\Ether\Plugins\Ether_Obfuscator.dll</HintPath>
-    </Reference>
-    <Reference Include="OZ_Obfuscator">
-      <HintPath>Assets\Plugins\Ether\Plugins\OZ_Obfuscator.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms">
       <HintPath>Assets\Plugins\Ether\Plugins\System.Windows.Forms.dll</HintPath>
@@ -719,16 +717,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="NavMeshComponentsEditor.csproj">
-      <Project>{C42E5029-F5D9-D33C-BEB6-BECA95FE4E66}</Project>
-      <Name>NavMeshComponentsEditor</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.2DPlatformer.Tutorials.csproj">
-      <Project>{DDFEBA95-6C62-AA50-F4D7-3C4929929AB3}</Project>
+      <Project>{AD16333C-AB1A-AD09-C483-E32C18467324}</Project>
       <Name>Unity.2DPlatformer.Tutorials</Name>
     </ProjectReference>
+    <ProjectReference Include="NavMeshComponentsEditor.csproj">
+      <Project>{890AEA1F-ADCA-7315-B201-DE70C027A078}</Project>
+      <Name>NavMeshComponentsEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="NavMeshComponents.csproj">
-      <Project>{811AEBCD-FB3A-28DD-C04B-914DB27DFA8B}</Project>
+      <Project>{276CD531-7C0F-F2F2-FB4D-ABBFB13DEC51}</Project>
       <Name>NavMeshComponents</Name>
     </ProjectReference>
   </ItemGroup>

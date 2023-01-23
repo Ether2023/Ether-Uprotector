@@ -66,10 +66,13 @@ public static class ComponentResolver
         }
         return enumerable;
     }
-    public static void ProcessAnimation()
+    public static void ProcessAllAssetFiles()
     {
         foreach (var asset in AssetsResolver.AssetsRefList)
+        {
             AnimationResolver.ResolveAsset(asset);
+            ScriptsResolver.ResolveProjectScripts(asset);
+        }
     }
     public static void ProcessComponentsInAllScenes()
     {

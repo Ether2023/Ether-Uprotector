@@ -3,8 +3,8 @@ using Ether_IL2CPP.LitJson;
 using Ether_Obfuscator.Obfuscators;
 using Ether_Obfuscator;
 using Spectre.Console;
-using Ether_Obfuscator.Ofbuscators.UnityMonoBehavior;
 using Ether_Obfuscator.Unity;
+using Ether_Obfuscator.Obfuscators.UnityMonoBehavior;
 
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
@@ -201,18 +201,18 @@ void _Test()
     MonoUtils.SaveAssetsToFile(assets, "C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets.obfus");
     loader.Save();
     */
-    AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
-    AssetsFile assets = MonoUtils.LoadAsset("C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets.bak");
-
-    List<MonoSwapMap> maps = new List<MonoSwapMap>();
+    //AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
+    AssetsFile assets = MonoUtils.LoadAsset("C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets");
+    List<MonoScript> var_MonoScriptList = assets.GetObjects<MonoScript>();
+    Dictionary<string, string> maps = new Dictionary<string, string>();
     List<String> mono = MonoUtils.GetMonoBehaviorClass(assets);
-    ObfusFunc obfusFunc = new ObfusFunc(loader.Module, out maps , mono);
-    obfusFunc.Execute();
+    //ObfusFunc obfusFunc = new ObfusFunc(loader.Module, out maps , mono);
+    //obfusFunc.Execute();
 
     MonoUtils.SetMonoMapToAssetFile(assets, maps);
     MonoUtils.SaveAssetsToFile(assets, "C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets.obfus");
-    loader.Save();
-    Console.WriteLine(loader.OutputPath);
+    //loader.Save();
+    //Console.WriteLine(loader.OutputPath);
     
 }
 void CheckVersion()
@@ -242,7 +242,7 @@ void MonoObfus()
     }
     if (jsonManager.index.Obfus.Obfusfunc == 1)
     {
-        obfuscators.Add(new ObfusFunc(loader.Module));
+        obfuscators.Add(new ObfusFunc(loader.Module,File.ReadAllText("keyfunc.json"),null,true));
     }
     if (jsonManager.index.Obfus.NumObfus == 1)
     {
