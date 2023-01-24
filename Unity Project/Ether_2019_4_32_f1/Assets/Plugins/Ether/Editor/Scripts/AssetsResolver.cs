@@ -1,4 +1,4 @@
-﻿using Ether_Obfuscator.Obfuscators.UnityMonoBehavior;
+﻿using Ether_Obfuscator.Obfuscators.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;

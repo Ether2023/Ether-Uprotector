@@ -3,8 +3,9 @@ using Ether_IL2CPP.LitJson;
 using Ether_Obfuscator.Obfuscators;
 using Ether_Obfuscator;
 using Spectre.Console;
-using Ether_Obfuscator.Unity;
-using Ether_Obfuscator.Obfuscators.UnityMonoBehavior;
+using Ether_UnityAsset.AssetFile;
+using Ether_UnityAsset.AssetFile.Object;
+using Ether_Obfuscator.Obfuscators.Unity;
 
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
@@ -210,7 +211,7 @@ void _Test()
     //obfusFunc.Execute();
 
     MonoUtils.SetMonoMapToAssetFile(assets, maps);
-    MonoUtils.SaveAssetsToFile(assets, "C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets.obfus");
+    //MonoUtils.SaveAssetsToFile(assets, "C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets");
     //loader.Save();
     //Console.WriteLine(loader.OutputPath);
     

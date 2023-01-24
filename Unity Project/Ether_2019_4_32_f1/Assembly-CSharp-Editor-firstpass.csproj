@@ -68,6 +68,7 @@
     <Compile Include="Assets\Plugins\Ether\Editor\Scripts\Component\ScriptsResolver.cs" />
     <Compile Include="Assets\Plugins\Ether\Editor\Scripts\ComponentResolver.cs" />
     <Compile Include="Assets\Plugins\Ether\Editor\Scripts\ReflectionResolver.cs" />
+    <Compile Include="Assets\Plugins\Ether\Editor\test.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -271,6 +272,9 @@
     <Reference Include="Ether_Obfuscator">
       <HintPath>Assets\Plugins\Ether\Plugins\Ether_Obfuscator.dll</HintPath>
     </Reference>
+    <Reference Include="Ether_UnityAsset">
+      <HintPath>Assets\Plugins\Ether\Plugins\Ether_UnityAsset.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms">
       <HintPath>Assets\Plugins\Ether\Plugins\System.Windows.Forms.dll</HintPath>
     </Reference>
@@ -288,6 +292,27 @@
     </Reference>
     <Reference Include="System.IO.Compression.FileSystem">
       <HintPath>Library\PackageCache\com.unity.connect.share@2.0.3\Plugins\System.IO.Compression.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Obfuscator.Editor">
+      <HintPath>Assets\OPS\Obfuscator\Editor\Plugins\OPS.Obfuscator.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Mono.Cecil.Mdb">
+      <HintPath>Assets\OPS\Editor\Plugins\Mono.Cecil\OPS.Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Mono.Cecil">
+      <HintPath>Assets\OPS\Editor\Plugins\Mono.Cecil\OPS.Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Mono.Cecil.Pdb">
+      <HintPath>Assets\OPS\Editor\Plugins\Mono.Cecil\OPS.Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Assets.Editor">
+      <HintPath>Assets\OPS\Editor\Plugins\OPS.Assets.Editor\OPS.Assets.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Mono.Cecil.Rocks">
+      <HintPath>Assets\OPS\Editor\Plugins\Mono.Cecil\OPS.Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Serialization.Json">
+      <HintPath>Assets\OPS\Plugins\Json\OPS.Serialization.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
@@ -717,17 +742,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Unity.2DPlatformer.Tutorials.csproj">
-      <Project>{AD16333C-AB1A-AD09-C483-E32C18467324}</Project>
-      <Name>Unity.2DPlatformer.Tutorials</Name>
-    </ProjectReference>
     <ProjectReference Include="NavMeshComponentsEditor.csproj">
       <Project>{890AEA1F-ADCA-7315-B201-DE70C027A078}</Project>
       <Name>NavMeshComponentsEditor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.2DPlatformer.Tutorials.csproj">
+      <Project>{AD16333C-AB1A-AD09-C483-E32C18467324}</Project>
+      <Name>Unity.2DPlatformer.Tutorials</Name>
+    </ProjectReference>
     <ProjectReference Include="NavMeshComponents.csproj">
       <Project>{276CD531-7C0F-F2F2-FB4D-ABBFB13DEC51}</Project>
       <Name>NavMeshComponents</Name>
+    </ProjectReference>
+    <ProjectReference Include="OPS.Obfuscator.csproj">
+      <Project>{220D034E-13F4-3610-602C-12E35BA10F53}</Project>
+      <Name>OPS.Obfuscator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

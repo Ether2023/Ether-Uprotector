@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using Ether_IL2CPP.LitJson;
-using Ether_Obfuscator.Obfuscators.UnityMonoBehavior;
+using Ether_Obfuscator.Obfuscators.Unity;
+using Ether_Obfuscator.Obfuscators.Resolver;
+using System.Reflection;
 
 namespace Ether_Obfuscator.Obfuscators
 {
@@ -18,7 +20,7 @@ namespace Ether_Obfuscator.Obfuscators
         List<string> ignoreMethod = new List<string>();
         List<string> ignoreField = new List<string>();
         List<string> ignoreClass = new List<string>();
-        Dictionary<string, string> swapMaps= new Dictionary<string, string>();
+        Dictionary<TypeKey, TypeKey> swapMaps= new Dictionary<TypeKey, TypeKey>();
         List<string> jumpName = new List<string>();
         List<string> Mono;
         ReflectionResolver ReflectionResolver;
@@ -53,7 +55,7 @@ namespace Ether_Obfuscator.Obfuscators
             Mono = MonoClass;
             ObfusType = ObufsType;
         }
-        public ObfusFunc(ModuleDefMD module, string[] _ignoreMethod, string[] _ignoreField, string[] _ignoreClass,out Dictionary<string,string> Map ,List<String> MonoClass = null,bool ObufsType = true)
+        public ObfusFunc(ModuleDefMD module, string[] _ignoreMethod, string[] _ignoreField, string[] _ignoreClass,out Dictionary<TypeKey, TypeKey> Map ,List<String> MonoClass = null,bool ObufsType = true)
         {
             ReflectionResolver = new ReflectionResolver(module);
             this.module = module;
@@ -67,7 +69,7 @@ namespace Ether_Obfuscator.Obfuscators
             Mono = MonoClass;
             ObfusType = ObufsType;
         }
-        public ObfusFunc(ModuleDefMD module, Dictionary<string, string> Map, List<String> MonoClass = null, bool ObufsType = true)
+        public ObfusFunc(ModuleDefMD module, Dictionary<TypeKey, TypeKey> Map, List<String> MonoClass = null, bool ObufsType = true)
         {
             ReflectionResolver = new ReflectionResolver(module);
             this.module = module;
@@ -105,7 +107,7 @@ namespace Ether_Obfuscator.Obfuscators
                 foreach (var method in type.Methods.Where(x => !x.IsConstructor && !x.IsVirtual
                 && !x.IsRuntime && !x.IsRuntimeSpecialName && !x.IsAbstract
                 && !((x.GenericParameters != null) && x.GenericParameters.Count > 0) && !(x.Overrides.Count > 0)
-                && !(x.Name.StartsWith("<") || x.Name.StartsWith("do"))))
+                && !(x.Name.StartsWith("<") || x.Name.StartsWith("do") && !x.IsSpecialName)))
                 {
                     if (ignoreMethod.FirstOrDefault(x => method.FullName.Contains(x)) == null)
                         NameGenerator.SetObfusName(method, NameGenerator.Mode.FuncName, 5);
@@ -125,12 +127,13 @@ namespace Ether_Obfuscator.Obfuscators
                     if (MonoUtils.IsMonoBehaviour(type))
                     {
                         string TempName;
+                        TypeKey temptype = new TypeKey(type);
                         do
                         {
                             NameGenerator.SetObfusName(type, NameGenerator.Mode.RandomString, out TempName, 1, 5);
                         } while (jumpName.Contains(type.Name));
                         jumpName.Add(type.Name);
-                        swapMaps.Add(TempName, type.Name);
+                        swapMaps.Add(temptype, new TypeKey(type));
                     }
                 }
                 else if (ObfusType && ignoreClass.FirstOrDefault(x => type.FullName.Contains(x)) == null && !type.IsGlobalModuleType && !type.Name.Contains("`") && !type.IsAbstract && Mono != null)
@@ -138,12 +141,13 @@ namespace Ether_Obfuscator.Obfuscators
                     if(Mono.Contains(type.Name) && MonoUtils.IsMonoBehaviour(type))
                     {
                         string TempName;
+                        TypeKey temptype = new TypeKey(type);
                         do
                         {
                             NameGenerator.SetObfusName(type, NameGenerator.Mode.RandomString, out TempName, 1, 5);
                         } while (jumpName.Contains(type.Name));
                         jumpName.Add(type.Name);
-                        swapMaps.Add(TempName, type.Name);
+                        swapMaps.Add(temptype, new TypeKey(type));
                     }
                 }
             }
@@ -157,4 +161,99 @@ namespace Ether_Obfuscator.Obfuscators
         public string[] custom_ignore_Field;
         public string[] custom_obfus_Class;
         }
+    public class TypeKey
+    {
+        public string Assembly { get; private set; }
+        public string FullName { get; private set; }
+        public string Namespace { get; private set; }
+        public string Name { get; private set; }
+        private TypeKey()
+        {
+        }
+        public TypeKey(TypeDef type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException("TypeDefinition");
+            }
+            Assembly = type.Module.Assembly.Name;
+            FullName = type.FullName;
+            Namespace = type.Namespace;
+            Name = type.Name;
+        }
+        public TypeKey(Type _Type)
+        {
+            if (_Type == null)
+            {
+                throw new ArgumentNullException("_Type");
+            }
+            Assembly = _Type.Assembly.GetName().Name;
+            FullName = _Type.FullName.Replace("+", "/");
+            Namespace = _Type.Namespace;
+            Name = _Type.Name;
+        }
+        public TypeKey(string _Assembly, string _Namespace, string _Name)
+        {
+            if (string.IsNullOrEmpty(_Assembly))
+            {
+                throw new ArgumentNullException("_Assembly");
+            }
+            if (string.IsNullOrEmpty(_Name))
+            {
+                throw new ArgumentNullException("_Name");
+            }
+            Assembly = _Assembly;
+            FullName = (string.IsNullOrEmpty(_Namespace) ? _Name : (_Namespace + "." + _Name));
+            Namespace = _Namespace;
+            Name = _Name;
+        }
+        public override bool Equals(object _Object)
+        {
+            return Equals(_Object as TypeKey);
+        }
+
+        public bool Equals(TypeKey _TypeKey)
+        {
+            if (_TypeKey != null && Assembly.Equals(_TypeKey.Assembly))
+            {
+                return FullName.Equals(_TypeKey.FullName);
+            }
+            return false;
+        }
+        public override int GetHashCode()
+        {
+            return Assembly.GetHashCode() ^ FullName.GetHashCode();
+        }
+        public static bool operator ==(TypeKey _A, TypeKey _B)
+        {
+            if ((object)_A == _B)
+            {
+                return true;
+            }
+            if ((object)_A == null)
+            {
+                return false;
+            }
+            if ((object)_B == null)
+            {
+                return false;
+            }
+            return _A.Equals(_B);
+        }
+
+        public static bool operator !=(TypeKey _A, TypeKey _B)
+        {
+            return !(_A == _B);
+        }
+        public override string ToString()
+        {
+            StringBuilder var_Builder = new StringBuilder();
+            var_Builder.Append("[");
+            var_Builder.Append(Assembly);
+            var_Builder.Append("]");
+            var_Builder.Append(" ");
+            var_Builder.Append(FullName);
+            return var_Builder.ToString();
+        }
+    }
 }

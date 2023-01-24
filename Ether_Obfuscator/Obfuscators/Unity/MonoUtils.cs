@@ -7,19 +7,19 @@ using System.Text;
 using System.Threading.Tasks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using Ether_Obfuscator.Unity;
-using UnityEditor;
-using MonoScript = Ether_Obfuscator.Unity.MonoScript;
-namespace Ether_Obfuscator.Obfuscators.UnityMonoBehavior
+using Ether_UnityAsset;
+using Ether_UnityAsset.AssetFile;
+using Ether_UnityAsset.AssetFile.Object;
+namespace Ether_Obfuscator.Obfuscators.Unity
 {
     public static class MonoUtils
     {
         public static AssetsFile LoadAsset(string path)
         {
-            UnityFileReader var_Reader = new UnityFileReader(path);
-            AssetsFile var_AssetsFile = new AssetsFile(var_Reader);
-            var_Reader.Close();
-            return var_AssetsFile;
+            UnityFileReader Reader = new UnityFileReader(path);
+            AssetsFile Asset = new AssetsFile(Reader);
+            Reader.Close();
+            return Asset;
         }
         public static bool IsMonoBehaviour(TypeDef type)
         {
@@ -62,16 +62,26 @@ namespace Ether_Obfuscator.Obfuscators.UnityMonoBehavior
             }
             return result;
         }
-        public static void SetMonoMapToAssetFile(AssetsFile assetsFile, Dictionary<string, string> Maps)
+        public static void SetMonoMapToAssetFile(AssetsFile Asset, Dictionary<TypeKey, TypeKey> Map)
         {
-            List<MonoScript> MonoScriptList = assetsFile.GetObjects<MonoScript>();
-
-            for(int i = 0; i < MonoScriptList.Count; i++)
+            if (Asset == null)
             {
-                string str;
-                if (Maps.ContainsKey(MonoScriptList[i].Name) && MonoScriptList[i].AssemblyName == "Assembly-CSharp.dll" && Maps.TryGetValue(MonoScriptList[i].Name,out str))
+                throw new ArgumentNullException("Asset");
+            }
+            if (Map == null)
+            {
+                throw new ArgumentNullException("Map");
+            }
+            List<MonoScript> MonoScriptList = Asset.GetObjects<MonoScript>();
+            for (int i = 0; i < MonoScriptList.Count; i++)
+            {
+                string Assembly = MonoScriptList[i].AssemblyName.Substring(0, MonoScriptList[i].AssemblyName.Length - 4);
+                string Namespace = MonoScriptList[i].Namespace;
+                string Name = MonoScriptList[i].Name;
+                TypeKey Key = new TypeKey(Assembly, Namespace, Name);
+                if (Map.ContainsKey(Key) && Map.TryGetValue(Key, out var ValueTypeKey))
                 {
-                    MonoScriptList[i].UpdateType(MonoScriptList[i].AssemblyName, string.IsNullOrEmpty(MonoScriptList[i].Namespace) ? "" : MonoScriptList[i].Namespace, string.IsNullOrEmpty(str) ? "" : str);
+                    MonoScriptList[i].UpdateType(MonoScriptList[i].AssemblyName, string.IsNullOrEmpty(ValueTypeKey.Namespace) ? "" : ValueTypeKey.Namespace, string.IsNullOrEmpty(ValueTypeKey.Name) ? "" : ValueTypeKey.Name);
                 }
             }
         }
@@ -79,11 +89,11 @@ namespace Ether_Obfuscator.Obfuscators.UnityMonoBehavior
         {
             if (_AssetsFile == null)
             {
-                throw new ArgumentNullException("_AssetsFile");
+                throw new ArgumentNullException("AssetsFile");
             }
             if (string.IsNullOrEmpty(_FilePath))
             {
-                throw new ArgumentNullException("_FilePath");
+                throw new ArgumentNullException("FilePath");
             }
             if (File.Exists(_FilePath) && !_Override)
             {
@@ -100,12 +110,12 @@ namespace Ether_Obfuscator.Obfuscators.UnityMonoBehavior
         }
     }
     [Serializable]
-    public class MonoClass
+    public class MonoType
     {
         public string Assembly;
         public string Namespace;
         public string Name;
-        public MonoClass(string _assembly,string _namespace,string name) {
+        public MonoType(string _assembly,string _namespace,string name) {
             Assembly = _assembly;
             Namespace = _namespace;
             Name = name;

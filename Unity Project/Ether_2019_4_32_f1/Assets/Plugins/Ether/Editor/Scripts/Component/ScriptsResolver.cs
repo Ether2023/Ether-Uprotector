@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ether_Obfuscator.Obfuscators.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Ether_Obfuscator.Unity;
-using Ether_Obfuscator.Obfuscators.UnityMonoBehavior;
 using MonoScript = UnityEditor.MonoScript;
+using MonoType = Ether_Obfuscator.Obfuscators.Unity.MonoType;
 
 public class ScriptsResolver
 {
-    public List<MonoClass> ReferencedMonoScriptTypeList = new List<MonoClass>();
+    public List<MonoType> ReferencedMonoScriptTypeList = new List<MonoType>();
     public List<string> ProjectScripts = new List<string>();
     public void ResolveProjectScripts(UnityAssetReference AssetReference)
     {
@@ -29,7 +29,7 @@ public class ScriptsResolver
         {
             MonoScript MonoScripts = UnityEditor.MonoScript.FromMonoBehaviour(_Component as MonoBehaviour);
             Type type = MonoScripts.GetClass();
-            MonoClass monoClass = new MonoClass(type.Assembly.GetName().Name,type.Namespace,type.Name);
+            MonoType monoClass = new MonoType(type.Assembly.GetName().Name, type.Namespace, type.Name);
             if (!ReferencedMonoScriptTypeList.Contains(monoClass))
             {
                 ReferencedMonoScriptTypeList.Add(monoClass);
@@ -43,7 +43,7 @@ public class ScriptsResolver
         for (int i = 0; i < FoundMonoScripts.Count; i++)
         {
             Type type = FoundMonoScripts[i].GetClass();
-            MonoClass Class = new MonoClass(type.Assembly.GetName().Name, type.Namespace, type.Name);
+            MonoType Class = new MonoType(type.Assembly.GetName().Name, type.Namespace, type.Name);
             if (!ReferencedMonoScriptTypeList.Contains(Class))
             {
                 ReferencedMonoScriptTypeList.Add(Class);

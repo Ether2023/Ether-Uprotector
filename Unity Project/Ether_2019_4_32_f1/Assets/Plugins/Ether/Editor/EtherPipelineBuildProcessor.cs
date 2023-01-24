@@ -1,8 +1,8 @@
 ﻿using Codice.Client.BaseCommands;
 using Ether_Obfuscator;
 using Ether_Obfuscator.Obfuscators;
-using Ether_Obfuscator.Obfuscators.UnityMonoBehavior;
-using Ether_Obfuscator.Unity;
+using Ether_Obfuscator.Obfuscators.Unity;
+using Ether_UnityAsset.AssetFile;
 using JetBrains.Annotations;
 using NUnit.Framework.Internal;
 using System;
@@ -20,7 +20,7 @@ using UnityEngine;
 public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBuildAssemblies, IPostBuildPlayerScriptDLLs, IUnityLinkerProcessor, IPostprocessBuildWithReport
 {
     static bool hasObfuscated = false;
-    Dictionary<string,string> monoSwapMaps = new Dictionary<string, string>();
+    Dictionary<TypeKey, TypeKey> monoSwapMaps = new Dictionary<TypeKey, TypeKey>();
     public int callbackOrder
     {
         get { return 0; }
@@ -183,7 +183,7 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
             string path = BuildResolver.GetGameManagersAssetStandalone(_Report);
             if(File.Exists(path))
             {
-                Log("Found Cache Gamemanager Asset:" + path, LogType.Info);
+                Log("Found Gamemanager Asset:" + path, LogType.Info);
                 ReplaceGamemanagerAsset(path, monoSwapMaps);
             }
             else
@@ -197,8 +197,8 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
         {
             smap.Add(new SwapMap
             {
-                OriginName = map.Key,
-                ObfusName = map.Value,
+                OriginName = map.Key.Name,
+                ObfusName = map.Value.Name,
             });
         }
         _Log.Map = smap.ToArray();
@@ -210,7 +210,7 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
     {
         return _Assemblies;
     }
-    public void ReplaceGamemanagerAsset(string path,Dictionary<string,string> Map)
+    public void ReplaceGamemanagerAsset(string path,Dictionary<TypeKey, TypeKey> Map)
     {
         AssetsFile asset = MonoUtils.LoadAsset(path);
         MonoUtils.SetMonoMapToAssetFile(asset, Map);

@@ -353,6 +353,9 @@
     <Reference Include="Ether_Obfuscator">
       <HintPath>Assets\Plugins\Ether\Plugins\Ether_Obfuscator.dll</HintPath>
     </Reference>
+    <Reference Include="Ether_UnityAsset">
+      <HintPath>Assets\Plugins\Ether\Plugins\Ether_UnityAsset.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms">
       <HintPath>Assets\Plugins\Ether\Plugins\System.Windows.Forms.dll</HintPath>
     </Reference>
@@ -778,13 +781,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Unity.2DPlatformer.Tutorials.csproj">
-      <Project>{AD16333C-AB1A-AD09-C483-E32C18467324}</Project>
-      <Name>Unity.2DPlatformer.Tutorials</Name>
-    </ProjectReference>
     <ProjectReference Include="NavMeshComponentsEditor.csproj">
       <Project>{890AEA1F-ADCA-7315-B201-DE70C027A078}</Project>
       <Name>NavMeshComponentsEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.2DPlatformer.Tutorials.csproj">
+      <Project>{AD16333C-AB1A-AD09-C483-E32C18467324}</Project>
+      <Name>Unity.2DPlatformer.Tutorials</Name>
     </ProjectReference>
     <ProjectReference Include="NavMeshComponents.csproj">
       <Project>{276CD531-7C0F-F2F2-FB4D-ABBFB13DEC51}</Project>

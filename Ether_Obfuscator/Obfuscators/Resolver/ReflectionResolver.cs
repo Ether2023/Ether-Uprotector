@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-namespace Ether_Obfuscator.Obfuscators.UnityMonoBehavior
+namespace Ether_Obfuscator.Obfuscators.Resolver
 {
     public class ReflectionResolver
     {

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using System.IO;    
-using Ether_Obfuscator.Obfuscators.UnityMonoBehavior;
 using System.Linq;
 using System.Runtime.InteropServices;
 using MenuItem = UnityEditor.MenuItem;
 using System.Windows.Forms;
+using Ether_Obfuscator.Obfuscators.Unity;
 
 public class EtherConfig : ScriptableObject
 {
@@ -46,7 +46,7 @@ public class ignore
     public string[] custom_ignore_Field;
     public string[] custom_ignore_Class;
     [HideInInspector]
-    public MonoClass[] MonoBehavior;
+    public MonoType[] MonoBehavior;
     [HideInInspector]
     public string[] ProjectSripts;
     public bool ObfusType = false;
@@ -95,13 +95,6 @@ public class Obfuscations
     public bool FuckILdasm = true;
     public bool PEPacker = true;
     public bool MethodError = true;
-}
-[Serializable]
-public class MonoType
-{
-    public string Assembly;
-    public string Namespace;
-    public string Name;
 }
 
 public class EtherConfigManager : UnityEditor.Editor

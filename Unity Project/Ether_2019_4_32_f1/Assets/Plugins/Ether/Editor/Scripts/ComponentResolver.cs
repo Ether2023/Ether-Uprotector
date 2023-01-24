@@ -1,4 +1,5 @@
-﻿using Ether_Obfuscator.Obfuscators.UnityMonoBehavior;
+﻿using Ether_Obfuscator.Obfuscators.Resolver;
+using Ether_Obfuscator.Obfuscators.Unity;
 using NUnit.Framework.Internal;
 using System;
 using System.Collections;

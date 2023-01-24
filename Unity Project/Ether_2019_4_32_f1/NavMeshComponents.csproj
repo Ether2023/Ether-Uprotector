@@ -266,6 +266,9 @@
     <Reference Include="Ether_Obfuscator">
       <HintPath>Assets\Plugins\Ether\Plugins\Ether_Obfuscator.dll</HintPath>
     </Reference>
+    <Reference Include="Ether_UnityAsset">
+      <HintPath>Assets\Plugins\Ether\Plugins\Ether_UnityAsset.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms">
       <HintPath>Assets\Plugins\Ether\Plugins\System.Windows.Forms.dll</HintPath>
     </Reference>
@@ -283,6 +286,27 @@
     </Reference>
     <Reference Include="System.IO.Compression.FileSystem">
       <HintPath>Library\PackageCache\com.unity.connect.share@2.0.3\Plugins\System.IO.Compression.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Obfuscator.Editor">
+      <HintPath>Assets\OPS\Obfuscator\Editor\Plugins\OPS.Obfuscator.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Mono.Cecil.Mdb">
+      <HintPath>Assets\OPS\Editor\Plugins\Mono.Cecil\OPS.Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Mono.Cecil">
+      <HintPath>Assets\OPS\Editor\Plugins\Mono.Cecil\OPS.Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Mono.Cecil.Pdb">
+      <HintPath>Assets\OPS\Editor\Plugins\Mono.Cecil\OPS.Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Assets.Editor">
+      <HintPath>Assets\OPS\Editor\Plugins\OPS.Assets.Editor\OPS.Assets.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Mono.Cecil.Rocks">
+      <HintPath>Assets\OPS\Editor\Plugins\Mono.Cecil\OPS.Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="OPS.Serialization.Json">
+      <HintPath>Assets\OPS\Plugins\Json\OPS.Serialization.Json.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity 2019.4.32f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>
@@ -641,11 +665,11 @@
     <Reference Include="Boo.Lang">
       <HintPath>C:\Program Files\Unity 2019.4.32f1\Editor\Data\MonoBleedingEdge\lib\mono\unityscript\Boo.Lang.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

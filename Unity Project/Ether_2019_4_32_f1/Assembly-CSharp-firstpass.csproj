@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{108CCBCD-55DB-8E3B-9282-323C6C4849C7}</ProjectGuid>
+    <ProjectGuid>{D947F793-F929-21BE-DBDF-820E293E3CDB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
@@ -47,7 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Package</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>2.0.16</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>2.0.17</UnityProjectGeneratorVersion>
     <UnityProjectType>GamePlugins:3</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2019.4.32f1</UnityVersion>
@@ -56,12 +56,13 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Plugins\Beebyte\Obfuscator\DoNotFakeAttribute.cs" />
-    <Compile Include="Assets\Plugins\Beebyte\Obfuscator\ObfuscateLiterals.cs" />
-    <Compile Include="Assets\Plugins\Beebyte\Obfuscator\RenameAttribute.cs" />
-    <Compile Include="Assets\Plugins\Beebyte\Obfuscator\ReplaceLiteralsWithName.cs" />
-    <Compile Include="Assets\Plugins\Beebyte\Obfuscator\SkipAttribute.cs" />
-    <Compile Include="Assets\Plugins\Beebyte\Obfuscator\SkipRenameAttribute.cs" />
+    <Compile Include="Assets\Plugins\Ether\test.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Plugins\Ether\Plugins\Ether_UnityAsset.dll" />
+    <None Include="Assets\Plugins\Ether\Plugins\Ether_Obfuscator.dll" />
+    <None Include="Assets\Plugins\Ether\Plugins\System.Windows.Forms.dll" />
+    <None Include="Assets\Plugins\Ether\Plugins\dnlib.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -248,13 +249,19 @@
       <HintPath>C:\Program Files\Unity 2019.4.32f1\Editor\Data\Managed\UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="dnlib">
-      <HintPath>Assets\O&amp;ZProtector\Plugins\dnlib.dll</HintPath>
+      <HintPath>Assets\Plugins\Ether\Plugins\dnlib.dll</HintPath>
     </Reference>
-    <Reference Include="OZ_Obfuscator">
-      <HintPath>Assets\O&amp;ZProtector\Plugins\OZ_Obfuscator.dll</HintPath>
+    <Reference Include="Ether_Obfuscator">
+      <HintPath>Assets\Plugins\Ether\Plugins\Ether_Obfuscator.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>Assets\Plugins\Ether\Plugins\System.Windows.Forms.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Compression.FileSystem">
       <HintPath>Library\PackageCache\com.unity.connect.share@2.0.3\Plugins\System.IO.Compression.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Ether_UnityAsset">
+      <HintPath>Assets\Plugins\Ether\Plugins\Ether_UnityAsset.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity 2019.4.32f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>
@@ -676,15 +683,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="NavMeshComponentsEditor.csproj">
-      <Project>{C42E5029-F5D9-D33C-BEB6-BECA95FE4E66}</Project>
+      <Project>{890AEA1F-ADCA-7315-B201-DE70C027A078}</Project>
       <Name>NavMeshComponentsEditor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.2DPlatformer.Tutorials.csproj">
-      <Project>{DDFEBA95-6C62-AA50-F4D7-3C4929929AB3}</Project>
+      <Project>{AD16333C-AB1A-AD09-C483-E32C18467324}</Project>
       <Name>Unity.2DPlatformer.Tutorials</Name>
     </ProjectReference>
     <ProjectReference Include="NavMeshComponents.csproj">
-      <Project>{811AEBCD-FB3A-28DD-C04B-914DB27DFA8B}</Project>
+      <Project>{276CD531-7C0F-F2F2-FB4D-ABBFB13DEC51}</Project>
       <Name>NavMeshComponents</Name>
     </ProjectReference>
   </ItemGroup>
