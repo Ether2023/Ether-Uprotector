@@ -4,21 +4,48 @@
 
 namespace binary_encrypt_mgr
 {
-	void binary_encrypt(const char* bi, const char* mdi,const char* bo, const char* mdo) {
-		// process binary
-		uint32_t crc_x32;
-		uint32_t crc_x64;
-		proc_binary(bi, bo, crc_x32, crc_x64);
-		proc_metadata(mdi, mdo, crc_x32, crc_x64);
+    static encrypt_config config;
+
+	void encrypt_binary(encrypt_config conf, string ui1, string uo1, string ui2, string uo2
+                        , string bi1, string bo1, string bi2, string bo2,
+                        string mi, string mo) {
+        config = conf;
+
+        // process unity binary(for obfuscate il2cpp API)
+        if(conf.enable_api_obfuscate) {
+            proc_unity_binary(ui1.c_str(), uo1.c_str());
+            proc_unity_binary(ui2.c_str(), uo2.c_str());
+        }
+
+		// process il2cpp binary(only read crc in current)
+		uint32_t crc_x32 = 0;
+		uint32_t crc_x64 = 0;
+		proc_binary(bi1.c_str(), bo1.c_str(), crc_x32, crc_x64);
+		proc_binary(bi2.c_str(), bo2.c_str(), crc_x32, crc_x64);
+        // at least one il2cpp binary file
+        if(crc_x32==0&&crc_x64==0){
+            throw "[binary_encrypt_mgr] il2cpp binary file not found";
+        }
+
+        // process metadata
+		proc_metadata(mi.c_str(), mo.c_str(), crc_x32, crc_x64);
 		cout << "[binary_encrypt_mgr] encrypt succ" << endl;
 	}
 
+    void proc_unity_binary(const char* bi, const char* bo){
+        // TODO: obfuscate il2cpp API
+    }
+
 	void proc_binary(const char* bi, const char* bo, uint32_t& crc_x32, uint32_t& crc_x64) {
 		char* binary_data;
+        if(_access(bi, 0) != 0){
+            // maybe don't have binary file for this architecture
+            return;
+        }
 		size_t sz_bin = utils::read_file(bi, &binary_data);
 
 		if (sz_bin == 0) {
-			throw "[binary_encrypt_mgr] failed to open il2cppbinary file";
+			throw "[binary_encrypt_mgr] failed to open il2cpp binary file";
 		}
 
 		string platform = "Unknown";
@@ -37,15 +64,15 @@ namespace binary_encrypt_mgr
 					break;
 				}
 			}
-			if (binary_data[pe_addr + 1] == 0x4C) {// PE..L
+			if (binary_data[pe_addr + sizeof(int)] == 0x4C) {// PE..L
 				architecture = "x86";
 			}
-			if (binary_data[pe_addr + 1] == 0x64) {// PE..d
+			if (binary_data[pe_addr + sizeof(int)] == 0x64) {// PE..d
 				architecture = "x64";
 			}
 		}
 		if (((int*)binary_data)[0] == 0x464C457F) {// ELF
-			
+            platform = "ANDROID";
 			if (binary_data[4] == 1) {
 				architecture = "armeabi-v7a";
 			}
@@ -53,15 +80,13 @@ namespace binary_encrypt_mgr
 				architecture = "arm64-v8a";
 			}
 		}
-		cout << "[binary_encrypt_mgr] il2cppbinary platfrom : "<<platform << endl;
-		cout << "[binary_encrypt_mgr] il2cppbinary architecture : "<< architecture << endl;
 
 		uint32_t crc_bin = encryption::crc32(binary_data, sz_bin);
 		printf("[binary_encrypt_mgr] il2cppbinary %s %s crc32 is %08x\n", platform.c_str(), architecture.c_str(), crc_bin);
 
-		// TODO: Classify x32 and x64
-		crc_x32 = crc_bin;
-		crc_x64 = crc_bin;
+        (architecture == "armeabi-v7a" || architecture == "x86" ? crc_x32 : crc_x64) = crc_bin;
+
+        free(binary_data);
 
 		cout << "[binary_encrypt_mgr] binary "<<platform <<" " << architecture << " encrypted" << endl;
 	}
@@ -72,11 +97,12 @@ namespace binary_encrypt_mgr
 		char* data_o;
 		size_t s_o = utils::read_file(mdi, &data_o);
 
-		if (s_o == 0) {
-			throw "[binary_encrypt_mgr] failed to open il2cppbinary file";
-		}
+        if (s_o == 0) {
+            throw "[binary_encrypt_mgr] failed to open il2cppbinary file";
+        }
 
-		// check sanity
+
+        // check sanity
 		if (*((int*)data_o) != 0xFAB11BAF) {
 			cout << "[binary_encrypt_mgr] invaild metadata file" << endl;
 			throw "[binary_encrypt_mgr] invaild metadata file";
@@ -110,14 +136,15 @@ namespace binary_encrypt_mgr
 		generate_ozmetadata_header(data, s_o, crc_x32, crc_x64);
 
 		// all encrypt
-		const char* key = "REPLACE_THIS_FOR_A_CUSTOM_KEY";
+		const char* key = config.encrypt_key.c_str();
+        cout<<"[binary_encrypt_mgr] applied custom key: "<<key<<endl;
 		// dont encrypt fronthdr now, so that we can get file length
 		encryption::oz_encryption(data + sizeof(FrontHeader), s_o - sizeof(FrontHeader), key, strlen(key));
 		// encrypt fronthdr now
 		encryption::oz_encryption(data, sizeof(FrontHeader), key, strlen(key));
 
 		utils::write_file(mdo, data, s_o + 1024);
-
+        free(data);
 		cout << "[binary_encrypt_mgr] global-metadata.dat file encrypted" << endl;
 	}
 
@@ -134,14 +161,10 @@ namespace binary_encrypt_mgr
 		memcpy((data + len_o), data, MAX_HEADER_LENGTH);
 
 		// encrypt header
-		/*size_t hl;
-		xxtea_encrypt(data, MAX_HEADER_LENGTH, "o&z_il2cpp_encryption", &hl);*/
-		const char* header_key = "REPLACE_THIS_FOR_A_CUSTOM_KEY";
+		const char* header_key = config.encrypt_key.c_str();
 		encryption::oz_encryption((data + len_o), MAX_HEADER_LENGTH, header_key, strlen(header_key));
-		/*for (int i = 0; i < MAX_HEADER_LENGTH; i++) {
-			data[i + len_o] ^= header_key[i % keylen];
-		}*/
 
+        cout << "[binary_encrypt_mgr] metadata size : "<< len_o << endl;
 		// create header
 		FrontHeader* fhdr = (FrontHeader*)malloc(sizeof(FrontHeader));
 		if (fhdr == NULL) {
@@ -168,8 +191,6 @@ namespace binary_encrypt_mgr
 			data[i] = rand();
 			data[i] = 0;
 		}
-
-		// TODO : calc metadata's crc
 
 		memcpy(data, fhdr, sizeof(FrontHeader));
 	}

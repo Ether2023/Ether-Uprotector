@@ -63,15 +63,14 @@ namespace encryption {
 
 
 #if _WIN32
-	uint32_t check_sum_gameassembly(const char* binpath, uint32_t crc) {
+	void check_sum_gameassembly(uint32_t crc32, uint32_t crc64) {
 		char* this_binary;
 		int sz_this = 0;
 		//const char* binpath = fp;
 		FILE* pFile;
-		fopen_s(&pFile, binpath, "rb");
+		fopen_s(&pFile, encryption::get_string_decrypt("F\\l\\>jldjYkt-[ic", -667221561), "rb");
 		if (pFile == NULL) {
 			kill_process();
-			return 123;
 		}
 		fseek(pFile, 0, SEEK_END);
 		sz_this = ftell(pFile);
@@ -85,12 +84,43 @@ namespace encryption {
 			kill_process();
 		}
 		fclose(pFile);
-		int crc_get = encryption::crc32(this_binary, sz_this);
+
+        //std::string platform = "Unknown";
+        int architecture = -1;
+
+        if (((int*)this_binary)[0] == 0x905A4D) {// MZ
+            //platform = "WIN32";
+
+            int pe_addr = 0;
+            while (true) {
+                if (*((int*)(this_binary + pe_addr)) == 0x4550) {// PE
+                    break;
+                }
+                pe_addr += sizeof(int);
+                if (pe_addr > result) {
+                    break;
+                }
+            }
+            if (this_binary[pe_addr + 1] == 0x4C) {// PE..L
+                architecture = 32;
+            }
+            if (this_binary[pe_addr + 1] == 0x64) {// PE..d
+                architecture = 64;
+            }
+        }
+        else{// not win32 dll
+            kill_process();
+        }
+
+		uint32_t crc_get = encryption::crc32(this_binary, sz_this);
 		free(this_binary);
-		if (crc_get != crc) {
-			kill_process();
+		if ((architecture == 32 && crc_get == crc32) || (architecture == 64 && crc_get == crc64) ) {
+			// check sum success
 		}
-		return (uint32_t)crc_get;
+        else{
+            // fail
+            kill_process();
+        }
 	}
 
 	void kill_process() {
@@ -107,7 +137,7 @@ namespace encryption {
 #endif
 
 #if IL2CPP_TARGET_ANDROID
-	uint32_t check_sum_libil2cpp(const char* binpath, uint32_t crc) {
+	void check_sum_libil2cpp(uint32_t crc32, uint32_t crc64) {
 
 	}
 #endif

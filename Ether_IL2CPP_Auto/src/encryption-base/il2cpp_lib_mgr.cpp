@@ -2,13 +2,15 @@
 #include "utils.h"
 #include "cpp_mgr.h"
 #include "static_res.h"
+#include "../encrypt_config.h"
 
 #define EXT_OZ_BACKUP ".ether_il2cpp_bak"
 
 namespace il2cpp_lib_mgr
 {
-	void proc_lib(const char* p) {
+    void proc_lib(const char* p, encrypt_config cfg) {
 		string sp = string(p);
+        il2cpp_lib_mgr::conf = cfg;
 		// libil2cpp
 
 		cout << "[il2cpp_lib_mgr] " << "start generate at" << " path:" << p << endl;
@@ -23,7 +25,7 @@ namespace il2cpp_lib_mgr
 
 		if (!succ) {
 			cout << "[il2cpp_lib_mgr] " << "failed to find il2cpp-metadata.h in path:" << sp << endl;
-			return;
+			throw "failed to find il2cpp-metadata.h";
 		}
 		cout << "done" << endl;
 
@@ -44,7 +46,7 @@ namespace il2cpp_lib_mgr
 				succ = true;
 				cout << "[il2cpp_lib_mgr] " << "processing MetadataCache.cpp...\n";
                 // "./oz_scripts/mdc.ozs"
-				cpp_mgr::proc_cpp((s + EXT_OZ_BACKUP).c_str(), s.c_str(), (const char*)_mdc_ozs);
+				cpp_mgr::proc_cpp((s + EXT_OZ_BACKUP).c_str(), s.c_str(), (const char*)_mdc_ozs, conf);
 				cout << "done" << endl;
 				break;
 			}
@@ -53,7 +55,7 @@ namespace il2cpp_lib_mgr
 
 		if (!succ) {
 			cout << "[il2cpp_lib_mgr] " << "failed to find MetadataCache.cpp" << " path:" << sp + "/vm/" << endl;
-			return;
+            throw "failed to find MetadataCache.cpp";
 		}
 
 		// move includes(oz_encryption)
@@ -77,9 +79,9 @@ namespace il2cpp_lib_mgr
 		//Check bak
 		for (auto s : fs) {
 			if (s.find(EXT_OZ_BACKUP) != string::npos) {
-                string err = (string("[il2cpp_lib_mgr] already installed. please uninstall first. path:") + sp).c_str();
-                //cout << err << endl;
-                throw err.c_str();
+                string err = (string("[il2cpp_lib_mgr] already installed. please uninstall first. path:") + sp);
+                cout << err<<endl;
+                throw " already installed.";
             }
 		}
 
@@ -92,7 +94,7 @@ namespace il2cpp_lib_mgr
 				CopyFileA(s.c_str(), (s + EXT_OZ_BACKUP).c_str(), FALSE);
 
                 // "./oz_scripts/metadataheader.ozs"
-				cpp_mgr::proc_cpp((s + EXT_OZ_BACKUP).c_str(), s.c_str(), (const char*)_metadataheader_ozs);
+				cpp_mgr::proc_cpp((s + EXT_OZ_BACKUP).c_str(), s.c_str(), (const char*)_metadataheader_ozs, conf);
 				return true;
 			}
 

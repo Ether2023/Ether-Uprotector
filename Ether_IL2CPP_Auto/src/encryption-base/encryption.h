@@ -1,4 +1,5 @@
-#include <iostream>
+#pragma once
+
 #include <stdio.h>
 #include <string.h>
 #include <string> 
@@ -9,11 +10,11 @@ namespace encryption {
 	const char* get_string_decrypt(const char* str, int key);
 
 #if _WIN32
-	uint32_t check_sum_gameassembly(const char* binpath, uint32_t crc);
+	void check_sum_gameassembly(uint32_t crc32, uint32_t crc64);
 #endif
 
 #if IL2CPP_TARGET_ANDROID
-	uint32_t check_sum_libil2cpp(const char* binpath, uint32_t crc);
+	void check_sum_libil2cpp(uint32_t crc32, uint32_t crc64);
 #endif
 	void kill_process();
 }

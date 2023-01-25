@@ -4,6 +4,8 @@
 #include "encryption-base/cpp_mgr.h"
 #include "encryption-base/binary_encrypt_mgr.h"
 #include "encryption-base/utils.h"
+#include "encrypt_config.h"
+#include "../include/json.h"
 
 #define DEVELOPMENT_VERSION 1
 
@@ -24,7 +26,7 @@ extern "C"{
 ETHER_EXPORT int __stdcall get_version();
 ETHER_EXPORT int __stdcall get_api_version();
 ETHER_EXPORT bool __stdcall process_libil2cpp(const char* path, const char* config);
-ETHER_EXPORT bool __stdcall restore_libil2cpp(const char* path);
+ETHER_EXPORT bool __stdcall restore_libil2cpp(const char* path, const char* config);
 
 ETHER_EXPORT bool __stdcall encrypt_win( const char* game_dir,const char* game_exe_name, const char* config);
 

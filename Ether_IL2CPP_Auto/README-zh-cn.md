@@ -4,6 +4,10 @@
 
 自动生成libil2cpp代码, 一键加密global-metadata.dat, 支持绝大多数unity版本
 
+## 保护效果
+
+[Windows Build](./Examples/EtherIl2cppBuild.zip)
+
 ## 保护内容
 
 | 功能                                | 支持 |
@@ -26,23 +30,19 @@
 | ------------------------------------------------------------ | ----------------------------- |
 | int get_version()                                            | 获取当前版本                  |
 | int get_api_version()                                        | 获取当前调用Api版本           |
-| bool process_libil2cpp(string path, string config)           | 生成EtherLibil2cpp            |
-| bool restore_libil2cpp(string path)                          | 恢复libil2cpp                 |
-| bool encrypt_win(string game_dir,string game_exe_name, string config) | Windows平台加密               |
-| bool encrypt_android(string input_apk_unpack, string config) | Android平台加密 (需先解压apk) |
+| bool process_libil2cpp(string path, string encrypt_config)   | 生成EtherLibil2cpp            |
+| bool restore_libil2cpp(string path, string config)           | 恢复libil2cpp                 |
+| bool encrypt_win(string game_dir,string game_exe_name, string encrypt_config) | Windows平台加密               |
+| bool encrypt_android(string input_apk_unpack, string encrypt_config) | Android平台加密 (需先解压apk) |
 
 我们正在全力开发GUI程序哦,敬请期待
 
-#### 2.生成exe使用命令行调用(临时调试使用)
-生成exe文件, 通过命令行调用
-| 命令行                                                  | 功能                          |
-| ------------------------------------------------------- | ----------------------------- |
-| `--proclib-p     <libil2cpp_path>`                      | 生成EtherLibil2cpp            |
-| `--restorelib-p  <libil2cpp_path> `                     | 恢复libil2cpp                 |
-| `--enc-android-p <apk_unpack_path>            <config>` | Android平台加密 (需先解压apk) |
-| `--enc-win-p     <game_path>       <exe_name> <config>` | Windows平台加密               |
-| `--version`                                             | 获取当前版本                  |
-| `--apiversion`                                          | 获取当前调用Api版本           |
+#### 2.使用我们临时制作的UGUI程序 
+
+下载打包版本[Windows](./Examples/EtherIl2cppBuild.zip), 或自行构建Unity工程[UnitySDK](./Examples/EtherIl2cppSDK.zip)
+
+从旧版更新到新版 : 将`EtherIl2cpp.dll`替换`EtherIl2cpp_Data/Plugins/EtherIl2cpp.dll`, 卸载重装EtherIl2cpp
+
 
 ## 支持的Unity版本
 unity2017.1.x - 2022.1.x

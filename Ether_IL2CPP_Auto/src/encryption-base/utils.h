@@ -1,25 +1,25 @@
 #pragma once
 
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include <string>
 #include <io.h>
 #include <vector>
 #include <codecvt>
 #include <windows.h>
-#include "../../include/SimpleIni.h"
+#include "../../include/json.h"
 
 #include "err_code.h"
 #include "binary_encrypt_mgr.h"
+#include "../encrypt_config.h"
 
 using namespace std;
-
-static CSimpleIni ini;
 
 namespace utils {
 
 	// main func
-	void load_config();
+	void load_config(string s, encrypt_config &cfg);
 	void show_help();
 
 	// file utils
@@ -44,4 +44,6 @@ namespace utils {
 	// other
 	void string_split(string str, const char* spl, vector<string>& v);
 	void string_split_w(wstring str, const wchar_t* spl, vector<wstring>& v);
+    void cout2log_file(const char* fp);
+    void close_log_file(const char* fp);
 }

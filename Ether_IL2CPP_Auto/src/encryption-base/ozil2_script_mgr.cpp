@@ -99,6 +99,7 @@ namespace ozil2_script_mgr
 
 	void change_value(vector<oz_script_var>& vars, string name, int v) {
 		bool declared = false;
+
 		for (int i = 0; i < vars.size(); i++) {
 			if (vars[i].n == name.substr(1)) {
 				vars[i].intv = v;
@@ -216,7 +217,7 @@ namespace ozil2_script_mgr
 
 				break;
 			case 10:
-				printf("%d", parse_int(vars, cmd[1]));
+				cout << parse_int(vars, cmd[1]);
 				break;
 			case 11:
 				cout << parse_str(cmd[1]);

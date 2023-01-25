@@ -6,6 +6,10 @@
 
 Automatically generate `libil2cpp code`, encrypt `global-metadata.dat` with one key, and support most unity versions
 
+## Protect Sample
+
+[Windows Build](./Examples/EtherIl2cppBuild.zip)
+
 ## Protect Content
 
 |Function                       |Support|
@@ -22,29 +26,24 @@ Automatically generate `libil2cpp code`, encrypt `global-metadata.dat` with one 
 
 ## Usage
 
-#### 1.Use dllexport api (recommended)
+#### 1.Use dllexport api
 
 | API                                                          | Function                                                 |
 | ------------------------------------------------------------ | -------------------------------------------------------- |
 | int get_version()                                            | Get current version                                      |
 | int get_api_version()                                        | Get current api version                                  |
-| bool process_libil2cpp(string path, string config)           | Generate `EtherLibil2cpp`                                |
-| bool restore_libil2cpp(string path)                          | Restore to original `libil2cpp`                          |
-| bool encrypt_win(string game_dir,string game_exe_name, string config) | Encrypt game for `Windows`                               |
-| bool encrypt_android(string input_apk_unpack, string config) | Encrypt game for `Android `(Unpack apk file is required) |
+| bool process_libil2cpp(string path, string encrypt_config_json) | Generate `EtherLibil2cpp`                                |
+| bool restore_libil2cpp(string path, string encrypt_config_json) | Restore to original `libil2cpp`                          |
+| bool encrypt_win(string game_dir,string game_exe_name, string encrypt_config) | Encrypt game for `Windows`                               |
+| bool encrypt_android(string input_apk_unpack, string encrypt_config) | Encrypt game for `Android `(Unpack apk file is required) |
 
 We're working on GUI programs. Coming soon~
 
-#### Use command line calls 
+#### 2.Use our temporary program made with Unity GUI
 
-| Command                                                 | Function                                                |
-| ------------------------------------------------------- | ------------------------------------------------------- |
-| `--proclib-p     <libil2cpp_path>`                      | Generate `EtherLibil2cpp`                               |
-| `--restorelib-p  <libil2cpp_path> `                     | Restore to original `libil2cpp`                         |
-| `--enc-android-p <apk_unpack_path>            <config>` | Encrypt game for `Android`(Unpack apk file is required) |
-| `--enc-win-p     <game_path>       <exe_name> <config>` | Encrypt game for `Windows`                              |
-| `--version`                                             | Get current version                                     |
-| `--apiversion`                                          | Get current api version                                 |
+Download this [WindowsBuild](./Examples/EtherIl2cppBuild.zip), or build by your self with unity project [UnitySDK](./Examples/EtherIl2cppSDK.zip)
+
+Update `EtherIl2cpp.dll`(Core module) : Replace new `EtherIl2cpp.dll` to `EtherIl2cpp_Data/Plugins/EtherIl2cpp.dll`, then reinstall EtherIl2cpp
 
 ## Supported Unity Version
 

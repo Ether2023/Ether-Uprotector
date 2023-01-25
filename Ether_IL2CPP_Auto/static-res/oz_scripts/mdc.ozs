@@ -19,7 +19,7 @@ printsn remove\_check\_sum\_finished
 
 #变量
 find_str_in_file s_GlobalMetadata 0 $head
-insert_line $head static\_const\_FrontHeader*\_frontHeader;
+insert_line $head static\_FrontHeader*\_frontHeader;
 
 #头引用
 #oz_encryption

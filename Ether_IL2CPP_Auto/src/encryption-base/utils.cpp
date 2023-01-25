@@ -1,39 +1,34 @@
-#include <locale>
 #include "utils.h"
 #include "static_res.h"
 
-#define CONFIG_FILE_NAME "EtherIl2cpp.ini"
-#define CONFIG_ENCRYPTION "Encryption"
-
 namespace utils {
 	void show_help() {
-		cout << "\t--proclib-p     <libil2cpp_path >                      \tÉú³ÉEtherLibil2cpp" << endl;
-		cout << "\t--restorelib-p  <libil2cpp_path >                      \t»¹Ô­libil2cpp" << endl;
-		cout << "\t--enc-android-p <apk_unpack_path> <config  >           \t¼ÓÃÜapk" << endl;
-		cout << "\t--enc-win-p     <game_path      > <exe_name> <config>  \t¼ÓÃÜexe" << endl;
-		cout << "\t--version                                              \t»ñÈ¡µ±Ç°°æ±¾" << endl;
-		cout << "\t--apiversion                                           \t»ñÈ¡µ±Ç°µ÷ÓÃApi°æ±¾" << endl;
+		cout << "\t--proclib-p     <libil2cpp_path >                      \tGenerate \"EtherLibil2cpp\"" << endl;
+		cout << "\t--restorelib-p  <libil2cpp_path >                      \tRestore to original libil2cpp" << endl;
+		cout << "\t--enc-android-p <apk_unpack_path> <encrypt_config  >           \tEncrypt apk file" << endl;
+		cout << "\t--enc-win-p     <game_path      > <exe_name> <encrypt_config>  \tEncrypt exe file" << endl;
+		cout << "\t--version                                              \tGet current version" << endl;
+		cout << "\t--apiversion                                           \tGet current Api version" << endl;
 	}
 
-    void try_create_config() {
-        ini.SetUnicode();
-        if (_access(CONFIG_FILE_NAME, 0) != 0)
-        {
-            ini.SetValue(CONFIG_ENCRYPTION, "Encrypt_Key", "REPLACE_IT_WITH_A_CUSTOM_KEY");
-            ini.SetBoolValue(CONFIG_ENCRYPTION, "Enable_CheckSum_WIN32", true);
-            ini.SetBoolValue(CONFIG_ENCRYPTION, "Enable_CheckSum_ANDROID", false);
-            ini.SetBoolValue(CONFIG_ENCRYPTION, "Enable_StringsEncrypt", false);
-            ini.SaveFile(CONFIG_FILE_NAME);
-        }
-        
-    }
+    void load_config(string s, encrypt_config &cfg) {
+        // encrypt_config str should be:
+        // "logfile output.log unity_version 2017.4.30f1 encrypt_key 123456" ...
 
-    void load_config() {
-        try_create_config();
-        ini.LoadFile(CONFIG_FILE_NAME);
-        string key = ini.GetValue(CONFIG_ENCRYPTION, "Encrypt_Key");
-        binary_encrypt_mgr::encrypt_key = key;
-        //ini.SaveFile("oz_il2cpp.ini");
+        Json::Value root;
+        Json::Reader reader;
+        reader.parse(s, root);
+
+        cfg.logfile = root["logfile"].asString();
+        if(cfg.logfile!=""){
+            cout2log_file(cfg.logfile.c_str());
+        }
+        cfg.unity_version = root["unity_version"].asString();
+        cfg.encrypt_key = root["encrypt_key"].asString();
+        cfg.enable_check_sum = root["enable_check_sum"].asBool();
+        cfg.enable_api_obfuscate = root["enable_api_obfuscate"].asBool();
+        cfg.enable_strings_encrypt = root["enable_strings_encrypt"].asBool();
+
     }
 
     void read_file_lines(const char* fp, std::vector<string>& lines) {
@@ -136,9 +131,9 @@ namespace utils {
             printf("[utils::read_file] Failed to open file %s\n", path);
             return 0;
         }
-        fseek(pFile, 0, SEEK_END);//¶Áµ½×îºó
-        fileSize = ftell(pFile);//»ñÈ¡µ±Ç°Î»ÖÃ£¨¾ÍÊÇÎÄ¼þµÄ´óÐ¡ÁË£©
-        rewind(pFile);//·µ»Øµ½0 pos
+        fseek(pFile, 0, SEEK_END);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        fileSize = ftell(pFile);//ï¿½ï¿½È¡ï¿½ï¿½Ç°Î»ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ä´ï¿½Ð¡ï¿½Ë£ï¿½
+        rewind(pFile);//ï¿½ï¿½ï¿½Øµï¿½0 pos
         buffer = (char*)malloc(sizeof(char) * fileSize + 1);
         if (buffer == NULL) {
             exit(ERR_CODE_MEM);
@@ -287,4 +282,16 @@ namespace utils {
         }
         return src;
     }
+
+    static ofstream g_log;
+
+    void cout2log_file(const char* fp){
+        g_log = ofstream(fp);
+        cout.rdbuf(g_log.rdbuf());
+    }
+
+    void close_log_file(const char* fp){
+        g_log.close();
+    }
+
 }

@@ -1,7 +1,8 @@
+#include "ozil2_script_mgr.h"
 #include "cpp_mgr.h"
 #include "utils.h"
-#include "ozil2_script_mgr.h"
 #include "static_res.h"
+#include "il2cpp_lib_mgr.h"
 
 namespace cpp_mgr {
 
@@ -16,7 +17,7 @@ namespace cpp_mgr {
 				}
 			}
 			else {
-				bool find = false;
+				//find = false;
 			}
 			if (find) {
 				return num;
@@ -74,11 +75,15 @@ namespace cpp_mgr {
 		vector<string> ins;
         // TODO: improve this code
         if(0==strcmp(fp, "mdc_init.cpp")){
-            cout<<"11144555114"<<endl;
-            utils::string_split(string((const char*)_mdc_init_cpp), "\n", ins);
+            string mdc_init_str = string((const char*)_mdc_init_cpp);
+            // TODO: improve this code!!!!!!!!!!!!!!!!
+            utils::str_replace_all(mdc_init_str, "$ENABLE_WIN_CHECKSUM", conf.enable_check_sum?"1":"0");
+            utils::str_replace_all(mdc_init_str, "$CUSTOM_KEY", str_encrypt_mgr::create_decrypt_get_method(conf.encrypt_key));
+            utils::str_replace_all(mdc_init_str, "$CUSTOM_HDR_KEY", str_encrypt_mgr::create_decrypt_get_method(conf.encrypt_key));
+            cout << "[cpp_mgr::insert_from_file] applied custom key : " << conf.encrypt_key << endl;
+            utils::string_split(mdc_init_str, "\n", ins);
         }
         if(0==strcmp(fp, "front_head.h")){
-            cout<<"11144555114"<<endl;
             utils::string_split(string((const char*)_front_head_h), "\n", ins);
         }
 		// utils::read_file_lines(fp, ins);
@@ -142,12 +147,19 @@ namespace cpp_mgr {
 		}
 	}
 
-	void proc_cpp(const char* ifp, const char* ofp, const char* script) {
+	void proc_cpp(const char* ifp, const char* ofp, const char* script, encrypt_config config) {
+        conf = config;
 		vector<string> cpplines;
 		utils::read_file_lines(ifp, cpplines);
 
 		vector<string> l_script;
-		utils::string_split(string(script), "\n", l_script);
+        string ssss = string(script);
+        utils::str_replace_all(ssss, "\r", "");
+		stringstream ss(ssss);
+        string str;
+        while(getline(ss, str)){
+            l_script.push_back(str);
+        }
 
 		std::vector<oz_script_var> vars;
 		int line_num = 0;
@@ -158,9 +170,9 @@ namespace cpp_mgr {
 			}
 			catch (exception e) {
 				cout << "[cpp_mgr] error at line " << line_num << "\n ,cmd:" << c << "\n ,exception:" << e.what() << endl;
-				exit(0);
 			}
 		}
+        enc_cstr_all(cpplines, il2cpp_lib_mgr::conf.encrypt_key);
 
 		utils::write_file_lines(ofp, cpplines);
 	}

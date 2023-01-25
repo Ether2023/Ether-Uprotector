@@ -1,4 +1,4 @@
-#include <iostream>
+#pragma once
 
 #include "encryption-base/utils.h"
 #include "encryption-base/il2cpp_lib_mgr.h"
@@ -6,14 +6,15 @@
 #include "encryption-base/binary_encrypt_mgr.h"
 #include "encryption-base/str_encrypt_mgr.h"
 #include "ether_il2cpp_api.h"
+#include "encrypt_config.h"
+#include "../include/json.h"
 
 using namespace std;
 
 int main(int argc, char* const argv[]) {
     //Enable chs output
     setlocale(LC_ALL, "");
-    utils::load_config();
-
+    cout<<encryption::get_string_decrypt("N[J#SG^5", 852143741)<<endl;
     if (argc == 1) {
         //Welcome text
         cout << "# This program is used to add EtherEncryption in to libil2cpp and encrypt binary files." << endl;
@@ -26,7 +27,7 @@ int main(int argc, char* const argv[]) {
             process_libil2cpp(argv[2], "");
         }
         if (strcmp(argv[1], "--restorelib-p") == 0) {
-            restore_libil2cpp(argv[2]);
+            restore_libil2cpp(argv[2], "");
         }
         if (strcmp(argv[1], "--enc-android-p") == 0) {
             encrypt_android(argv[2], argv[3]);

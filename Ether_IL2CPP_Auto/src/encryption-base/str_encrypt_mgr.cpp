@@ -37,6 +37,10 @@ namespace str_encrypt_mgr {
 		callmethod += "\", ";
 		callmethod += to_string(key);
 		callmethod += ")";
+        //TODO: fix this
+        if(callmethod.find("#")!=string::npos){
+            return create_decrypt_get_method(str);
+        }
 		return callmethod;
 	}
 }

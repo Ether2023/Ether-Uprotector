@@ -1,31 +1,37 @@
     // dec fronthead
-	char* char_gbmd = (char*)s_GlobalMetadata;
+	char* gbmdFileData = (char*)s_GlobalMetadata;
 	
 	// keys
-    const char* key = "REPLACE_THIS_FOR_A_CUSTOM_KEY";
-    const char* header_key = "REPLACE_THIS_FOR_A_CUSTOM_KEY";
-	
-    encryption::oz_encryption_new(&char_gbmd, sizeof(FrontHeader), key, (int)strlen(key));
-    FrontHeader* frontHeader;
-    frontHeader = (FrontHeader*)char_gbmd;
+    const char* key = $CUSTOM_KEY;
+    // const char* header_key = $CUSTOM_HDR_KEY;
+
+    char* frontHrdBytes = (char*)malloc(sizeof(FrontHeader));
+    memcpy(frontHrdBytes, gbmdFileData, sizeof(FrontHeader));
+
+    encryption::oz_encryption(frontHrdBytes, (int)sizeof(FrontHeader), key, (int)strlen(key));
+    frontHeader = (FrontHeader*)frontHrdBytes;
     if (frontHeader->sanity != 8102084797857888879) {
-        exit(-1);
+        encryption::kill_process();
     }
 	
-    char* headerdata = (char*)malloc(frontHeader->length);
-    size_t headerlen;
-    memcpy(headerdata, (char*)s_GlobalMetadata + frontHeader->offset, frontHeader->length);
-    char* header = headerdata;
-    encryption::oz_encryption_new(&header, frontHeader->length, header_key, (int)strlen(header_key));
-	s_GlobalMetadataHeader = (Il2CppGlobalMetadataHeader*)header;
+    char* hdrBytes = (char*)malloc(frontHeader->length);
+    size_t hdrLen = frontHeader->length;
+    memcpy(hdrBytes, (char*)s_GlobalMetadata + frontHeader->offset, frontHeader->length);
+    encryption::oz_encryption(hdrBytes, (int)frontHeader->length, key, (int)strlen(key));
+	s_GlobalMetadataHeader = (Il2CppGlobalMetadataHeader*)hdrBytes;
 	
     // dec datas
-    char* final_gbmd = (char*)malloc(frontHeader->offset);
-	memcpy(final_gbmd, s_GlobalMetadata, frontHeader->offset);
-    encryption::oz_encryption(final_gbmd + sizeof(FrontHeader), frontHeader->offset - sizeof(FrontHeader), key, (int)strlen(key));
-	s_GlobalMetadata = (void*)final_gbmd;
+    char* gbmdBytes = (char*)malloc(frontHeader->offset);
+	memcpy(gbmdBytes, s_GlobalMetadata, frontHeader->offset);
+    encryption::oz_encryption(gbmdBytes + sizeof(FrontHeader), (int)(frontHeader->offset - sizeof(FrontHeader)), key, (int)strlen(key));
+	s_GlobalMetadata = (void*)gbmdBytes;
 #if _WIN32
-	encryption::check_sum_gameassembly(encryption::get_string_decrypt("F\\l\\>jldjYkt-[ic", -667221561), frontHeader->crc_userassembly);
+    if($ENABLE_WIN_CHECKSUM == 1){
+        encryption::check_sum_gameassembly(frontHeader->crc_x32 ,frontHeader->crc_x64);
+    }
 #endif
 #if _ANDROID_
+    if($ENABLE_WIN_CHECKSUM == 1){
+        encryption::check_sum_libil2cpp(frontHeader->crc_x32 ,frontHeader->crc_x64);
+    }
 #endif
