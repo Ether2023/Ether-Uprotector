@@ -1,5 +1,3 @@
-# Ether Uprotector
-
 ![Ether-Uprotector](https://socialify.git.ci/Ether2023/Ether-Uprotector/image?description=1&font=Inter&forks=1&issues=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2FEther2023%2FEther-Uprotector%2Fmain%2Flogo.png&name=1&owner=1&pattern=Signal&pulls=1&stargazers=1&theme=Light)
 
 ![qq](https://img.shields.io/badge/oRangeSumMer(QQ)-2286401259-green) ![qq](https://img.shields.io/badge/Z1029(QQ)-3408708525-green) ![qqgroup](https://img.shields.io/badge/QQGroup-957552913-orange) [![Bilibili](https://img.shields.io/badge/bilibili-%E6%A9%99%E4%B9%8B%E5%A4%8F-blue)](https://space.bilibili.com/79045701) ![email](https://img.shields.io/badge/Email-2286401259%40qq.com-yellowgreen)
@@ -10,7 +8,7 @@
 
 English | [简体中文](README_zh-cn.md)
 
-## Project List
+# Project List
 - [Ether_Obfuscator](Ether_Obfuscator)
 - [Ether_IL2CPP_Auto](Ether_IL2CPP_Auto)
 - ~~[[Obsolete]Ether_IL2CPP_GUI](Ether_IL2CPP_GUI)~~

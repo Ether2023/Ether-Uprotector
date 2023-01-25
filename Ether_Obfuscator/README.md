@@ -26,9 +26,11 @@
    ![generateconfi](img/gener.png)
 
    The plug-in will automatically analyze your project and generate corresponding configuration files. You can manually configure the generated files for a second time
+
    ![config](img/configFile.png)
 
 3. Open the Enable switch in the Config file and select the function you need in the Obfuscations below([Function introduction](#function-description))
+   
    ![obfuscations](img/obfuscators.png)
 
 4. Now you can build your project directly. As usual, our plug-in will help you complete everything automatically
@@ -71,8 +73,6 @@
     You can add the HandleShoot function to `ignore_ControlFlow_Method`
 
    ![config](img/cfignore.png)
-4. This function can confuse your project before IL2CPP is executed (the strength is equivalent to `O&Z Monoobfus`), which can make your project more secure when building cpp. Even if your program receives attacks like `il2cppdumper`, your methods and fields are still in a confused state, and the code file stored in `il2Cpp` is still confused by functions like `ControlFlow`, which reduces its readability and protects your game security to the greatest extent
-   > The best effect can be obtained by cooperating with `O&Z-IL2CPP`
 
 ## Function Description
  - ControlFlow
