@@ -1,6 +1,6 @@
 # Ether Uprotector
 
-![EtherUProtector](https://socialify.git.ci/Ether2023/Ether-Uprotector/image?description=1&forks=1&issues=1&logo=<https://github.com/Ether2023/Ether-Uprotector/blob/main/logo.png>&name=1&owner=1&pulls=1&stargazers=1&theme=Light)
+![Ether-Uprotector](https://socialify.git.ci/Ether2023/Ether-Uprotector/image?description=1&font=Inter&forks=1&issues=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2FEther2023%2FEther-Uprotector%2Fmain%2Flogo.png&name=1&owner=1&pattern=Signal&pulls=1&stargazers=1&theme=Light)
 
 Ether Uprotector 是由 **Ether Team** 维护的针对Unity进行的客制化和加密
 
