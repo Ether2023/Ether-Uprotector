@@ -1,6 +1,6 @@
 # Ether Uprotector
 
-![EtherUProtector](https://socialify.git.ci/Ether2023/Ether-Uprotector/image?description=1&forks=1&issues=1&logo=<>&name=1&owner=1&pulls=1&stargazers=1&theme=Light)
+![EtherUProtector](https://socialify.git.ci/Ether2023/Ether-Uprotector/image?description=1&forks=1&issues=1&logo=<https://github.com/Ether2023/Ether-Uprotector/blob/main/logo.png>&name=1&owner=1&pulls=1&stargazers=1&theme=Light)
 
 **Ether Uprotector** is a tool providing custom encryption for **Unity**, maintained by **Ether Team**
 
