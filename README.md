@@ -2,6 +2,8 @@
 
 ![Ether-Uprotector](https://socialify.git.ci/Ether2023/Ether-Uprotector/image?description=1&font=Inter&forks=1&issues=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2FEther2023%2FEther-Uprotector%2Fmain%2Flogo.png&name=1&owner=1&pattern=Signal&pulls=1&stargazers=1&theme=Light)
 
+![qq](https://img.shields.io/badge/oRangeSumMer(QQ)-2286401259-green) ![qq](https://img.shields.io/badge/Z1029(QQ)-3408708525-green) ![qqgroup](https://img.shields.io/badge/QQGroup-957552913-orange) [![Bilibili](https://img.shields.io/badge/bilibili-%E6%A9%99%E4%B9%8B%E5%A4%8F-blue)](https://space.bilibili.com/79045701) ![email](https://img.shields.io/badge/Email-2286401259%40qq.com-yellowgreen)
+
 **Ether Uprotector** is a tool providing custom encryption for **Unity**, maintained by **Ether Team**
 
 **The program is based on [Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48), requires [Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48) environment, please make sure your computer has NET Runtime or NET SDK properly installed**
