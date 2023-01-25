@@ -152,12 +152,6 @@ namespace Ether_Obfuscator
 
             return newFieldDef;
         }
-        public static string DownloadText(string url)
-        {
-            WebClient webClient = new WebClient();
-            webClient.Encoding = Encoding.UTF8;
-            return webClient.DownloadString(url);
-        }
     }
     public class NameGenerator
     {

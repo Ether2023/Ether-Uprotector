@@ -9,12 +9,25 @@ using System.Runtime.InteropServices;
 using MenuItem = UnityEditor.MenuItem;
 using System.Windows.Forms;
 using Ether_Obfuscator.Obfuscators.Unity;
+using Ether.Il2cpp;
+using System.Diagnostics;
+using Debug = UnityEngine.Debug;
 
 public class EtherConfig : ScriptableObject
 {
-    public bool Enable = true;
-    public int key = 114514;
+    public bool Enable_Obfuscator = true;
+    public bool Enable_Il2CPP = false;
     public ObfusConfig Obfus = new ObfusConfig();
+    public Il2cppConfig il2cpp = new Il2cppConfig();
+}
+[Serializable]
+public class Il2cppConfig
+{
+    public string UnityVersion = UnityEngine.Application.unityVersion;
+    public string Key = "114514";
+    public bool EnableCheckSum = true;
+    public bool StringEncrypt = false;
+    public bool Il2cppAPIObfuscate = false;
 }
 [Serializable]
 public class ObfusConfig
@@ -49,7 +62,7 @@ public class ignore
     public MonoType[] MonoBehavior;
     [HideInInspector]
     public string[] ProjectSripts;
-    public bool ObfusType = false;
+    public bool ObfusType = true;
     public bool OnlyForProjectScripts = true;
 }
 [Serializable]
@@ -86,7 +99,7 @@ public class ignore_Reflection
 [Serializable]
 public class Obfuscations
 {
-    public bool ControlFlow = true;
+    public bool ControlFlow = false;
     public bool NumObfus = true;
     public bool LocalVariables2Field = true;
     public bool StrCrypter = true;
@@ -135,33 +148,29 @@ public class EtherConfigManager : UnityEditor.Editor
     {
         EditorApplication.UnlockReloadAssemblies();
     }
-    /*
-    [MenuItem("Ether/Analyze and Update Config")]
-    static void UpdateConfig()
+    [MenuItem("Ether/Test")]
+    static void Test()
     {
-        DialogResult dr = MessageBox.Show("Are you sure you want to reanalyze your project and generate the corresponding configuration file?\nThis may cause you to lose the modification of Unity Runtime Function&Field section (Custom Function&Field section will not be affected)", "warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-        if (dr == DialogResult.No) return;
-        if (!File.Exists(UnityEngine.Application.dataPath + "/Plugins/Ether/Config.asset"))
-        {    
-            MessageBox.Show("You have no Config or Config has been lost! Regernate Config for you...","Error" ,MessageBoxButtons.OK ,MessageBoxIcon.Error);
-            CreateConfig();
-            return;
-        }
-        ReflectionResolver reflectionResolver = new ReflectionResolver();
-        ComponentResolver.ProcessComponentsInAllScenes();
-        ComponentResolver.ProcessComponentsInAllPrefabs();
-        ComponentResolver.ProcessAnimation();
-        EtherConfig _Config = AssetDatabase.LoadAssetAtPath<EtherConfig>("Assets/Plugins/Ether/Config.asset");
-        _Config.Obfus.Keyfunc.AnimationComponent.ignoreMethod = ComponentResolver.AnimationResolver.ReferencedAnimationMethodHashSet.ToArray();
-        _Config.Obfus.Keyfunc.GUIComponent.ignoreMethod = ComponentResolver.GUIComponetResolver.ReferencedGuiMethodHashSet.ToArray();
-        _Config.Obfus.Keyfunc.Reflection = new ignore_Reflection
+        UnityEngine.Debug.Log(System.Windows.Forms.Application.ExecutablePath);
+        Process[] processList = Process.GetProcesses();
+        foreach (var process in processList)
         {
-            ignoreMethod = reflectionResolver.RelectionMethodList.ToArray(),
-            ignoreType = reflectionResolver.RelectionTypeList.ToArray(),
-            ignoreNamespace = reflectionResolver.RelectionNamespaceList.ToArray()
-        };
-        _Config.Obfus.Keyfunc.MonoBehavior = ComponentResolver.ScriptsResolver.ReferencedMonoScriptTypeList.ToArray();
-        AssetDatabase.SaveAssets();
+            if (process.ProcessName == "Unity.exe")
+            {
+                //Debug.Log(process.StartInfo.)
+            }
+        }
     }
-    */
+    [MenuItem("Ether/uninstall Ether IL2CPP")]
+    static void uninstallEtherIl2CPP()
+    {
+        try
+        {
+            Il2cppInstaller.UnInstall(System.Windows.Forms.Application.ExecutablePath);
+        }
+        catch (Exception ex)
+        {
+            throw (ex);
+        }
+    }
 }

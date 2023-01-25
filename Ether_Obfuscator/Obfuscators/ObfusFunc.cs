@@ -10,6 +10,7 @@ using Ether_IL2CPP.LitJson;
 using Ether_Obfuscator.Obfuscators.Unity;
 using Ether_Obfuscator.Obfuscators.Resolver;
 using System.Reflection;
+using UnityEngine;
 
 namespace Ether_Obfuscator.Obfuscators
 {
@@ -24,9 +25,11 @@ namespace Ether_Obfuscator.Obfuscators
         List<string> jumpName = new List<string>();
         List<string> Mono;
         ReflectionResolver ReflectionResolver;
+        CustomAttrResolver customAttrResolver; 
         public ObfusFunc(ModuleDefMD module,string Keyfunc, List<String> MonoClass = null, bool ObufsType = true)
         {
             ReflectionResolver = new ReflectionResolver(module);
+            customAttrResolver = new CustomAttrResolver(module);
             this.module = module;
             ignore ig = JsonMapper.ToObject<ignore>(Keyfunc);
             foreach (var item in ig.ignoreMethod)
@@ -45,6 +48,7 @@ namespace Ether_Obfuscator.Obfuscators
         public ObfusFunc(ModuleDefMD module, string[] _ignoreMethod, string[] _ignoreField, string[] _ignoreClass, List<String> MonoClass = null, bool ObufsType = true)
         {
             ReflectionResolver = new ReflectionResolver(module);
+            customAttrResolver = new CustomAttrResolver(module);
             this.module = module;
             foreach (var item in _ignoreMethod)
                 ignoreMethod.Add(item);
@@ -58,6 +62,7 @@ namespace Ether_Obfuscator.Obfuscators
         public ObfusFunc(ModuleDefMD module, string[] _ignoreMethod, string[] _ignoreField, string[] _ignoreClass,out Dictionary<TypeKey, TypeKey> Map ,List<String> MonoClass = null,bool ObufsType = true)
         {
             ReflectionResolver = new ReflectionResolver(module);
+            customAttrResolver = new CustomAttrResolver(module);
             this.module = module;
             Map = swapMaps;
             foreach (var item in _ignoreMethod)
@@ -72,6 +77,7 @@ namespace Ether_Obfuscator.Obfuscators
         public ObfusFunc(ModuleDefMD module, Dictionary<TypeKey, TypeKey> Map, List<String> MonoClass = null, bool ObufsType = true)
         {
             ReflectionResolver = new ReflectionResolver(module);
+            customAttrResolver = new CustomAttrResolver(module);
             this.module = module;
             Map = swapMaps;
             if (!File.Exists("keyfunc.json"))
@@ -121,8 +127,7 @@ namespace Ether_Obfuscator.Obfuscators
                 }
                 foreach (var p in type.Properties.Where(x => !x.IsRuntimeSpecialName && !x.IsSpecialName))
                     NameGenerator.SetObfusName(p, NameGenerator.Mode.RandomString, 4);
-
-                if(ObfusType && ignoreClass.FirstOrDefault(x => type.FullName.Contains(x)) == null && !type.IsGlobalModuleType && !type.Name.Contains("`") && !type.IsAbstract && Mono == null)
+                if (ObfusType && ignoreClass.FirstOrDefault(x => type.FullName.Contains(x)) == null && !type.IsGlobalModuleType && !type.Name.Contains("`") && !type.IsAbstract && Mono == null)
                 {
                     if (MonoUtils.IsMonoBehaviour(type))
                     {
@@ -134,11 +139,16 @@ namespace Ether_Obfuscator.Obfuscators
                         } while (jumpName.Contains(type.Name));
                         jumpName.Add(type.Name);
                         swapMaps.Add(temptype, new TypeKey(type));
+                        for (int i = 0; i < customAttrResolver.typeReflist.Count; i++)
+                        {
+                            if (customAttrResolver.typeReflist[i].FullName == temptype.Name)
+                                customAttrResolver.typeReflist[i] = type.ToTypeSig();
+                        }
                     }
                 }
                 else if (ObfusType && ignoreClass.FirstOrDefault(x => type.FullName.Contains(x)) == null && !type.IsGlobalModuleType && !type.Name.Contains("`") && !type.IsAbstract && Mono != null)
                 {
-                    if(Mono.Contains(type.Name) && MonoUtils.IsMonoBehaviour(type))
+                    if (Mono.Contains(type.Name) && MonoUtils.IsMonoBehaviour(type))
                     {
                         string TempName;
                         TypeKey temptype = new TypeKey(type);
@@ -148,9 +158,32 @@ namespace Ether_Obfuscator.Obfuscators
                         } while (jumpName.Contains(type.Name));
                         jumpName.Add(type.Name);
                         swapMaps.Add(temptype, new TypeKey(type));
+                        for(int i = 0; i < customAttrResolver.typeReflist.Count;i++)
+                        {
+                            if (customAttrResolver.typeReflist[i].FullName == temptype.Name)
+                                customAttrResolver.typeReflist[i] = type.ToTypeSig();
+                        }
                     }
                 }
             }
+            /*
+            foreach (var type in module.Types.Where(x => !(x.Name.StartsWith("<"))))
+            {
+                foreach (var customAttr in type.CustomAttributes.Where(x => x.TypeFullName == typeof(UnityEngine.RequireComponent).FullName))
+                {
+                    for(int i = 0;i< customAttr.ConstructorArguments.Count;i++)
+                    {
+                        TypeKey TempKey;
+                        if (swapMaps.TryGetValue(new TypeKey(customAttr.ConstructorArguments[i].Type), out TempKey))
+                        {
+                            var attr = customAttr.ConstructorArguments[i];
+                            attr.Value = module.Find(TempKey.FullName, false).ToTypeSig();
+                            customAttr.ConstructorArguments[i] = attr;
+                        }
+                    }
+                }
+            }
+            */
         }
     }
     public class ignore
@@ -206,6 +239,13 @@ namespace Ether_Obfuscator.Obfuscators
             FullName = (string.IsNullOrEmpty(_Namespace) ? _Name : (_Namespace + "." + _Name));
             Namespace = _Namespace;
             Name = _Name;
+        }
+        public TypeKey(TypeSig typeSig)
+        {
+            Assembly = typeSig.DefinitionAssembly.Name;
+            FullName = typeSig.GetFullName();
+            Namespace = typeSig.Namespace;
+            Name = typeSig.GetName();
         }
         public override bool Equals(object _Object)
         {

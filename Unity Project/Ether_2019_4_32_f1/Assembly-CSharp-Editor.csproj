@@ -256,6 +256,9 @@
     <Reference Include="UnityEditor.Android.Extensions">
       <HintPath>C:\Program Files\Unity 2019.4.32f1\Editor\Data\PlaybackEngines\AndroidPlayer\UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>Assets\Plugins\Ether\Editor\EtherIl2cpp\Plugins\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="dnlib">
       <HintPath>Assets\Plugins\Ether\Plugins\dnlib.dll</HintPath>
     </Reference>

@@ -28,7 +28,7 @@ namespace Ether_Obfuscator.Obfuscators
             Module = module;
             if(ignoreMethod != null)
             foreach (var item in ignoreMethod)
-                IgnoreMethod.Add(item.ToLower());
+                IgnoreMethod.Add(item);
         }
         public void Execute()
         {
@@ -39,10 +39,10 @@ namespace Ether_Obfuscator.Obfuscators
                     for (int j = 0; j < tDef.Methods.Count; j++)
                     {
                         var mDef = tDef.Methods[j];
-                        if (!mDef.Name.StartsWith("get_") && !mDef.Name.StartsWith("set_"))
+                        if (!mDef.Name.StartsWith("get_") && !mDef.Name.StartsWith("set_") &&!mDef.IsSpecialName)
                         {
                             if (!mDef.HasBody || mDef.IsConstructor) continue;
-                            if (IgnoreMethod.Count>0 && IgnoreMethod.FirstOrDefault(x => mDef.FullName.ToLower().Contains(x)) != null) continue;
+                            if (IgnoreMethod.Count>0 && IgnoreMethod.FirstOrDefault(x => mDef.FullName.Contains(x)) != null) continue;
                             mDef.Body.SimplifyBranches();
                             ObfusMethod(mDef);
                         }

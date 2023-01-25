@@ -77,8 +77,9 @@ namespace Ether_Obfuscator
         public void LoadModuleDefMD()
         {
             Console.Write("Loading Mono ModuleDefMD...\n");
-            ModuleCreationOptions modOpts = new ModuleCreationOptions(CLRRuntimeReaderKind.Mono);
-            Module = ModuleDefMD.Load(Path, modOpts);
+            //ModuleCreationOptions modOpts = new ModuleCreationOptions(CLRRuntimeReaderKind.Mono);
+            //Module = ModuleDefMD.Load(Path, modOpts);
+            Module = ModuleDefMD.Load(Path);
             Assembly = Module.Assembly;
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write(" Module: ");

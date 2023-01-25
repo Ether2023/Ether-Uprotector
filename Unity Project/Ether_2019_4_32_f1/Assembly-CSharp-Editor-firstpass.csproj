@@ -58,6 +58,13 @@
   <ItemGroup>
     <Compile Include="Assets\Plugins\Ether\Editor\EtherConfig.cs" />
     <Compile Include="Assets\Plugins\Ether\Editor\EtherConfigInspector.cs" />
+    <Compile Include="Assets\Plugins\Ether\Editor\EtherIl2cpp\ApkEncrypter.cs" />
+    <Compile Include="Assets\Plugins\Ether\Editor\EtherIl2cpp\BaseEncrypter.cs" />
+    <Compile Include="Assets\Plugins\Ether\Editor\EtherIl2cpp\EtherIl2cppNative.cs" />
+    <Compile Include="Assets\Plugins\Ether\Editor\EtherIl2cpp\ExeEncrypter.cs" />
+    <Compile Include="Assets\Plugins\Ether\Editor\EtherIl2cpp\Il2cppInstaller.cs" />
+    <Compile Include="Assets\Plugins\Ether\Editor\EtherIl2cpp\Utilitys.cs" />
+    <Compile Include="Assets\Plugins\Ether\Editor\EtherIl2cpp\Zip.cs" />
     <Compile Include="Assets\Plugins\Ether\Editor\EtherLog.cs" />
     <Compile Include="Assets\Plugins\Ether\Editor\EtherPipelineBuildProcessor.cs" />
     <Compile Include="Assets\Plugins\Ether\Editor\Scripts\AssemblyResolver.cs" />
@@ -68,7 +75,10 @@
     <Compile Include="Assets\Plugins\Ether\Editor\Scripts\Component\ScriptsResolver.cs" />
     <Compile Include="Assets\Plugins\Ether\Editor\Scripts\ComponentResolver.cs" />
     <Compile Include="Assets\Plugins\Ether\Editor\Scripts\ReflectionResolver.cs" />
-    <Compile Include="Assets\Plugins\Ether\Editor\test.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Plugins\Ether\Editor\EtherIl2cpp\Plugins\x86_64\EtherIl2cpp.dll" />
+    <None Include="Assets\Plugins\Ether\Editor\EtherIl2cpp\Plugins\ICSharpCode.SharpZipLib.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -266,6 +276,9 @@
     <Reference Include="UnityEditor.Android.Extensions">
       <HintPath>C:\Program Files\Unity 2019.4.32f1\Editor\Data\PlaybackEngines\AndroidPlayer\UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>Assets\Plugins\Ether\Editor\EtherIl2cpp\Plugins\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="dnlib">
       <HintPath>Assets\Plugins\Ether\Plugins\dnlib.dll</HintPath>
     </Reference>
@@ -292,27 +305,6 @@
     </Reference>
     <Reference Include="System.IO.Compression.FileSystem">
       <HintPath>Library\PackageCache\com.unity.connect.share@2.0.3\Plugins\System.IO.Compression.FileSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="OPS.Obfuscator.Editor">
-      <HintPath>Assets\OPS\Obfuscator\Editor\Plugins\OPS.Obfuscator.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="OPS.Mono.Cecil.Mdb">
-      <HintPath>Assets\OPS\Editor\Plugins\Mono.Cecil\OPS.Mono.Cecil.Mdb.dll</HintPath>
-    </Reference>
-    <Reference Include="OPS.Mono.Cecil">
-      <HintPath>Assets\OPS\Editor\Plugins\Mono.Cecil\OPS.Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="OPS.Mono.Cecil.Pdb">
-      <HintPath>Assets\OPS\Editor\Plugins\Mono.Cecil\OPS.Mono.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="OPS.Assets.Editor">
-      <HintPath>Assets\OPS\Editor\Plugins\OPS.Assets.Editor\OPS.Assets.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="OPS.Mono.Cecil.Rocks">
-      <HintPath>Assets\OPS\Editor\Plugins\Mono.Cecil\OPS.Mono.Cecil.Rocks.dll</HintPath>
-    </Reference>
-    <Reference Include="OPS.Serialization.Json">
-      <HintPath>Assets\OPS\Plugins\Json\OPS.Serialization.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
@@ -753,10 +745,6 @@
     <ProjectReference Include="NavMeshComponents.csproj">
       <Project>{276CD531-7C0F-F2F2-FB4D-ABBFB13DEC51}</Project>
       <Name>NavMeshComponents</Name>
-    </ProjectReference>
-    <ProjectReference Include="OPS.Obfuscator.csproj">
-      <Project>{220D034E-13F4-3610-602C-12E35BA10F53}</Project>
-      <Name>OPS.Obfuscator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,5 @@
 ﻿using Codice.Client.BaseCommands;
+using Ether.Il2cpp;
 using Ether_Obfuscator;
 using Ether_Obfuscator.Obfuscators;
 using Ether_Obfuscator.Obfuscators.Unity;
@@ -27,10 +28,33 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
     }
     public void OnPreprocessBuild(BuildReport _Report)
     {
+        EtherConfig _Config = AssetDatabase.LoadAssetAtPath<EtherConfig>("Assets/Plugins/Ether/Config.asset");
         hasObfuscated = false;
-        ComponentResolver.ProcessComponentsInAllScenes();
-        ComponentResolver.ProcessComponentsInAllPrefabs();
-        ComponentResolver.ProcessAllAssetFiles();
+        if(_Config.Enable_Il2CPP && PlayerSettings.GetScriptingBackend(BuildResolver.GetBuildTargetGroupByBuildTarget(EditorUserBuildSettings.activeBuildTarget)) == ScriptingImplementation.IL2CPP)
+        {
+            EtherIl2cppConfig config = new EtherIl2cppConfig();
+            config.UnityVersion = _Config.il2cpp.UnityVersion;
+            config.EncryptKey = _Config.il2cpp.Key;
+            config.EnableStringEncrypt = _Config.il2cpp.StringEncrypt;
+            config.EnableCheckSum = _Config.il2cpp.EnableCheckSum;
+            config.EnableIl2cppAPIObfuscate = _Config.il2cpp.Il2cppAPIObfuscate;
+            try
+            {
+                Il2cppInstaller.Install(System.Windows.Forms.Application.ExecutablePath, config);
+                Log("Ether Il2CPP install Successfully!",LogType.Info);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+        if(_Config.Enable_Obfuscator)
+        {
+            ComponentResolver.ProcessComponentsInAllScenes();
+            ComponentResolver.ProcessComponentsInAllPrefabs();
+            ComponentResolver.ProcessAllAssetFiles();
+
+        }
     }
     public void OnPostBuildPlayerScriptDLLs(BuildReport _Report)
     {
@@ -41,7 +65,7 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
             Log("NOT Found Config!", LogType.Error);
             return;
         }
-        if (!_Config.Enable) return;
+        if (!_Config.Enable_Obfuscator) return;
         if (!hasObfuscated)
         {
             if (BuildPipeline.isBuildingPlayer && !EditorApplication.isPlayingOrWillChangePlaymode)
@@ -92,7 +116,7 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
                     {
                         obfuscators.Add(new FuckILdasm(loader.Module));
                     }
-                    if (_Config.Obfus.Obfuscations.MethodError)
+                    if (_Config.Obfus.Obfuscations.MethodError && PlayerSettings.GetScriptingBackend(BuildResolver.GetBuildTargetGroupByBuildTarget(EditorUserBuildSettings.activeBuildTarget)) == ScriptingImplementation.Mono2x)
                     {
                         obfuscators.Add(new MethodError(loader.Module));
                     }
@@ -105,7 +129,9 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
                         obfuscator.Execute();
                     }
                     loader.Save(Asmpath);
-                    if(_Config.Obfus.Obfuscations.PEPacker)
+                    if(_Config.Obfus.Obfuscations.PEPacker 
+                        && PlayerSettings.GetScriptingBackend(BuildResolver.GetBuildTargetGroupByBuildTarget(EditorUserBuildSettings.activeBuildTarget)) == ScriptingImplementation.Mono2x 
+                        && (_Report.summary.platform == BuildTarget.StandaloneWindows || _Report.summary.platform == BuildTarget.StandaloneWindows64))
                     {
                         PEPacker.pack(Asmpath);
                     }
@@ -170,7 +196,6 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
     }
     public void OnPostprocessBuild(BuildReport _Report)
     {
-        AssetsFile assets;
         EtherConfig _Config = AssetDatabase.LoadAssetAtPath<EtherConfig>("Assets/Plugins/Ether/Config.asset");
         if (_Config == null)
         {
@@ -178,31 +203,69 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
             Log("NOT Found Config!", LogType.Error);
             return;
         }
-        if (hasObfuscated && _Config.Obfus.Obfuscations.Obfusfunc)
+        if (_Config.Enable_Obfuscator)
         {
-            string path = BuildResolver.GetGameManagersAssetStandalone(_Report);
-            if(File.Exists(path))
+            if (hasObfuscated && _Config.Obfus.Obfuscations.Obfusfunc)
             {
-                Log("Found Gamemanager Asset:" + path, LogType.Info);
-                ReplaceGamemanagerAsset(path, monoSwapMaps);
+                string path = BuildResolver.GetGameManagersAssetStandalone(_Report);
+                if (File.Exists(path))
+                {
+                    Log("Found Gamemanager Asset:" + path, LogType.Info);
+                    ReplaceGamemanagerAsset(path, monoSwapMaps);
+                }
+                else
+                {
+                    Log("NOT Found Manager Asset", LogType.Error);
+                }
             }
-            else
+            EtherLog _Log = ScriptableObject.CreateInstance<EtherLog>();
+            List<SwapMap> smap = new List<SwapMap>();
+            foreach (var map in monoSwapMaps)
             {
-                Log("NOT Found Manager Asset", LogType.Error);
+                smap.Add(new SwapMap
+                {
+                    OriginName = map.Key.Name,
+                    ObfusName = map.Value.Name,
+                });
+            }
+            _Log.Map = smap.ToArray();
+            AssetDatabase.CreateAsset(_Log, "Assets/Plugins/Ether/log/Log.asset");
+        }
+        if(_Config.Enable_Il2CPP && PlayerSettings.GetScriptingBackend(BuildResolver.GetBuildTargetGroupByBuildTarget(EditorUserBuildSettings.activeBuildTarget)) == ScriptingImplementation.IL2CPP)
+        {
+            EtherIl2cppConfig config = new EtherIl2cppConfig();
+            config.UnityVersion = _Config.il2cpp.UnityVersion;
+            config.EncryptKey = _Config.il2cpp.Key;
+            config.EnableStringEncrypt = _Config.il2cpp.StringEncrypt;
+            config.EnableCheckSum = _Config.il2cpp.EnableCheckSum;
+            config.EnableIl2cppAPIObfuscate = _Config.il2cpp.Il2cppAPIObfuscate;
+            switch (_Report.summary.platform)
+            {
+                case BuildTarget.StandaloneWindows:
+                case BuildTarget.StandaloneWindows64:
+                    {
+                        new ExeEncrypter(_Report.summary.outputPath, config).Process();
+                        Log("Ether Il2CPP Encryt: "+ _Report.summary.outputPath, LogType.Info);
+                    }
+                    break;
+                case BuildTarget.Android:
+                    {
+                        new ApkEncrypter(_Report.summary.outputPath, config).Process();
+                        Log("Ether Il2CPP Encryt: " + _Report.summary.outputPath, LogType.Info);
+                    }
+                    break;
+                default: break;
+            }
+            try
+            {
+                Il2cppInstaller.UnInstall(System.Windows.Forms.Application.ExecutablePath);
+                Log("Ether Il2CPP uninstall Successfully!", LogType.Info);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
             }
         }
-        EtherLog _Log = ScriptableObject.CreateInstance<EtherLog>();
-        List<SwapMap> smap = new List<SwapMap>();
-        foreach (var map in monoSwapMaps)
-        {
-            smap.Add(new SwapMap
-            {
-                OriginName = map.Key.Name,
-                ObfusName = map.Value.Name,
-            });
-        }
-        _Log.Map = smap.ToArray();
-        AssetDatabase.CreateAsset(_Log, "Assets/Plugins/Ether/log/Log.asset");
         EditorApplication.UnlockReloadAssemblies();
         return;
     }

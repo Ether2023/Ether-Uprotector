@@ -104,11 +104,11 @@
     <Compile Include="Obfuscators\MethodError.cs" />
     <Compile Include="Obfuscators\ObfusFunc.cs" />
     <Compile Include="Obfuscators\PEPacker.cs" />
+    <Compile Include="Obfuscators\Resolver\CustomAttrResolver.cs" />
     <Compile Include="Obfuscators\Unity\MonoUtils.cs" />
     <Compile Include="Obfuscators\Resolver\ReflectionResolver.cs" />
     <Compile Include="Runtime\Num2Modle.cs" />
     <Compile Include="Obfuscators\NumObfus.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Obfuscators\StrCrypter.cs" />
     <Compile Include="Runtime\StringEncoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

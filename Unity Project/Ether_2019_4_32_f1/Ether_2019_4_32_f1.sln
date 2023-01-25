@@ -5,9 +5,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavMeshComponents", "NavMeshComponents.csproj", "{276CD531-7C0F-F2F2-FB4D-ABBFB13DEC51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavMeshComponentsEditor", "NavMeshComponentsEditor.csproj", "{890AEA1F-ADCA-7315-B201-DE70C027A078}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor-firstpass", "Assembly-CSharp-Editor-firstpass.csproj", "{1BA226FD-C318-45AF-96F7-D565473BE4A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavMeshComponentsEditor", "NavMeshComponentsEditor.csproj", "{890AEA1F-ADCA-7315-B201-DE70C027A078}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{BD5FE18A-C3E0-285D-6BE0-E9C615D8347A}"
 EndProject
@@ -27,14 +27,14 @@ Global
 		{276CD531-7C0F-F2F2-FB4D-ABBFB13DEC51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{276CD531-7C0F-F2F2-FB4D-ABBFB13DEC51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{276CD531-7C0F-F2F2-FB4D-ABBFB13DEC51}.Release|Any CPU.Build.0 = Release|Any CPU
-		{890AEA1F-ADCA-7315-B201-DE70C027A078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{890AEA1F-ADCA-7315-B201-DE70C027A078}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{890AEA1F-ADCA-7315-B201-DE70C027A078}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{890AEA1F-ADCA-7315-B201-DE70C027A078}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1BA226FD-C318-45AF-96F7-D565473BE4A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1BA226FD-C318-45AF-96F7-D565473BE4A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BA226FD-C318-45AF-96F7-D565473BE4A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BA226FD-C318-45AF-96F7-D565473BE4A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{890AEA1F-ADCA-7315-B201-DE70C027A078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{890AEA1F-ADCA-7315-B201-DE70C027A078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{890AEA1F-ADCA-7315-B201-DE70C027A078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{890AEA1F-ADCA-7315-B201-DE70C027A078}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BD5FE18A-C3E0-285D-6BE0-E9C615D8347A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BD5FE18A-C3E0-285D-6BE0-E9C615D8347A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD5FE18A-C3E0-285D-6BE0-E9C615D8347A}.Release|Any CPU.ActiveCfg = Release|Any CPU

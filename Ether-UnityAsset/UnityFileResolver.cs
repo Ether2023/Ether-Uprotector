@@ -33,40 +33,13 @@ namespace Ether_UnityAsset
     }
     public class UnityFileReader : EndianBinaryReader
     {
-        //
-        // 摘要:
-        //     Get the full file path.
         public string FullFilePath { get; private set; }
-
-        //
-        // 摘要:
-        //     Get the file name.
         public string FileName { get; private set; }
-
-        //
-        // 摘要:
-        //     Get the file type.
         public UnityFileType FileType { get; private set; }
-
-        //
-        // 摘要:
-        //     Create a reader by the _FilePath.
-        //
-        // 参数:
-        //   _FilePath:
         public UnityFileReader(string _FilePath)
             : this(_FilePath, File.Open(_FilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
         {
         }
-
-        //
-        // 摘要:
-        //     Create a reader for _FilePath by _Stream.
-        //
-        // 参数:
-        //   _FilePath:
-        //
-        //   _Stream:
         public UnityFileReader(string _FilePath, Stream _Stream)
             : base(_Stream)
         {
@@ -74,10 +47,6 @@ namespace Ether_UnityAsset
             FileName = Path.GetFileName(_FilePath);
             FileType = CheckFileType();
         }
-
-        //
-        // 摘要:
-        //     Find the file type and reset stream position.
         private UnityFileType CheckFileType()
         {
             string text = ReadStringToNull(20);
@@ -149,10 +118,6 @@ namespace Ether_UnityAsset
             base.Position = position;
             return new byte[6] { 98, 114, 111, 116, 108, 105 }.SequenceEqual(second);
         }
-
-        //
-        // 摘要:
-        //     Find if the file is a assets unity file.
         private bool IsAssetsFile()
         {
             long position = base.Position;
@@ -198,35 +163,12 @@ namespace Ether_UnityAsset
     }
     public class UnityFileWriter : EndianBinaryWriter
     {
-        //
-        // 摘要:
-        //     Get the full file path.
         public string FullFilePath { get; private set; }
-
-        //
-        // 摘要:
-        //     Get the file name.
         public string FileName { get; private set; }
-
-        //
-        // 摘要:
-        //     Create a reader by the _FilePath.
-        //
-        // 参数:
-        //   _FilePath:
         public UnityFileWriter(string _FilePath)
             : this(_FilePath, File.Open(_FilePath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
         {
         }
-
-        //
-        // 摘要:
-        //     Create a reader for _FilePath by _Stream.
-        //
-        // 参数:
-        //   _FilePath:
-        //
-        //   _Stream:
         public UnityFileWriter(string _FilePath, Stream _Stream)
             : base(_Stream)
         {

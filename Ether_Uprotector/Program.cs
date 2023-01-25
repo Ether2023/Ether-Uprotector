@@ -6,6 +6,7 @@ using Spectre.Console;
 using Ether_UnityAsset.AssetFile;
 using Ether_UnityAsset.AssetFile.Object;
 using Ether_Obfuscator.Obfuscators.Unity;
+using System.Collections.Generic;
 
 List<byte[]> StringLiteraBytes = new List<byte[]>();
 List<byte[]> StringLiteraBytes_Crypted = new List<byte[]>();
@@ -187,22 +188,17 @@ bool CheckMetadataFile()
 void _Test()
 {
     //_GenerateConfig();
-    /*
     AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
-    foreach (var type in loader.Module.Types.Where(x => !(x.Name.StartsWith("<"))))
-    {
-        if (type.Name == "EnemyController") type.Name = "abc123";
-    }
+    Dictionary<TypeKey, TypeKey> map = new Dictionary<TypeKey, TypeKey>();
+    ObfusFunc obfus = new ObfusFunc(loader.Module,map);
+    obfus.Execute();
     AssetsFile assets = MonoUtils.LoadAsset("C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets.bak");
     List<MonoScript> MonoScriptList = assets.GetObjects<MonoScript>();
-    foreach(var Mono in MonoScriptList)
-    {
-        if (Mono.Name == "EnemyController") Mono.UpdateType(Mono.AssemblyName, Mono.Namespace, "abc123");
-    }
-    MonoUtils.SaveAssetsToFile(assets, "C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets.obfus");
+    MonoUtils.SetMonoMapToAssetFile(assets, map);
+    MonoUtils.SaveAssetsToFile(assets, "C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets");
     loader.Save();
-    */
-    //AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
+    /*
+    AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
     AssetsFile assets = MonoUtils.LoadAsset("C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets");
     List<MonoScript> var_MonoScriptList = assets.GetObjects<MonoScript>();
     Dictionary<string, string> maps = new Dictionary<string, string>();
@@ -210,11 +206,11 @@ void _Test()
     //ObfusFunc obfusFunc = new ObfusFunc(loader.Module, out maps , mono);
     //obfusFunc.Execute();
 
-    MonoUtils.SetMonoMapToAssetFile(assets, maps);
+    //MonoUtils.SetMonoMapToAssetFile(assets, maps);
     //MonoUtils.SaveAssetsToFile(assets, "C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets");
     //loader.Save();
     //Console.WriteLine(loader.OutputPath);
-    
+    */
 }
 void CheckVersion()
 {

@@ -56,7 +56,8 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Plugins\Ether\test.cs" />
+    <Compile Include="Assets\Plugins\Ether\UI\GUI_API.cs" />
+    <Compile Include="Assets\Plugins\Ether\UI\PanelText_Change.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Ether\Plugins\Ether_UnityAsset.dll" />
@@ -254,14 +255,14 @@
     <Reference Include="Ether_Obfuscator">
       <HintPath>Assets\Plugins\Ether\Plugins\Ether_Obfuscator.dll</HintPath>
     </Reference>
+    <Reference Include="Ether_UnityAsset">
+      <HintPath>Assets\Plugins\Ether\Plugins\Ether_UnityAsset.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms">
       <HintPath>Assets\Plugins\Ether\Plugins\System.Windows.Forms.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Compression.FileSystem">
       <HintPath>Library\PackageCache\com.unity.connect.share@2.0.3\Plugins\System.IO.Compression.FileSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="Ether_UnityAsset">
-      <HintPath>Assets\Plugins\Ether\Plugins\Ether_UnityAsset.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity 2019.4.32f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>

@@ -7,49 +7,36 @@ Ether Uprotector 是由 **Ether Team** 维护的针对Unity进行的客制化和
 ***本程序基于[Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48)开发，运行需要[Net6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0) & [NETFramework4.8](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net48)环境，请确保您的PC正确安装了NET Runtime或者NET SDK***
 
 ## Project List
-- [Ether-IL2CPP](Ether_IL2CPP)
-- [Ether-Obfuscator](Ether_Obfuscator)
+- [Ether_Obfuscator](Ether_Obfuscator)
 - [Ether_IL2CPP_Auto](Ether_IL2CPP_Auto)
-- [Ether_IL2CPP_GUI](Ether_IL2CPP_GUI)
+- ~~[[Obsolete]Ether_IL2CPP_GUI](Ether_IL2CPP_GUI)~~
+- ~~[[Obsolete]Ether-IL2CPP](Ether_IL2CPP)~~
+
+
+## 如何开始
+[点我](Ether_Obfuscator)了解如何开始使用并且正确配置Ether Uprotector
 
 ## What's New
-1. 本次更新添加了UnityPackage功能,现在您可以导入我们的UnityPackge，在unity的可视化界面配置您的加密方案
-   > ***现在你可以同时享受Ether_IL2CPP和Ether_Obfuscator的双倍安全***
+1. 全新的UI配置界面,让你的配置更加简单
+2. 自动分析项目并且根据项目生成配置(涵盖`GUI`,`Animation`以及`Reflection`),**自动生成**需要忽略的方法名以及字段名
 
-   >详细的使用方法请看[Ether_Obfuscator](Ether_Obfuscator)
+   ![newui](pics/newui.png)
+ 
+3. 支持混淆`monobehaviour`类名
 
-   >我们支持Unity2018.2之后的所有版本
+   ![monoobfus](pics/obfusmono.png)
 
-   ![UnityConfig](pics/Unity%20Config.png)
-
-2. 在MonoObfuscate功能中，我们添加了方法加固,使得Dnspy等软件无法还原C#代码(*请看下方图片*)
+4. `EtherIL2CPP`任然存在bug，我们会修复他们并且将在`v1.61`版本正式发布新版的EtherIL2CPP
    
-|New                       |说明|
-|--------------------------|----|
-|MethodError               |加固方法使得Dnspy等反编译器无法还原C#代码|
-
-   > after ErrorMethod: 
-
-   > ![ErrorMethod](pics/ErrorMethod.png)
-
-3. 修复了以下bug
-   - 修复Enable开关无效的bug
-   - 在Unity 2022中报错的问题
-   - 修复了切换场景时有时会抛出NullReferenceException异常的问题
-
-## 关于Ether_Obfuscator的使用方法以及问题处理
-1. 从**Release**中下载我们的unitypackage
-2. 正确的配置**Config.json**和**KeyFunc.json**,就像你配置Ether_Obfuscator那样(如不明白配置,可以跳转到[Ether_Obfuscator](Ether_Obfuscator/README.md)了解)
-3. 您只需要像正常的构建生成项目一样，O&Z 会自动帮你完成IL2CPP的混淆
-4. 本功能还存在一些bug，目前已知有以下几点
-   - 使用Ether_Obfuscator构建您的项目时，可能会出现某一个函数的报错(而且是构建时可能发生，也可能不发生，例如同一工程构建时候报错了，过一会又可以顺序编译了)，这是由于ControlFlow的随机问题造成的，如果您有耐心可以多尝试几次，如果一直在某一个报错，可以尝试在Config.json中添加该函数的名称，这样会让ControFlow跳过这个函数,例如以下这种情况
+## 关于Ether_Obfuscator问题处理
+1. ControlFlow功能可能存在bug,如果Unity抛出异常，可以尝试关闭ControlFlow功能
+2. 如果在IL2CPP构建过程中个别方法抛出异常
    ![err1](pics/err1.png)
    可以将HandleShoot函数添加到**ignore_ControlFlow_Method**中
-   ![config](pics/config.png)
-5. 本功能可以在IL2CPP执行之前对您的项目进行一次混淆(强度等同于Ether_Obfuscator)，可以使您的项目构建cpp时更加安全，即使您的程序收到了il2cppdumper之类的攻击，您的方法和字段任然处于混淆状态，而且il2cpp储存的代码文件任然被ControlFlow等功能混淆，使其可读性降低，最大程度保护您的游戏安全
-   > 配合**Ether-IL2CPP**可以获得最佳效果哦
+   ![config](pics/cfignore.png)
+
 ## 预告
-1. 我们正常尝试对MonoBehave类进行修改以实现对Class的混淆
+1. 我们正在规划并且制作`AssetProtection`
 
 ## 未来的规划
 1. 对AssetBundle资源进行加密
