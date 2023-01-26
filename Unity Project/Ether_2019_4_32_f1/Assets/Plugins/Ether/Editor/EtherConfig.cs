@@ -58,8 +58,8 @@ public class ignore
     public string[] custom_ignore_Method;
     public string[] custom_ignore_Field;
     public string[] custom_ignore_Class;
-    [HideInInspector]
-    public MonoType[] MonoBehavior;
+    //[HideInInspector]
+    //public MonoType[] MonoBehavior;
     [HideInInspector]
     public string[] ProjectSripts;
     public bool ObfusType = true;
@@ -129,7 +129,7 @@ public class EtherConfigManager : UnityEditor.Editor
             ignoreNamespace = reflectionResolver.RelectionNamespaceList.ToArray()
         };
         List<MonoType> types = new List<MonoType>();
-        _Config.Obfus.Keyfunc.MonoBehavior = ComponentResolver.ScriptsResolver.ReferencedMonoScriptTypeList.ToArray();
+        //_Config.Obfus.Keyfunc.MonoBehavior = ComponentResolver.ScriptsResolver.ReferencedMonoScriptTypeList.ToArray();
         _Config.Obfus.Keyfunc.ProjectSripts = ComponentResolver.ScriptsResolver.ProjectScripts.ToArray();
         if (File.Exists(UnityEngine.Application.dataPath + "/Plugins/Ether/Config.asset"))
         {

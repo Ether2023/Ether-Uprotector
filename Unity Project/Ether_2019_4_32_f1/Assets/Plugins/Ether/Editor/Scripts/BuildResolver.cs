@@ -78,6 +78,13 @@ public static class BuildResolver
     public static string GetGameManagersAssetStandalone(BuildReport report)
     {
         string outputPath = report.summary.outputPath;
+        if((EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneOSX && EditorUserBuildSettings.GetPlatformSettings("OSXUniversal", "CreateXcodeProject").Equals("true"))
+         ||(EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneWindows && EditorUserBuildSettings.GetPlatformSettings("Standalone", "CreateSolution").Equals("true"))
+         ||(EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneWindows64 &&  EditorUserBuildSettings.GetPlatformSettings("Standalone", "CreateSolution").Equals("true"))
+         ||(EditorUserBuildSettings.activeBuildTarget == BuildTarget.StandaloneLinux64 && EditorUserBuildSettings.GetPlatformSettings("Standalone", "CreateSolution").Equals("true")))
+        {
+            return GetPathForVisualStudioProjectWindowsAndLinuxStandalone(outputPath);
+        }
         if (report.summary.platform == BuildTarget.StandaloneOSX)
         {
             return GetPathForMacStandalone(outputPath);
@@ -97,7 +104,7 @@ public static class BuildResolver
         string text = Path.Combine(Path.GetDirectoryName(outpath), Path.GetFileNameWithoutExtension(outpath) + "_Data");
         return Path.Combine(text, "globalgamemanagers.assets");
     }
-    public static string OnPostBuild_GetPathForVisualStudioProjectWindowsAndLinuxStandalone(string outpath)
+    static string GetPathForVisualStudioProjectWindowsAndLinuxStandalone(string outpath)
     {
         string text = Path.Combine(Path.GetDirectoryName(outpath), "build");
         text = Path.Combine(text, "bin");

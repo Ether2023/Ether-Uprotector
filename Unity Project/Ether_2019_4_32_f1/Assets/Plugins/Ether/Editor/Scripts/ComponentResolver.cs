@@ -141,7 +141,7 @@ public static class ComponentResolver
         foreach (Component component in componentList)
         {
             GUIComponetResolver.ResolveGUIComponent(component);
-            ScriptsResolver.ResolveComponent(component);
+            //ScriptsResolver.ResolveComponent(component);
         }
     }
     public static void LoadScenes(List<string> s)
