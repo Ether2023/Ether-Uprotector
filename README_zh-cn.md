@@ -14,6 +14,11 @@ Ether Uprotector 是由 **Ether Team** 维护的针对Unity进行的客制化和
 - ~~[[Obsolete]Ether_IL2CPP_GUI](Ether_IL2CPP_GUI)~~
 - ~~[[Obsolete]Ether-IL2CPP](Ether_IL2CPP)~~
 
+## 临时更新⚠(v1.6 std1.5)
+
+**修复了Android平台构建后程序错误的bug**
+
+你可以在[**release**](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases)下载最新的修复版本
 
 ## 如何开始
 [点我](Ether_Obfuscator)了解如何开始使用并且正确配置Ether Uprotector

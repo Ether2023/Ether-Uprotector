@@ -17,9 +17,14 @@ English | [简体中文](README_zh-cn.md)
 ## How to Start ?
 [Click Me](Ether_Obfuscator) to learn how to properly configure and use the Ether Upprotector
 
+## Temporary update⚠(v1.6 std1.5)
+**Fixed bugs of program errors after the Android platform was built**
+
+You can download the fix version at [**release**](https://github.com/Z1029-oRangeSumMer/O-Z-IL2CPP/releases)
+
 ## What's New
 1. The new UI configuration interface makes your configuration easier
-   
+
 2. **Automatically analyze** the project and generate the method name and field name to be ignored according to the project generation configuration (including `GUI`, `Animation` and `Reflection`)
 
    ![newui](pics/newui.png)

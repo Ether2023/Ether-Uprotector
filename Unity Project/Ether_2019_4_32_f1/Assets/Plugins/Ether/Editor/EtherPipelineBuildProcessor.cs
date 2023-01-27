@@ -15,24 +15,27 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Content;
 using UnityEditor.Build.Reporting;
+using UnityEditor.Rendering;
 using UnityEditor.UnityLinker;
 using UnityEngine;
 
-public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBuildAssemblies, IPostBuildPlayerScriptDLLs, IUnityLinkerProcessor, IPostprocessBuildWithReport
+public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBuildAssemblies, IPostBuildPlayerScriptDLLs, IUnityLinkerProcessor, IPostprocessBuildWithReport, IPreprocessShaders
 {
     static bool hasObfuscated = false;
+    static bool hasPostAsset = false;
     Dictionary<TypeKey, TypeKey> monoSwapMaps = new Dictionary<TypeKey, TypeKey>();
-    //static BuildReport buildReport;
+    static BuildReport buildReport;
     public int callbackOrder
     {
-        get { return int.MaxValue; }
+        get { return 0; }
     }
     public void OnPreprocessBuild(BuildReport _Report)
     {
-        //buildReport = _Report;
+        buildReport = _Report;
         EtherConfig _Config = AssetDatabase.LoadAssetAtPath<EtherConfig>("Assets/Plugins/Ether/Config.asset");
         hasObfuscated = false;
-        if(_Config.Enable_Il2CPP && PlayerSettings.GetScriptingBackend(BuildResolver.GetBuildTargetGroupByBuildTarget(EditorUserBuildSettings.activeBuildTarget)) == ScriptingImplementation.IL2CPP)
+        hasPostAsset = false;
+        if (_Config.Enable_Il2CPP && PlayerSettings.GetScriptingBackend(BuildResolver.GetBuildTargetGroupByBuildTarget(EditorUserBuildSettings.activeBuildTarget)) == ScriptingImplementation.IL2CPP)
         {
             EtherIl2cppConfig config = new EtherIl2cppConfig();
             config.UnityVersion = _Config.il2cpp.UnityVersion;
@@ -56,6 +59,45 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
             ComponentResolver.ProcessComponentsInAllPrefabs();
             ComponentResolver.ProcessAllAssetFiles();
 
+        }
+    }
+    public void OnProcessShader(Shader shader, ShaderSnippetData snippet, IList<ShaderCompilerData> data)
+    {
+        if (!hasPostAsset)
+        {
+            Log("Building Shader...", LogType.Info);
+            EtherConfig _Config = AssetDatabase.LoadAssetAtPath<EtherConfig>("Assets/Plugins/Ether/Config.asset");
+            if (hasObfuscated && _Config.Obfus.Keyfunc.ObfusType)
+            {
+                //if (!OverwriteAssetCheck(buildReport))
+                //return;
+                if (buildReport.summary.platform == BuildTarget.StandaloneWindows || buildReport.summary.platform == BuildTarget.StandaloneWindows64 ||
+                    buildReport.summary.platform == BuildTarget.StandaloneLinux64 || buildReport.summary.platform == BuildTarget.StandaloneOSX)
+                    return;
+                string TempGameManger = BuildResolver.GetGameManagersAssetFromTemp();
+                if (!File.Exists(TempGameManger))
+                {
+                    Log("NOT Found Temp Gamemanager Asset:" + TempGameManger, LogType.Warning);
+                }
+                else
+                {
+                    Log("Found Temp Gamemanager Asset:" + TempGameManger, LogType.Info);
+                    ReplaceGamemanagerAsset(TempGameManger, monoSwapMaps);
+                    hasPostAsset = true;
+                }
+
+                string CacheGameManagerPath = BuildResolver.GetGameManagerAssetFromCache(EditorUserBuildSettings.activeBuildTarget);
+                if (!File.Exists(CacheGameManagerPath))
+                {
+                    Log("NOT Found Cache Gamemanager Asset:" + CacheGameManagerPath, LogType.Warning);
+                }
+                else
+                {
+                    Log("Found Cache Gamemanager Asset:" + CacheGameManagerPath, LogType.Info);
+                    ReplaceGamemanagerAsset(CacheGameManagerPath, monoSwapMaps);
+                    hasPostAsset = true;
+                }
+            }
         }
     }
     public void OnPostBuildPlayerScriptDLLs(BuildReport _Report)
@@ -153,6 +195,7 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
     public string GenerateAdditionalLinkXmlFile(BuildReport _Report, UnityLinkerBuildPipelineData _Data)
     {
         Log("GenerateAdditionalLinkXmlFile...", LogType.Info);
+        /*
         EtherConfig _Config = AssetDatabase.LoadAssetAtPath<EtherConfig>("Assets/Plugins/Ether/Config.asset");
         if (hasObfuscated && _Config.Obfus.Keyfunc.ObfusType)
         {
@@ -183,18 +226,19 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
                 ReplaceGamemanagerAsset(CacheGameManagerPath, monoSwapMaps);
             }
         }
+        */
             return null;
     }
 #if UNITY_2021_2_OR_NEWER
 #else
     public void OnBeforeRun(BuildReport report, UnityLinkerBuildPipelineData data)
     {
-        Debug.Log("OnBeforeRun");
+        //Log("LinkXmlFile BeforeRun...");
     }
 
     public void OnAfterRun(BuildReport report, UnityLinkerBuildPipelineData data)
     {
-        Debug.Log("OnAfterRun");
+        //Log("LinkXmlFile AfterRun...");
     }
 #endif
     static string[] ArrayCombine(string[] a, string[] b)
@@ -219,8 +263,8 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
         {
             if (hasObfuscated && _Config.Obfus.Keyfunc.ObfusType)
             {
-                if (!OverwriteAssetCheck(_Report))
-                    return;
+                //if (!OverwriteAssetCheck(_Report))
+                    //return;
                 if (!(_Report.summary.platform == BuildTarget.StandaloneWindows || _Report.summary.platform == BuildTarget.StandaloneWindows64 ||
                     _Report.summary.platform == BuildTarget.StandaloneLinux64 || _Report.summary.platform == BuildTarget.StandaloneOSX))
                     return;
@@ -313,7 +357,7 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
         Warning,
         Error
     }
-    public void Log(object msg, LogType type)
+    public void Log(object msg, LogType type = LogType.Info)
     {
         switch(type)
         {
