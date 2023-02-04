@@ -187,30 +187,10 @@ bool CheckMetadataFile()
 }
 void _Test()
 {
-    //_GenerateConfig();
     AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
-    Dictionary<TypeKey, TypeKey> map = new Dictionary<TypeKey, TypeKey>();
-    ObfusFunc obfus = new ObfusFunc(loader.Module,map);
-    obfus.Execute();
-    AssetsFile assets = MonoUtils.LoadAsset("C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets.bak");
-    List<MonoScript> MonoScriptList = assets.GetObjects<MonoScript>();
-    MonoUtils.SetMonoMapToAssetFile(assets, map);
-    MonoUtils.SaveAssetsToFile(assets, "C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets");
+    Antide4dot antide4Dot = new Antide4dot(loader.Module);
+    antide4Dot.Execute();
     loader.Save();
-    /*
-    AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
-    AssetsFile assets = MonoUtils.LoadAsset("C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets");
-    List<MonoScript> var_MonoScriptList = assets.GetObjects<MonoScript>();
-    Dictionary<string, string> maps = new Dictionary<string, string>();
-    List<String> mono = MonoUtils.GetMonoBehaviorClass(assets);
-    //ObfusFunc obfusFunc = new ObfusFunc(loader.Module, out maps , mono);
-    //obfusFunc.Execute();
-
-    //MonoUtils.SetMonoMapToAssetFile(assets, maps);
-    //MonoUtils.SaveAssetsToFile(assets, "C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/globalgamemanagers.assets");
-    //loader.Save();
-    //Console.WriteLine(loader.OutputPath);
-    */
 }
 void CheckVersion()
 {

@@ -17,7 +17,7 @@ public class EtherConfigInspector : Editor
         GUI.skin.label.fontSize = 35;
         GUI.skin.label.alignment = TextAnchor.MiddleLeft;
         EditorGUILayout.BeginHorizontal(GUI.skin.box);
-        GUILayout.Box(ico,GUILayout.Width(50),GUILayout.Height(50));
+        GUILayout.Box(ico, GUILayout.Width(50), GUILayout.Height(50));
         GUILayout.Label("Ether Uprotector");
         EditorGUILayout.EndHorizontal();
 
@@ -259,6 +259,7 @@ public class EtherConfigInspector : Editor
             EditorGUILayout.EndVertical();
             #endregion
         }
+        GUI.skin.label.fontSize = 12;
         //base.DrawDefaultInspector();
         serializedObject.ApplyModifiedProperties();
     }

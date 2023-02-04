@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c8233b3054f50b469533bcaf15c8469, type: 3}
   m_Name: Config
   m_EditorClassIdentifier: 
-  Enable_Obfuscator: 1
+  Enable_Obfuscator: 0
   Enable_Il2CPP: 0
   Obfus:
     Obfuscations:
-      ControlFlow: 0
-      NumObfus: 1
-      LocalVariables2Field: 1
-      StrCrypter: 1
+      ControlFlow: 1
+      NumObfus: 0
+      LocalVariables2Field: 0
+      StrCrypter: 0
       Obfusfunc: 1
-      AntiDe4dot: 1
-      FuckILdasm: 1
-      PEPacker: 1
-      MethodError: 1
+      AntiDe4dot: 0
+      FuckILdasm: 0
+      PEPacker: 0
+      MethodError: 0
     Keyfunc:
       ignore_ControlFlow_Method: []
       UnityRuntime:
