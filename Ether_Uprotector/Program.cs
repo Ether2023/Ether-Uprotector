@@ -189,6 +189,8 @@ void _Test()
 {
     AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
     Antide4dot antide4Dot = new Antide4dot(loader.Module);
+    ControlFlow controlFlow = new ControlFlow(loader.Module,new string[] {"123456"});
+    controlFlow.Execute();
     antide4Dot.Execute();
     loader.Save();
 }

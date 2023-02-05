@@ -19,24 +19,7 @@ namespace Ether_Obfuscator.Obfuscators
         }
         public void Execute()
         {
-            AddAttr(module, typeof(SuppressIldasmAttribute).Namespace, nameof(SuppressIldasmAttribute));
-            var globaltype = module.GlobalType;
-            foreach(var type in module.Types)
-            {
-                if(type.DeclaringType == globaltype && type.IsNested)
-                {
-                    type.Attributes = dnlib.DotNet.TypeAttributes.Sealed | dnlib.DotNet.TypeAttributes.ExplicitLayout;
-                }
-            }
-        }
-        //Thank to BitMono and sunnamed434
-        public CustomAttribute AddAttr(ModuleDefMD moduleDefMD, string @namespace, string @name)
-        {
-            var attributeRef = moduleDefMD.CorLibTypes.GetTypeRef(@namespace, @name);
-            var attributeCtor = new MemberRefUser(moduleDefMD, ".ctor", MethodSig.CreateInstance(moduleDefMD.CorLibTypes.Void), attributeRef);
-            var customAttribute = new CustomAttribute(attributeCtor);
-            moduleDefMD.CustomAttributes.Add(customAttribute);
-            return customAttribute;
+            module.CustomAttributes.Add(new CustomAttribute(new MemberRefUser(module, ".ctor", MethodSig.CreateInstance(module.CorLibTypes.Void), module.CorLibTypes.GetTypeRef("System.Runtime.CompilerServices", "SuppressIldasmAttribute"))));
         }
     }
 }

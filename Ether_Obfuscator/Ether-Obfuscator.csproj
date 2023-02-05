@@ -96,6 +96,7 @@
     <Compile Include="LitJson\Netstandard15Polyfill.cs" />
     <Compile Include="LitJson\ParserToken.cs" />
     <Compile Include="Obfuscator.cs" />
+    <Compile Include="Obfuscators\AntiTamper.cs" />
     <Compile Include="Obfuscators\Call2Calli.cs" />
     <Compile Include="Obfuscators\ControlFlow.cs" />
     <Compile Include="Obfuscators\Antide4dot.cs" />
@@ -107,7 +108,7 @@
     <Compile Include="Obfuscators\Resolver\CustomAttrResolver.cs" />
     <Compile Include="Obfuscators\Unity\MonoUtils.cs" />
     <Compile Include="Obfuscators\Resolver\ReflectionResolver.cs" />
-    <Compile Include="Runtime\AntiDe4dotAttr.cs" />
+    <Compile Include="Runtime\AntiTamperChecker.cs" />
     <Compile Include="Runtime\Num2Modle.cs" />
     <Compile Include="Obfuscators\NumObfus.cs" />
     <Compile Include="Obfuscators\StrCrypter.cs" />

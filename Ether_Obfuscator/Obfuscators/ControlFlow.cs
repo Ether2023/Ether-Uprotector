@@ -2,6 +2,8 @@
 using dnlib.DotNet.Emit;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,18 +12,30 @@ namespace Ether_Obfuscator.Obfuscators
 {
     public class Block
     {
-        public Block()
-        {
-            Instructions = new List<Instruction>();
-        }
-        public List<Instruction> Instructions { get; set; }
-
+        private Random random = new Random();
+        private int randomIdentifier;
+        public List<Instruction> Instructions { get; set; } = new List<Instruction>();
         public int Number { get; set; }
-        public int Next { get; set; }
+        public int RandomIdentifier
+        {
+            get
+            {
+                if (randomIdentifier == 0)
+                {
+                    randomIdentifier = random.Next(1, int.MaxValue);
+                    if (random.Next(0, 2) == 0)
+                    {
+                        randomIdentifier *= -1;
+                    }
+                }
+                return randomIdentifier;
+            }
+        }
     }
     public class ControlFlow : Obfuscator
     {
         public ModuleDef Module;
+        private Random random = new Random();
         List<string> IgnoreMethod = new List<string>();
         public ControlFlow(ModuleDef module, string[] ignoreMethod)
         {
@@ -32,131 +46,280 @@ namespace Ether_Obfuscator.Obfuscators
         }
         public void Execute()
         {
-            for (int i = 0; i < Module.Types.Count; i++)
-            {
-                var tDef = Module.Types[i];
-                if (tDef != Module.GlobalType)
-                    for (int j = 0; j < tDef.Methods.Count; j++)
-                    {
-                        var mDef = tDef.Methods[j];
-                        if (!mDef.Name.StartsWith("get_") && !mDef.Name.StartsWith("set_") &&!mDef.IsSpecialName)
-                        {
-                            if (!mDef.HasBody || mDef.IsConstructor) continue;
-                            if (IgnoreMethod.Count>0 && IgnoreMethod.FirstOrDefault(x => mDef.FullName.Contains(x)) != null) continue;
-                            mDef.Body.SimplifyBranches();
-                            ObfusMethod(mDef);
-                        }
-                    }
-            }
-        }
-        public void ObfusMethod(MethodDef method)
-        {
-            method.Body.SimplifyMacros(method.Parameters);
-            List<Block> blocks = Parse(method);
-            blocks = Randomize(blocks);
-            method.Body.Instructions.Clear();
-            Local local = new Local(Module.CorLibTypes.Int32);
-            method.Body.Variables.Add(local);
-            Instruction target = Instruction.Create(OpCodes.Nop);
-            Instruction instr = Instruction.Create(OpCodes.Br, target);
-            foreach (Instruction instruction in Calculation(0))
-                method.Body.Instructions.Add(instruction);
-            method.Body.Instructions.Add(Instruction.Create(OpCodes.Stloc, local));
-            method.Body.Instructions.Add(Instruction.Create(OpCodes.Br, instr));
-            method.Body.Instructions.Add(target);
-            foreach (Block block in blocks)
-            {
-                if (block != blocks.Single(x => x.Number == blocks.Count - 1))
-                {
-                    method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldloc, local));
-                    foreach (Instruction instruction in Calculation(block.Number))
-                        method.Body.Instructions.Add(instruction);
-                    method.Body.Instructions.Add(Instruction.Create(OpCodes.Ceq));
-                    Instruction instruction4 = Instruction.Create(OpCodes.Nop);
-                    method.Body.Instructions.Add(Instruction.Create(OpCodes.Brfalse, instruction4));
-                    foreach (Instruction instruction in block.Instructions)
-                        method.Body.Instructions.Add(instruction);
-                    foreach (Instruction instruction in Calculation(block.Number + 1))
-                        method.Body.Instructions.Add(instruction);
+            int amount = 0;
 
-                    method.Body.Instructions.Add(Instruction.Create(OpCodes.Stloc, local));
-                    method.Body.Instructions.Add(instruction4);
+            for (int x = 0; x < Module.Types.Count; x++)
+            {
+                TypeDef tDef = Module.Types[x];
+
+                for (int i = 0; i < tDef.Methods.Count; i++)
+                {
+                    MethodDef mDef = tDef.Methods[i];
+
+                    if (!mDef.Name.StartsWith("get_") && !mDef.Name.StartsWith("set_"))
+                    {
+                        if (!mDef.HasBody || mDef.IsConstructor) continue;
+                        if (IgnoreMethod.Count > 0 && IgnoreMethod.FirstOrDefault(x => mDef.FullName.Contains(x)) != null) continue;
+                        mDef.Body.SimplifyBranches();
+                        ObfusMethod(mDef);
+
+                        amount++;
+                    }
                 }
             }
-            method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldloc, local));
-            foreach (Instruction instruction in Calculation(blocks.Count - 1))
-                method.Body.Instructions.Add(instruction);
-            method.Body.Instructions.Add(Instruction.Create(OpCodes.Ceq));
-            method.Body.Instructions.Add(Instruction.Create(OpCodes.Brfalse, instr));
-            method.Body.Instructions.Add(Instruction.Create(OpCodes.Br, blocks.Single(x => x.Number == blocks.Count - 1).Instructions[0]));
-            method.Body.Instructions.Add(instr);
-            foreach (Instruction lastBlock in blocks.Single(x => x.Number == blocks.Count - 1).Instructions)
-                method.Body.Instructions.Add(lastBlock);
         }
-        public static List<Block> Parse(MethodDef method)
+
+        private void ObfusMethod(MethodDef Method)
         {
-            List<Block> blocks = new List<Block>();
-            List<Instruction> body = new List<Instruction>(method.Body.Instructions);
+            Method.Body.SimplifyMacros(Method.Parameters);
+            List<Block> BlockList = ParseMethod(Method);
+            BlockList = Randomize(BlockList);
+            Method.Body.Instructions.Clear();
+            Local variable = new Local(Module.CorLibTypes.Int32);
+            Method.Body.Variables.Add(variable);
+            Instruction instruction = Instruction.Create(OpCodes.Nop);
+            Instruction instruction2 = Instruction.Create(OpCodes.Br, instruction);
+            Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, BlockList.Single((Block x) => x.Number == 0).RandomIdentifier));
+            Method.Body.Instructions.Add(Instruction.Create(OpCodes.Stloc, variable));
+            Method.Body.Instructions.Add(Instruction.Create(OpCodes.Br, instruction2));
+            Method.Body.Instructions.Add(instruction);
+            foreach (Block block in BlockList)
+            {
+                if (block == BlockList.Single((Block x) => x.Number == BlockList.Count - 1))
+                {
+                    continue;
+                }
+                Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldloc, variable));
+                Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, block.RandomIdentifier));
+                Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ceq));
+                Instruction instruction3 = Instruction.Create(OpCodes.Nop);
+                Method.Body.Instructions.Add(Instruction.Create(OpCodes.Brfalse, instruction3));
+                foreach (Instruction instruction4 in block.Instructions)
+                {
+                    Method.Body.Instructions.Add(instruction4);
+                }
+                Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, BlockList.Single((Block x) => x.Number == block.Number + 1).RandomIdentifier));
+                Method.Body.Instructions.Add(Instruction.Create(OpCodes.Stloc, variable));
+                Method.Body.Instructions.Add(instruction3);
+            }
+            Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldloc, variable));
+            Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, BlockList.Single((Block x) => x.Number == BlockList.Count - 1).RandomIdentifier));
+            Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ceq));
+            Method.Body.Instructions.Add(Instruction.Create(OpCodes.Brfalse, instruction2));
+            Method.Body.Instructions.Add(Instruction.Create(OpCodes.Br, BlockList.Single((Block x) => x.Number == BlockList.Count - 1).Instructions[0]));
+            Method.Body.Instructions.Add(instruction2);
+            foreach (Instruction instruction5 in BlockList.Single((Block x) => x.Number == BlockList.Count - 1).Instructions)
+            {
+                Method.Body.Instructions.Add(instruction5);
+            }
+            Method.Body.OptimizeMacros();
+        }
+        public static List<Block> ParseMethod(MethodDef Method)
+        {
+            bool methodHasReturnValue = Method.ReturnType.FullName != "System.Void";
+            List<Block> list = new List<Block>();
             Block block = new Block();
-            int Id = 0;
-            int usage = 0;
-            block.Number = Id;
+            int num = 0;
+            int num2 = 0;
+            block.Number = num;
             block.Instructions.Add(Instruction.Create(OpCodes.Nop));
-            blocks.Add(block);
+            list.Add(block);
             block = new Block();
-            Stack<ExceptionHandler> handlers = new Stack<ExceptionHandler>();
-            foreach (Instruction instruction in method.Body.Instructions)
+            Stack<ExceptionHandler> stack = new Stack<ExceptionHandler>();
+            int pushes = 0;
+            int pops = 0;
+            int num3 = 0;
+            foreach (Instruction instruction in Method.Body.Instructions)
             {
-                foreach (var eh in method.Body.ExceptionHandlers)
+                foreach (ExceptionHandler exceptionHandler in Method.Body.ExceptionHandlers)
                 {
-                    if (eh.HandlerStart == instruction || eh.TryStart == instruction || eh.FilterStart == instruction)
-                        handlers.Push(eh);
-                }
-                foreach (var eh in method.Body.ExceptionHandlers)
-                {
-                    if (eh.HandlerEnd == instruction || eh.TryEnd == instruction)
-                        handlers.Pop();
-                }
-                int stacks, pops;
-                instruction.CalculateStackUsage(out stacks, out pops);
-                block.Instructions.Add(instruction);
-                usage += stacks - pops;
-                if (stacks == 0)
-                {
-                    if (instruction.OpCode != OpCodes.Nop)
+                    if (exceptionHandler.HandlerStart == instruction || exceptionHandler.TryStart == instruction || exceptionHandler.FilterStart == instruction)
                     {
-                        if ((usage == 0 || instruction.OpCode == OpCodes.Ret) && handlers.Count == 0)
-                        {
-
-                            block.Number = ++Id;
-                            blocks.Add(block);
-                            block = new Block();
-                        }
+                        stack.Push(exceptionHandler);
                     }
                 }
+                foreach (ExceptionHandler exceptionHandler2 in Method.Body.ExceptionHandlers)
+                {
+                    if (exceptionHandler2.HandlerEnd == instruction || exceptionHandler2.TryEnd == instruction)
+                    {
+                        stack.Pop();
+                    }
+                }
+                CalculateStackUsage(instruction, methodHasReturnValue, out pushes, out pops);
+                block.Instructions.Add(instruction);
+                if (instruction == Method.Body.Instructions.Last())
+                {
+                    num = (block.Number = num + 1);
+                    list.Add(block);
+                    block = new Block();
+                }
+                else
+                {
+                    num2 += pushes - pops;
+                    if (pushes == 0 && instruction.OpCode != OpCodes.Nop && (num2 == 0 || instruction.OpCode == OpCodes.Ret) && stack.Count == 0)
+                    {
+                        num = (block.Number = num + 1);
+                        list.Add(block);
+                        block = new Block();
+                    }
+                }
+                num3++;
             }
-
-            return blocks;
+            num3 = 0;
+            foreach (Block item in list)
+            {
+                foreach (Instruction instruction2 in item.Instructions)
+                {
+                    num3++;
+                }
+            }
+            return list;
         }
-        public List<Block> Randomize(List<Block> input)
+        public static void CalculateStackUsage(Instruction instruction, bool methodHasReturnValue, out int pushes, out int pops)
         {
-            List<Block> ret = new List<Block>();
-            foreach (var group in input)
-                ret.Insert(RandomGenerator.Generate(0, ret.Count), group);
-            return ret;
+            OpCode opCode = instruction.OpCode;
+            if (opCode.FlowControl == FlowControl.Call)
+            {
+                CalculateStackUsageCall(instruction, opCode.Code, out pushes, out pops);
+            }
+            else
+            {
+                CalculateStackUsageNonCall(instruction, opCode, methodHasReturnValue, out pushes, out pops);
+            }
+        }
+        private static void CalculateStackUsageCall(Instruction instruction, Code code, out int pushes, out int pops)
+        {
+            pushes = 0;
+            pops = 0;
+            if (code == Code.Jmp)
+            {
+                return;
+            }
+            IMethod methodSignature = (IMethod)instruction.Operand;
+            if (methodSignature != null)
+            {
+                bool flag = HasImplicitThis(methodSignature.MethodSig);
+                if (!(methodSignature.MethodSig.RetType.FullName == "System.Void") || (code == Code.Newobj && methodSignature.MethodSig.HasThis))
+                {
+                    pushes++;
+                }
+                pops += methodSignature.GetParamCount();
+                int parameterAfterSentinel = GetParameterAfterSentinel(methodSignature);
+                if (parameterAfterSentinel > 0)
+                {
+                    pops += parameterAfterSentinel;
+                }
+                if (flag && code != Code.Newobj)
+                {
+                    pops++;
+                }
+                if (code == Code.Calli)
+                {
+                    pops++;
+                }
+            }
         }
 
-
-        public List<Instruction> Calculation(int value)
+        private static void CalculateStackUsageNonCall(Instruction instruction, OpCode opCode, bool hasReturnValue, out int pushes, out int pops)
         {
-            List<Instruction> instructions = new List<Instruction>();
-            instructions.Add(Instruction.Create(OpCodes.Ldc_I4, value));
-            return instructions;
+            switch (opCode.StackBehaviourPush)
+            {
+                case StackBehaviour.Push0:
+                    pushes = 0;
+                    break;
+                case StackBehaviour.Push1:
+                case StackBehaviour.Pushi:
+                case StackBehaviour.Pushi8:
+                case StackBehaviour.Pushr4:
+                case StackBehaviour.Pushr8:
+                case StackBehaviour.Pushref:
+                    pushes = 1;
+                    break;
+                case StackBehaviour.Push1_push1:
+                    pushes = 2;
+                    break;
+                default:
+                    pushes = 0;
+                    break;
+            }
+            switch (opCode.StackBehaviourPop)
+            {
+                case StackBehaviour.Pop0:
+                    pops = 0;
+                    break;
+                case StackBehaviour.Pop1:
+                case StackBehaviour.Popi:
+                case StackBehaviour.Popref:
+                    pops = 1;
+                    break;
+                case StackBehaviour.Pop1_pop1:
+                case StackBehaviour.Popi_pop1:
+                case StackBehaviour.Popi_popi:
+                case StackBehaviour.Popi_popi8:
+                case StackBehaviour.Popi_popr4:
+                case StackBehaviour.Popi_popr8:
+                case StackBehaviour.Popref_pop1:
+                case StackBehaviour.Popref_popi:
+                    pops = 2;
+                    break;
+                case StackBehaviour.Popi_popi_popi:
+                case StackBehaviour.Popref_popi_popi:
+                case StackBehaviour.Popref_popi_popi8:
+                case StackBehaviour.Popref_popi_popr4:
+                case StackBehaviour.Popref_popi_popr8:
+                case StackBehaviour.Popref_popi_popref:
+                    pops = 3;
+                    break;
+                case StackBehaviour.PopAll:
+                    pops = -1;
+                    break;
+                case StackBehaviour.Varpop:
+                    if (hasReturnValue)
+                    {
+                        pops = 1;
+                    }
+                    else
+                    {
+                        pops = 0;
+                    }
+                    break;
+                default:
+                    pops = 0;
+                    break;
+            }
         }
-
-        public void obfusJMP(IList<Instruction> instrs, Instruction target)
+        public static bool HasImplicitThis(MethodSig method)
         {
-            instrs.Add(Instruction.Create(OpCodes.Br, target));
+            if (method.HasThis)
+            {
+                return !method.ExplicitThis;
+            }
+            return false;
+        }
+        private List<Block> Randomize(List<Block> input)
+        {
+            List<Block> list = new List<Block>();
+            foreach (Block item in input)
+            {
+                list.Insert(random.Next(0, list.Count), item);
+            }
+            return list;
+        }
+        public static int GetParameterAfterSentinel(IMethod _MethodSignature)
+        {
+            if (!_MethodSignature.HasParams())
+            {
+                return -1;
+            }
+            IList<TypeSig> parameters = _MethodSignature.GetParams();
+            for (int i = 0; i < parameters.Count; i++)
+            {
+                if (parameters[i].IsSentinel)
+                {
+                    return parameters.Count - 1 - i;
+                }
+            }
+            return -1;
         }
     }
 }
