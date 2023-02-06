@@ -63,11 +63,11 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
     }
     public void OnProcessShader(Shader shader, ShaderSnippetData snippet, IList<ShaderCompilerData> data)
     {
-        if (!hasPostAsset)
+        EtherConfig _Config = AssetDatabase.LoadAssetAtPath<EtherConfig>("Assets/Plugins/Ether/Config.asset");
+        if (!hasPostAsset && _Config.Obfus.Keyfunc.ObfusType)
         {
             Log("Building Shader...", LogType.Info);
-            EtherConfig _Config = AssetDatabase.LoadAssetAtPath<EtherConfig>("Assets/Plugins/Ether/Config.asset");
-            if (hasObfuscated && _Config.Obfus.Keyfunc.ObfusType)
+            if (hasObfuscated)
             {
                 //if (!OverwriteAssetCheck(buildReport))
                 //return;
@@ -126,10 +126,6 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
                     List<string> Mono = ComponentResolver.ScriptsResolver.ProjectScripts;
                     AssemblyLoader loader = new AssemblyLoader(File.ReadAllBytes(Asmpath));
                     List<Obfuscator> obfuscators = new List<Obfuscator>();
-                    if (_Config.Obfus.Obfuscations.ControlFlow)
-                    {
-                        obfuscators.Add(new ControlFlow(loader.Module, _Config.Obfus.Keyfunc.ignore_ControlFlow_Method));
-                    }
                     if (_Config.Obfus.Obfuscations.Obfusfunc)
                     {
                         if(_Config.Obfus.Keyfunc.ObfusType)
@@ -156,9 +152,17 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
                     {
                         obfuscators.Add(new Antide4dot(loader.Module));
                     }
+                    if (_Config.Obfus.Obfuscations.AntiTamper)
+                    {
+                        obfuscators.Add(new AntiTamper(loader.Module));
+                    }
                     if (_Config.Obfus.Obfuscations.FuckILdasm)
                     {
                         obfuscators.Add(new FuckILdasm(loader.Module));
+                    }
+                    if (_Config.Obfus.Obfuscations.ControlFlow)
+                    {
+                        obfuscators.Add(new ControlFlow(loader.Module, _Config.Obfus.Keyfunc.ignore_ControlFlow_Method));
                     }
                     if (_Config.Obfus.Obfuscations.MethodError && PlayerSettings.GetScriptingBackend(BuildResolver.GetBuildTargetGroupByBuildTarget(EditorUserBuildSettings.activeBuildTarget)) == ScriptingImplementation.Mono2x)
                     {
@@ -178,6 +182,10 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
                         && (_Report.summary.platform == BuildTarget.StandaloneWindows || _Report.summary.platform == BuildTarget.StandaloneWindows64))
                     {
                         PEPacker.pack(Asmpath);
+                    }
+                    if(_Config.Obfus.Obfuscations.AntiTamper)
+                    {
+                        AntiTamper.CreateHashAndInjectAssembly(Asmpath);
                     }
                     hasObfuscated = true;
                     EditorApplication.UnlockReloadAssemblies();

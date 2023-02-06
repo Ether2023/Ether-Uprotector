@@ -108,6 +108,10 @@ public class EtherConfigInspector : Editor
             EditorGUILayout.PropertyField(this.serializedObject.FindProperty("Obfus.Obfuscations.MethodError"));
             EditorGUILayout.EndHorizontal();
 
+            EditorGUILayout.BeginHorizontal(GUI.skin.box);
+            EditorGUILayout.PropertyField(this.serializedObject.FindProperty("Obfus.Obfuscations.AntiTamper"));
+            EditorGUILayout.EndHorizontal();
+
             EditorGUILayout.BeginHorizontal(GUI.skin.box, GUILayout.Width(100));
             EditorGUILayout.PropertyField(this.serializedObject.FindProperty("Obfus.Obfuscations.PEPacker"));
             if (GUILayout.Button("Pack Assembly"))

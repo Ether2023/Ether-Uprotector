@@ -108,6 +108,7 @@ public class Obfuscations
     public bool FuckILdasm = true;
     public bool PEPacker = true;
     public bool MethodError = true;
+    public bool AntiTamper = true;
 }
 
 public class EtherConfigManager : UnityEditor.Editor

@@ -77,12 +77,12 @@ namespace Ether_Obfuscator.Obfuscators
             Method.Body.Instructions.Clear();
             Local variable = new Local(Module.CorLibTypes.Int32);
             Method.Body.Variables.Add(variable);
-            Instruction instruction = Instruction.Create(OpCodes.Nop);
-            Instruction instruction2 = Instruction.Create(OpCodes.Br, instruction);
+            Instruction nop = Instruction.Create(OpCodes.Nop);
+            Instruction br = Instruction.Create(OpCodes.Br, nop);
             Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, BlockList.Single((Block x) => x.Number == 0).RandomIdentifier));
             Method.Body.Instructions.Add(Instruction.Create(OpCodes.Stloc, variable));
-            Method.Body.Instructions.Add(Instruction.Create(OpCodes.Br, instruction2));
-            Method.Body.Instructions.Add(instruction);
+            Method.Body.Instructions.Add(Instruction.Create(OpCodes.Br, br));
+            Method.Body.Instructions.Add(nop);
             foreach (Block block in BlockList)
             {
                 if (block == BlockList.Single((Block x) => x.Number == BlockList.Count - 1))
@@ -92,25 +92,25 @@ namespace Ether_Obfuscator.Obfuscators
                 Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldloc, variable));
                 Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, block.RandomIdentifier));
                 Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ceq));
-                Instruction instruction3 = Instruction.Create(OpCodes.Nop);
-                Method.Body.Instructions.Add(Instruction.Create(OpCodes.Brfalse, instruction3));
-                foreach (Instruction instruction4 in block.Instructions)
+                Instruction temp = Instruction.Create(OpCodes.Nop);
+                Method.Body.Instructions.Add(Instruction.Create(OpCodes.Brfalse, temp));
+                foreach (Instruction instruction in block.Instructions)
                 {
-                    Method.Body.Instructions.Add(instruction4);
+                    Method.Body.Instructions.Add(instruction);
                 }
                 Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, BlockList.Single((Block x) => x.Number == block.Number + 1).RandomIdentifier));
                 Method.Body.Instructions.Add(Instruction.Create(OpCodes.Stloc, variable));
-                Method.Body.Instructions.Add(instruction3);
+                Method.Body.Instructions.Add(temp);
             }
             Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldloc, variable));
             Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, BlockList.Single((Block x) => x.Number == BlockList.Count - 1).RandomIdentifier));
             Method.Body.Instructions.Add(Instruction.Create(OpCodes.Ceq));
-            Method.Body.Instructions.Add(Instruction.Create(OpCodes.Brfalse, instruction2));
+            Method.Body.Instructions.Add(Instruction.Create(OpCodes.Brfalse, br));
             Method.Body.Instructions.Add(Instruction.Create(OpCodes.Br, BlockList.Single((Block x) => x.Number == BlockList.Count - 1).Instructions[0]));
-            Method.Body.Instructions.Add(instruction2);
-            foreach (Instruction instruction5 in BlockList.Single((Block x) => x.Number == BlockList.Count - 1).Instructions)
+            Method.Body.Instructions.Add(br);
+            foreach (Instruction instruction in BlockList.Single((Block x) => x.Number == BlockList.Count - 1).Instructions)
             {
-                Method.Body.Instructions.Add(instruction5);
+                Method.Body.Instructions.Add(instruction);
             }
             Method.Body.OptimizeMacros();
         }
@@ -120,7 +120,7 @@ namespace Ether_Obfuscator.Obfuscators
             List<Block> list = new List<Block>();
             Block block = new Block();
             int num = 0;
-            int num2 = 0;
+            int stacknum = 0;
             block.Number = num;
             block.Instructions.Add(Instruction.Create(OpCodes.Nop));
             list.Add(block);
@@ -128,7 +128,7 @@ namespace Ether_Obfuscator.Obfuscators
             Stack<ExceptionHandler> stack = new Stack<ExceptionHandler>();
             int pushes = 0;
             int pops = 0;
-            int num3 = 0;
+            int i = 0;
             foreach (Instruction instruction in Method.Body.Instructions)
             {
                 foreach (ExceptionHandler exceptionHandler in Method.Body.ExceptionHandlers)
@@ -138,9 +138,9 @@ namespace Ether_Obfuscator.Obfuscators
                         stack.Push(exceptionHandler);
                     }
                 }
-                foreach (ExceptionHandler exceptionHandler2 in Method.Body.ExceptionHandlers)
+                foreach (ExceptionHandler exceptionHandler in Method.Body.ExceptionHandlers)
                 {
-                    if (exceptionHandler2.HandlerEnd == instruction || exceptionHandler2.TryEnd == instruction)
+                    if (exceptionHandler.HandlerEnd == instruction || exceptionHandler.TryEnd == instruction)
                     {
                         stack.Pop();
                     }
@@ -155,22 +155,22 @@ namespace Ether_Obfuscator.Obfuscators
                 }
                 else
                 {
-                    num2 += pushes - pops;
-                    if (pushes == 0 && instruction.OpCode != OpCodes.Nop && (num2 == 0 || instruction.OpCode == OpCodes.Ret) && stack.Count == 0)
+                    stacknum += pushes - pops;
+                    if (pushes == 0 && instruction.OpCode != OpCodes.Nop && (stacknum == 0 || instruction.OpCode == OpCodes.Ret) && stack.Count == 0)
                     {
                         num = (block.Number = num + 1);
                         list.Add(block);
                         block = new Block();
                     }
                 }
-                num3++;
+                i++;
             }
-            num3 = 0;
-            foreach (Block item in list)
+            i = 0;
+            foreach (Block _block in list)
             {
-                foreach (Instruction instruction2 in item.Instructions)
+                foreach (Instruction instruction in _block.Instructions)
                 {
-                    num3++;
+                    i++;
                 }
             }
             return list;
@@ -195,16 +195,16 @@ namespace Ether_Obfuscator.Obfuscators
             {
                 return;
             }
-            IMethod methodSignature = (IMethod)instruction.Operand;
-            if (methodSignature != null)
+            IMethod method = (IMethod)instruction.Operand;
+            if (method != null)
             {
-                bool flag = HasImplicitThis(methodSignature.MethodSig);
-                if (!(methodSignature.MethodSig.RetType.FullName == "System.Void") || (code == Code.Newobj && methodSignature.MethodSig.HasThis))
+                bool flag = HasImplicitThis(method.MethodSig);
+                if (!(method.MethodSig.RetType.FullName == "System.Void") || (code == Code.Newobj && method.MethodSig.HasThis))
                 {
                     pushes++;
                 }
-                pops += methodSignature.GetParamCount();
-                int parameterAfterSentinel = GetParameterAfterSentinel(methodSignature);
+                pops += method.GetParamCount();
+                int parameterAfterSentinel = GetParameterAfterSentinel(method);
                 if (parameterAfterSentinel > 0)
                 {
                     pops += parameterAfterSentinel;
@@ -305,13 +305,13 @@ namespace Ether_Obfuscator.Obfuscators
             }
             return list;
         }
-        public static int GetParameterAfterSentinel(IMethod _MethodSignature)
+        public static int GetParameterAfterSentinel(IMethod method)
         {
-            if (!_MethodSignature.HasParams())
+            if (!method.HasParams())
             {
                 return -1;
             }
-            IList<TypeSig> parameters = _MethodSignature.GetParams();
+            IList<TypeSig> parameters = method.GetParams();
             for (int i = 0; i < parameters.Count; i++)
             {
                 if (parameters[i].IsSentinel)

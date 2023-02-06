@@ -188,11 +188,14 @@ bool CheckMetadataFile()
 void _Test()
 {
     AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
-    Antide4dot antide4Dot = new Antide4dot(loader.Module);
-    ControlFlow controlFlow = new ControlFlow(loader.Module,new string[] {"123456"});
-    controlFlow.Execute();
-    antide4Dot.Execute();
+    //Antide4dot antide4Dot = new Antide4dot(loader.Module);
+    //ControlFlow controlFlow = new ControlFlow(loader.Module,new string[] {"123456"});
+    AntiTamper antiTamper = new AntiTamper(loader.Module);
+    //controlFlow.Execute();
+    //antide4Dot.Execute();
+    antiTamper.Execute();
     loader.Save();
+    AntiTamper.CreateHashAndInjectAssembly(loader.OutputPath);
 }
 void CheckVersion()
 {

@@ -20,11 +20,12 @@ MonoBehaviour:
       NumObfus: 0
       LocalVariables2Field: 0
       StrCrypter: 0
-      Obfusfunc: 1
+      Obfusfunc: 0
       AntiDe4dot: 0
       FuckILdasm: 0
       PEPacker: 0
       MethodError: 0
+      AntiTamper: 0
     Keyfunc:
       ignore_ControlFlow_Method: []
       UnityRuntime:
