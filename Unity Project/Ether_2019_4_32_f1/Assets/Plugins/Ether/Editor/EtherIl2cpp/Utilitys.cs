@@ -1,71 +1,1 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Runtime.InteropServices;
-
-namespace Ether.Il2cpp
-{
-    static class Utilitys
-    {
-        public static void ShowMsg(string s)
-        {
-            MessageBoxA(IntPtr.Zero, s, "Info", 0x40);//MB_ICONINFO
-        }
-
-        public static void ShowError(string s)
-        {
-            MessageBoxA(IntPtr.Zero, s, "Error", 0x10);//MB_ICONERROR
-        }
-
-        public static void MoveDirectory(string sourcePath, string destPath, bool ov=true)
-        {
-            string floderName = Path.GetFileName(sourcePath);
-            DirectoryInfo di = Directory.CreateDirectory(Path.Combine(destPath, floderName));
-            string[] files = Directory.GetFileSystemEntries(sourcePath);
-
-            foreach (string file in files)
-            {
-                if (Directory.Exists(file))
-                {
-                    MoveDirectory(file, di.FullName, ov);
-                }
-                else
-                {
-                    File.Move(file, Path.Combine(di.FullName, Path.GetFileName(file)));
-                }
-            }
-        }
-
-        public static void CopyDirectory(string sourcePath, string destPath)
-        {
-            string floderName = Path.GetFileName(sourcePath);
-            DirectoryInfo di = Directory.CreateDirectory(Path.Combine(destPath, floderName));
-            string[] files = Directory.GetFileSystemEntries(sourcePath);
-
-            foreach (string file in files)
-            {
-                if (Directory.Exists(file))
-                {
-                    CopyDirectory(file, di.FullName);
-                }
-                else
-                {
-                    File.Copy(file, Path.Combine(di.FullName, Path.GetFileName(file)), true);
-                }
-            }
-        }
-
-        public static void OpenDirectory(string d)
-        {
-            system("start " + d);
-        }
-
-        [DllImport("msvcrt.dll", SetLastError = false, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public extern static void system(string command); // longjmp
-
-
-        [DllImport("user32.dll", SetLastError = false, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public extern static void MessageBoxA(IntPtr hwnd, string text, string title, int mb_id); 
-    }
-}
+﻿using System; using System.Collections.Generic; using System.Text; using System.IO; using System.Diagnostics; using System.Runtime.InteropServices;  namespace Ether.Il2cpp {     static class Utilitys     {         public static void ShowMsg(string s)         {             MessageBoxA(IntPtr.Zero, s, "Info", 0x40);//MB_ICONINFO         }          public static void ShowError(string s)         {             MessageBoxA(IntPtr.Zero, s, "Error", 0x10);//MB_ICONERROR         }          public static void MoveDirectory(string sourcePath, string destPath, bool ov=true)         {             string floderName = Path.GetFileName(sourcePath);             DirectoryInfo di = Directory.CreateDirectory(Path.Combine(destPath, floderName));             string[] files = Directory.GetFileSystemEntries(sourcePath);              foreach (string file in files)             {                 if (Directory.Exists(file))                 {                     MoveDirectory(file, di.FullName, ov);                 }                 else                 {                     File.Move(file, Path.Combine(di.FullName, Path.GetFileName(file)));                 }             }         }          public static void CopyDirectory(string sourcePath, string destPath)         {             string floderName = Path.GetFileName(sourcePath);             DirectoryInfo di = Directory.CreateDirectory(Path.Combine(destPath, floderName));             string[] files = Directory.GetFileSystemEntries(sourcePath);              foreach (string file in files)             {                 if (Directory.Exists(file))                 {                     CopyDirectory(file, di.FullName);                 }                 else                 {                     File.Copy(file, Path.Combine(di.FullName, Path.GetFileName(file)), true);                 }             }         }          public static void OpenDirectory(string d)         {             system("start " + d);         }          [DllImport("msvcrt.dll", SetLastError = false, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]         public extern static void system(string command); // longjmp         /*public static void system(string command)         {             command = command.Trim().TrimEnd('&') + "&exit";//说明：不管命令是否成功均执行exit命令，否则当调用ReadToEnd()方法时，会处于假死状态             using (Process p = new Process())             {                 p.StartInfo.FileName = @"C:\Windows\System32\cmd.exe";                 p.StartInfo.UseShellExecute = false; //是否使用操作系统shell启动                 p.StartInfo.RedirectStandardInput = true; //接受来自调用程序的输入信息                 p.StartInfo.RedirectStandardOutput = true; //由调用程序获取输出信息                 p.StartInfo.RedirectStandardError = true; //重定向标准错误输出                 p.StartInfo.CreateNoWindow = true; //不显示程序窗口                 p.Start();//启动程序                  //向cmd窗口写入命令                 p.StandardInput.WriteLine(command);                 p.StandardInput.AutoFlush = true;                  //获取cmd窗口的输出信息                 string output = p.StandardOutput.ReadToEnd();                 p.WaitForExit();//等待程序执行完退出进程                 p.Close();                  return;             }         }*/           [DllImport("user32.dll", SetLastError = false, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]         public extern static void MessageBoxA(IntPtr hwnd, string text, string title, int mb_id);      } } 

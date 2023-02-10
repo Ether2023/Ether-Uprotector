@@ -48,6 +48,7 @@ namespace Ether.Il2cpp
 
         public static bool InstallEtherIl2cpp(string libIl2cppPath, EtherIl2cppConfig config)
         {
+			restore_libil2cpp(libIl2cppPath, JsonUtility.ToJson(new NativeEncryptConfig(config)));
             AssertApiVersion();
             ClearLastError();
             CheckPathLegal(libIl2cppPath);
