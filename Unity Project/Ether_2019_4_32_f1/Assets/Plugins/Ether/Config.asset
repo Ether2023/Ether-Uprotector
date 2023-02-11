@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c8233b3054f50b469533bcaf15c8469, type: 3}
   m_Name: Config
   m_EditorClassIdentifier: 
-  Enable_Obfuscator: 0
-  Enable_Il2CPP: 0
+  Enable_Obfuscator: 1
+  Enable_Il2CPP: 1
   Obfus:
     Obfuscations:
-      ControlFlow: 1
-      NumObfus: 0
-      LocalVariables2Field: 0
-      StrCrypter: 0
-      Obfusfunc: 0
-      AntiDe4dot: 0
-      FuckILdasm: 0
-      PEPacker: 0
-      MethodError: 0
-      AntiTamper: 0
+      ControlFlow: 0
+      NumObfus: 1
+      LocalVariables2Field: 1
+      StrCrypter: 1
+      Obfusfunc: 1
+      AntiDe4dot: 1
+      FuckILdasm: 1
+      PEPacker: 1
+      MethodError: 1
+      AntiTamper: 1
     Keyfunc:
       ignore_ControlFlow_Method: []
       UnityRuntime:
@@ -254,5 +254,5 @@ MonoBehaviour:
     UnityVersion: 2019.4.32f1
     Key: 114514
     EnableCheckSum: 1
-    StringEncrypt: 0
-    Il2cppAPIObfuscate: 0
+    StringEncrypt: 1
+    Il2cppAPIObfuscate: 1

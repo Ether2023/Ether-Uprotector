@@ -789,9 +789,17 @@
       <Project>{AD16333C-AB1A-AD09-C483-E32C18467324}</Project>
       <Name>Unity.2DPlatformer.Tutorials</Name>
     </ProjectReference>
+    <ProjectReference Include="IngameDebugConsole.Runtime.csproj">
+      <Project>{0F3D8098-81C8-F652-F8A5-AEFC6EC56F56}</Project>
+      <Name>IngameDebugConsole.Runtime</Name>
+    </ProjectReference>
     <ProjectReference Include="NavMeshComponents.csproj">
       <Project>{276CD531-7C0F-F2F2-FB4D-ABBFB13DEC51}</Project>
       <Name>NavMeshComponents</Name>
+    </ProjectReference>
+    <ProjectReference Include="IngameDebugConsole.Editor.csproj">
+      <Project>{6F4A3E4F-4868-D041-A7B9-EF91C3D52141}</Project>
+      <Name>IngameDebugConsole.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

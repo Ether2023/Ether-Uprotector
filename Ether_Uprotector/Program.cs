@@ -189,13 +189,13 @@ void _Test()
 {
     AssemblyLoader loader = new AssemblyLoader(OpenFilePath);
     //Antide4dot antide4Dot = new Antide4dot(loader.Module);
-    //ControlFlow controlFlow = new ControlFlow(loader.Module,new string[] {"123456"});
-    AntiTamper antiTamper = new AntiTamper(loader.Module);
-    //controlFlow.Execute();
+    ControlFlow controlFlow = new ControlFlow(loader.Module,new string[] {"123456"});
+    //AntiTamper antiTamper = new AntiTamper(loader.Module);
+    controlFlow.Execute();
     //antide4Dot.Execute();
-    antiTamper.Execute();
-    loader.Save();
-    AntiTamper.CreateHashAndInjectAssembly(loader.OutputPath);
+    //antiTamper.Execute();
+    loader.Save("C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/Managed/Assembly-CSharp.dll");
+    //AntiTamper.CreateHashAndInjectAssembly("C:/Users/22864/Desktop/2019Testbuild/O&Z_2019_4_32_f1_Data/Managed/Assembly-CSharp.dll");
 }
 void CheckVersion()
 {

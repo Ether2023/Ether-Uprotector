@@ -56,8 +56,15 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Plugins\Ether\UI\GUI_API.cs" />
-    <Compile Include="Assets\Plugins\Ether\UI\PanelText_Change.cs" />
+    <Compile Include="Assets\Plugins\Beebyte\Obfuscator\DoNotFakeAttribute.cs" />
+    <Compile Include="Assets\Plugins\Beebyte\Obfuscator\MessageCode.cs" />
+    <Compile Include="Assets\Plugins\Beebyte\Obfuscator\ObfuscateLiterals.cs" />
+    <Compile Include="Assets\Plugins\Beebyte\Obfuscator\RenameAttribute.cs" />
+    <Compile Include="Assets\Plugins\Beebyte\Obfuscator\ReplaceLiteralsWithName.cs" />
+    <Compile Include="Assets\Plugins\Beebyte\Obfuscator\SkipAttribute.cs" />
+    <Compile Include="Assets\Plugins\Beebyte\Obfuscator\SkipRenameAttribute.cs" />
+    <Compile Include="Assets\Plugins\Beebyte\Obfuscator\SuppressLog.cs" />
+    <Compile Include="Assets\Plugins\Beebyte\Obfuscator\SuppressLogAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Ether\Plugins\Ether_UnityAsset.dll" />
@@ -691,9 +698,17 @@
       <Project>{AD16333C-AB1A-AD09-C483-E32C18467324}</Project>
       <Name>Unity.2DPlatformer.Tutorials</Name>
     </ProjectReference>
+    <ProjectReference Include="IngameDebugConsole.Runtime.csproj">
+      <Project>{0F3D8098-81C8-F652-F8A5-AEFC6EC56F56}</Project>
+      <Name>IngameDebugConsole.Runtime</Name>
+    </ProjectReference>
     <ProjectReference Include="NavMeshComponents.csproj">
       <Project>{276CD531-7C0F-F2F2-FB4D-ABBFB13DEC51}</Project>
       <Name>NavMeshComponents</Name>
+    </ProjectReference>
+    <ProjectReference Include="IngameDebugConsole.Editor.csproj">
+      <Project>{6F4A3E4F-4868-D041-A7B9-EF91C3D52141}</Project>
+      <Name>IngameDebugConsole.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

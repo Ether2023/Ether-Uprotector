@@ -149,6 +149,7 @@ public class EtherConfigManager : UnityEditor.Editor
     {
         EditorApplication.UnlockReloadAssemblies();
     }
+    /*
     [MenuItem("Ether/Test")]
     static void Test()
     {
@@ -174,4 +175,28 @@ public class EtherConfigManager : UnityEditor.Editor
             throw (ex);
         }
     }
+    [MenuItem("Ether/install Ether il2cpp")]
+    static void CF()
+    {
+        EtherConfig _Config = AssetDatabase.LoadAssetAtPath<EtherConfig>("Assets/Plugins/Ether/Config.asset");
+        if (_Config.Enable_Il2CPP && PlayerSettings.GetScriptingBackend(BuildResolver.GetBuildTargetGroupByBuildTarget(EditorUserBuildSettings.activeBuildTarget)) == ScriptingImplementation.IL2CPP)
+        {
+            EtherIl2cppConfig config = new EtherIl2cppConfig();
+            config.UnityVersion = _Config.il2cpp.UnityVersion;
+            config.EncryptKey = _Config.il2cpp.Key;
+            config.EnableStringEncrypt = _Config.il2cpp.StringEncrypt;
+            config.EnableCheckSum = _Config.il2cpp.EnableCheckSum;
+            config.EnableIl2cppAPIObfuscate = _Config.il2cpp.Il2cppAPIObfuscate;
+            try
+            {
+                Il2cppInstaller.Install(System.Windows.Forms.Application.ExecutablePath, config);
+                //Log("Ether Il2CPP install Successfully!", LogType.Info);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+    */
 }

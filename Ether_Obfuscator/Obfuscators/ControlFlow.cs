@@ -7,12 +7,14 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
+using Random = System.Random;
 
 namespace Ether_Obfuscator.Obfuscators
 {
     public class Block
     {
-        private Random random = new Random();
+        //private Random random = new Random();
         private int randomIdentifier;
         public List<Instruction> Instructions { get; set; } = new List<Instruction>();
         public int Number { get; set; }
@@ -22,11 +24,18 @@ namespace Ether_Obfuscator.Obfuscators
             {
                 if (randomIdentifier == 0)
                 {
+                    randomIdentifier = RandomGenerator.Generate(1, int.MaxValue);
+                    if (RandomGenerator.Generate(0, 2) == 0)
+                    {
+                        randomIdentifier *= -1;
+                    }
+                    /*
                     randomIdentifier = random.Next(1, int.MaxValue);
                     if (random.Next(0, 2) == 0)
                     {
                         randomIdentifier *= -1;
                     }
+                    */
                 }
                 return randomIdentifier;
             }
@@ -35,7 +44,7 @@ namespace Ether_Obfuscator.Obfuscators
     public class ControlFlow : Obfuscator
     {
         public ModuleDef Module;
-        private Random random = new Random();
+        //private Random random = new Random();
         List<string> IgnoreMethod = new List<string>();
         public ControlFlow(ModuleDef module, string[] ignoreMethod)
         {
@@ -301,7 +310,8 @@ namespace Ether_Obfuscator.Obfuscators
             List<Block> list = new List<Block>();
             foreach (Block item in input)
             {
-                list.Insert(random.Next(0, list.Count), item);
+                list.Insert(RandomGenerator.Generate(0, list.Count), item);
+                //list.Insert(random.Next(0, list.Count), item);
             }
             return list;
         }

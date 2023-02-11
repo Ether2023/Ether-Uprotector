@@ -35,24 +35,6 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
         EtherConfig _Config = AssetDatabase.LoadAssetAtPath<EtherConfig>("Assets/Plugins/Ether/Config.asset");
         hasObfuscated = false;
         hasPostAsset = false;
-        if (_Config.Enable_Il2CPP && PlayerSettings.GetScriptingBackend(BuildResolver.GetBuildTargetGroupByBuildTarget(EditorUserBuildSettings.activeBuildTarget)) == ScriptingImplementation.IL2CPP)
-        {
-            EtherIl2cppConfig config = new EtherIl2cppConfig();
-            config.UnityVersion = _Config.il2cpp.UnityVersion;
-            config.EncryptKey = _Config.il2cpp.Key;
-            config.EnableStringEncrypt = _Config.il2cpp.StringEncrypt;
-            config.EnableCheckSum = _Config.il2cpp.EnableCheckSum;
-            config.EnableIl2cppAPIObfuscate = _Config.il2cpp.Il2cppAPIObfuscate;
-            try
-            {
-                Il2cppInstaller.Install(System.Windows.Forms.Application.ExecutablePath, config);
-                Log("Ether Il2CPP install Successfully!",LogType.Info);
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
-        }
         if(_Config.Enable_Obfuscator)
         {
             ComponentResolver.ProcessComponentsInAllScenes();
@@ -66,7 +48,7 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
         EtherConfig _Config = AssetDatabase.LoadAssetAtPath<EtherConfig>("Assets/Plugins/Ether/Config.asset");
         if (!hasPostAsset && _Config.Obfus.Keyfunc.ObfusType)
         {
-            Log("Building Shader...", LogType.Info);
+            //Log("Building Shader...", LogType.Info);
             if (hasObfuscated)
             {
                 //if (!OverwriteAssetCheck(buildReport))
@@ -148,21 +130,21 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
                     {
                         obfuscators.Add(new StrCrypter(loader.Module));
                     }
+                    if (_Config.Obfus.Obfuscations.ControlFlow)
+                    {
+                        obfuscators.Add(new ControlFlow(loader.Module, _Config.Obfus.Keyfunc.ignore_ControlFlow_Method));
+                    }
                     if (_Config.Obfus.Obfuscations.AntiDe4dot)
                     {
                         obfuscators.Add(new Antide4dot(loader.Module));
                     }
-                    if (_Config.Obfus.Obfuscations.AntiTamper)
+                    if (_Config.Obfus.Obfuscations.AntiTamper && PlayerSettings.GetScriptingBackend(BuildResolver.GetBuildTargetGroupByBuildTarget(EditorUserBuildSettings.activeBuildTarget)) == ScriptingImplementation.Mono2x)
                     {
                         obfuscators.Add(new AntiTamper(loader.Module));
                     }
                     if (_Config.Obfus.Obfuscations.FuckILdasm)
                     {
                         obfuscators.Add(new FuckILdasm(loader.Module));
-                    }
-                    if (_Config.Obfus.Obfuscations.ControlFlow)
-                    {
-                        obfuscators.Add(new ControlFlow(loader.Module, _Config.Obfus.Keyfunc.ignore_ControlFlow_Method));
                     }
                     if (_Config.Obfus.Obfuscations.MethodError && PlayerSettings.GetScriptingBackend(BuildResolver.GetBuildTargetGroupByBuildTarget(EditorUserBuildSettings.activeBuildTarget)) == ScriptingImplementation.Mono2x)
                     {
@@ -202,7 +184,7 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
     }
     public string GenerateAdditionalLinkXmlFile(BuildReport _Report, UnityLinkerBuildPipelineData _Data)
     {
-        Log("GenerateAdditionalLinkXmlFile...", LogType.Info);
+        //Log("GenerateAdditionalLinkXmlFile...", LogType.Info);
         /*
         EtherConfig _Config = AssetDatabase.LoadAssetAtPath<EtherConfig>("Assets/Plugins/Ether/Config.asset");
         if (hasObfuscated && _Config.Obfus.Keyfunc.ObfusType)
@@ -324,15 +306,6 @@ public class EtherPipelineBuildProcessor : IPreprocessBuildWithReport, IFilterBu
                     }
                     break;
                 default: break;
-            }
-            try
-            {
-                Il2cppInstaller.UnInstall(System.Windows.Forms.Application.ExecutablePath);
-                Log("Ether Il2CPP uninstall Successfully!", LogType.Info);
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
             }
         }
         EditorApplication.UnlockReloadAssemblies();

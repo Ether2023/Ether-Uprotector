@@ -1,8 +1,11 @@
-﻿using Ether_Obfuscator.Obfuscators;
+﻿using Ether.Il2cpp;
+using Ether_Obfuscator.Obfuscators;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using UnityEditor;
 using UnityEngine;
 [CustomEditor(typeof(EtherConfig))]
@@ -26,8 +29,8 @@ public class EtherConfigInspector : Editor
         GUILayout.Label("Main Switch");
         EditorGUILayout.PropertyField(this.serializedObject.FindProperty("Enable_Obfuscator"));
         EditorGUILayout.PropertyField(this.serializedObject.FindProperty("Enable_Il2CPP"));
-        this.serializedObject.FindProperty("Enable_Il2CPP").boolValue = false;
-        EditorGUILayout.HelpBox("IL2CPP still has some bugs, so it will not take effect", MessageType.Warning);
+        //this.serializedObject.FindProperty("Enable_Il2CPP").boolValue = false;
+        //EditorGUILayout.HelpBox("IL2CPP still has some bugs, so it will not take effect", MessageType.Warning);
         if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.StandaloneWindows && EditorUserBuildSettings.activeBuildTarget != BuildTarget.StandaloneWindows64 && EditorUserBuildSettings.activeBuildTarget != BuildTarget.Android)
         {
             EditorGUILayout.HelpBox("Ether IL2CPP only supports Windows and Android platforms", MessageType.Warning);
@@ -39,6 +42,8 @@ public class EtherConfigInspector : Editor
         #endregion
         if (this.serializedObject.FindProperty("Enable_Il2CPP").boolValue)
         {
+            string etherSignFile = Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/Data/il2cpp/libil2cpp/" + "EtherIl2cppConfig.json";
+            bool EtherIL2CPPhasinstalled = File.Exists(etherSignFile);
             #region IL2CPP
             EditorGUILayout.BeginVertical(GUI.skin.box);
             GUI.skin.label.alignment = TextAnchor.MiddleCenter;
@@ -52,6 +57,64 @@ public class EtherConfigInspector : Editor
             EditorGUILayout.PropertyField(this.serializedObject.FindProperty("il2cpp.StringEncrypt"));
             EditorGUILayout.PropertyField(this.serializedObject.FindProperty("il2cpp.Il2cppAPIObfuscate"));
             EditorGUILayout.EndVertical();
+
+            EditorGUILayout.BeginHorizontal(GUI.skin.box);
+            if(GUILayout.Button("Install EtherIL2CPP"))
+            {
+                EtherConfig _Config = AssetDatabase.LoadAssetAtPath<EtherConfig>("Assets/Plugins/Ether/Config.asset");
+                EtherIl2cppConfig config = new EtherIl2cppConfig();
+                config.UnityVersion = _Config.il2cpp.UnityVersion;
+                config.EncryptKey = _Config.il2cpp.Key;
+                config.EnableStringEncrypt = _Config.il2cpp.StringEncrypt;
+                config.EnableCheckSum = _Config.il2cpp.EnableCheckSum;
+                config.EnableIl2cppAPIObfuscate = _Config.il2cpp.Il2cppAPIObfuscate;
+                try
+                {
+                    if (!EtherIL2CPPhasinstalled)
+                    {
+                        Il2cppInstaller.Install(System.Windows.Forms.Application.ExecutablePath, config);
+                        Debug.Log("Ether Il2CPP install Successfully!");
+                    }
+                    else
+                    {
+                        Debug.Log("Ether Il2CPP has installed!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw (ex);
+                }
+            }
+            if (GUILayout.Button("Uninstall EtherIL2CPP"))
+            {
+                try
+                {
+                    if (EtherIL2CPPhasinstalled)
+                    {
+                        Il2cppInstaller.UnInstall(System.Windows.Forms.Application.ExecutablePath);
+                        Debug.Log("Ether Il2CPP uninstall Successfully!");
+                    }
+                    else
+                    {
+                        Debug.Log("Ether Il2CPP has NOT installed!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw (ex);
+                }
+            }
+            EditorGUILayout.EndHorizontal();
+
+            if (EtherIL2CPPhasinstalled)
+            {
+                EditorGUILayout.HelpBox("EtherIl2CPP has been installed. Now you can directly build projects protected by EtherIL2CPP!", MessageType.Info);
+                EditorGUILayout.HelpBox("Since EtherIl2CPP will change the building components of IL2CPP in your Unity after installation, which may cause errors when you use IL2CPP to build other projects, please uninstall EtherIL2CPP after the construction is completed!", MessageType.Info);
+            }
+            else
+            {
+                EditorGUILayout.HelpBox("EtherIl2CPP has NOT been installed, You can click Install to install EtherIL2CPP", MessageType.Info);
+            }
             #endregion
         }
         EditorGUILayout.Separator();
@@ -123,7 +186,7 @@ public class EtherConfigInspector : Editor
             EditorGUILayout.EndHorizontal();
             if (PlayerSettings.GetScriptingBackend(BuildResolver.GetBuildTargetGroupByBuildTarget(EditorUserBuildSettings.activeBuildTarget)) == ScriptingImplementation.IL2CPP && serializedObject.FindProperty("Obfus.Obfuscations.PEPacker").boolValue)
             {
-                EditorGUILayout.HelpBox("PEPacker does not support IL2CPP ScriptingBackend, so it will not take effect during the construction process", MessageType.Warning);
+                EditorGUILayout.HelpBox("PEPacker does not support IL2CPP ScriptingBackend, so it will not take effect during the building process", MessageType.Warning);
             }
             if ((EditorUserBuildSettings.activeBuildTarget != BuildTarget.StandaloneWindows && EditorUserBuildSettings.activeBuildTarget != BuildTarget.StandaloneWindows64) && serializedObject.FindProperty("Obfus.Obfuscations.PEPacker").boolValue)
             {
@@ -132,7 +195,12 @@ public class EtherConfigInspector : Editor
             if (PlayerSettings.GetScriptingBackend(BuildResolver.GetBuildTargetGroupByBuildTarget(EditorUserBuildSettings.activeBuildTarget)) == ScriptingImplementation.IL2CPP
                 && serializedObject.FindProperty("Obfus.Obfuscations.MethodError").boolValue)
             {
-                EditorGUILayout.HelpBox("When ScriptingBackend is IL2CPP, MethodError may cause errors! So it will not take effect during the construction process", MessageType.Warning);
+                EditorGUILayout.HelpBox("When ScriptingBackend is IL2CPP, MethodError may cause errors! So it will not take effect during the building process", MessageType.Warning);
+            }
+            if (PlayerSettings.GetScriptingBackend(BuildResolver.GetBuildTargetGroupByBuildTarget(EditorUserBuildSettings.activeBuildTarget)) == ScriptingImplementation.IL2CPP
+                && serializedObject.FindProperty("Obfus.Obfuscations.AntiTamper").boolValue)
+            {
+                EditorGUILayout.HelpBox("When ScriptingBackend is IL2CPP, AntiTamper cannot perform code validation! So it will not take effect during the building process", MessageType.Warning);
             }
             EditorGUILayout.EndVertical();
             #endregion
