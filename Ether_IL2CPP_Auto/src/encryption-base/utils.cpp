@@ -3,10 +3,10 @@
 
 namespace utils {
 	void show_help() {
-		cout << "\t--proclib-p     <libil2cpp_path >                      \tGenerate \"EtherLibil2cpp\"" << endl;
-		cout << "\t--restorelib-p  <libil2cpp_path >                      \tRestore to original libil2cpp" << endl;
-		cout << "\t--enc-android-p <apk_unpack_path> <encrypt_config  >           \tEncrypt apk file" << endl;
-		cout << "\t--enc-win-p     <game_path      > <exe_name> <encrypt_config>  \tEncrypt exe file" << endl;
+		cout << "\t--proclib-p     <libil2cpp_path > <encrypt_config>     \tGenerate \"EtherLibil2cpp\"" << endl;
+		cout << "\t--restorelib-p  <libil2cpp_path > <encrypt_config>     \tRestore to original libil2cpp" << endl;
+		cout << "\t--enc-android-p <apk_unpack_path> <encrypt_config>     \tEncrypt apk file" << endl;
+		cout << "\t--enc-win-p     <game_path> <exe_name> <encrypt_config>\tEncrypt exe file" << endl;
 		cout << "\t--version                                              \tGet current version" << endl;
 		cout << "\t--apiversion                                           \tGet current Api version" << endl;
 	}
@@ -29,6 +29,20 @@ namespace utils {
         cfg.enable_api_obfuscate = root["enable_api_obfuscate"].asBool();
         cfg.enable_strings_encrypt = root["enable_strings_encrypt"].asBool();
 
+    }
+
+    void load_files(string s, encrypt_file_config &cfg) {
+        // encrypt_config str should be:
+        // "logfile output.log unity_version 2017.4.30f1 encrypt_key 123456" ...
+
+        Json::Value root;
+        Json::Reader reader;
+        reader.parse(s, root);
+        cfg.globalmetadata = root["globalmetadata"].asString();
+        cfg.libil2cpp32 = root["libil2cpp32"].asString();
+        cfg.libil2cpp64 = root["libil2cpp64"].asString();
+        cfg.libunity32 = root["libunity32"].asString();
+        cfg.libunity64 = root["libunity64"].asString();
     }
 
     void read_file_lines(const char* fp, std::vector<string>& lines) {

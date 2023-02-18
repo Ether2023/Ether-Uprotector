@@ -13,6 +13,7 @@
 #include "err_code.h"
 #include "binary_encrypt_mgr.h"
 #include "../encrypt_config.h"
+#include "../encrypt_file_config.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ namespace utils {
 
 	// main func
 	void load_config(string s, encrypt_config &cfg);
+    void load_files(string s, encrypt_file_config &cfg);
 	void show_help();
 
 	// file utils

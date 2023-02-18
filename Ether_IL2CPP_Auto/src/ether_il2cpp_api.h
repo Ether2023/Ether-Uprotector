@@ -31,5 +31,7 @@ ETHER_EXPORT bool __stdcall restore_libil2cpp(const char* path, const char* conf
 ETHER_EXPORT bool __stdcall encrypt_win( const char* game_dir,const char* game_exe_name, const char* config);
 
 ETHER_EXPORT bool __stdcall encrypt_android(const char* input_apk_unpack, const char* config);
+
+ETHER_EXPORT bool __stdcall encrypt_files(const char* cfg, const char* files);
 }
 

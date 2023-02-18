@@ -100,3 +100,19 @@ ETHER_EXPORT bool __stdcall encrypt_android(const char* apk_unpack, const char* 
     utils::close_log_file(conf.logfile.c_str());
     return true;
 }
+
+ETHER_EXPORT bool __stdcall encrypt_files(const char* cfg, const char* files){
+    encrypt_config conf;
+    utils::load_config(string(cfg), conf);
+
+    // read files.json
+    encrypt_file_config fs;
+    utils::load_files(string(files), fs);
+
+    binary_encrypt_mgr::encrypt_binary(conf,
+                                       fs.libunity32, fs.libunity32,
+                                       fs.libunity64, fs.libunity64,
+                                       fs.libil2cpp32, fs.libil2cpp32,
+                                       fs.libil2cpp64, fs.libil2cpp64,
+                                       fs.globalmetadata, fs.globalmetadata);
+}

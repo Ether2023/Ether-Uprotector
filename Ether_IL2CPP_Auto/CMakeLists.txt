@@ -7,6 +7,6 @@ set(CMAKE_CXX_STANDARD 14)
 #add_executable(EtherIl2cpp src/main.cpp src/encryption-base/binary_encrypt_mgr.cpp src/encryption-base/utils.cpp src/ether_il2cpp_api.h src/encryption-base/cpp_mgr.cpp src/encryption-base/encryption.cpp src/encryption-base/il2cpp_lib_mgr.cpp src/encryption-base/ozil2_script_mgr.cpp src/encryption-base/str_encrypt_mgr.cpp src/ether_il2cpp_api.cpp src/encryption-base/static_res.h src/encrypt_config.h include/json.cpp)
 
 # build dll
-add_library(EtherIl2cpp SHARED src/main.cpp src/encryption-base/binary_encrypt_mgr.cpp src/encryption-base/utils.cpp src/ether_il2cpp_api.h src/encryption-base/cpp_mgr.cpp src/encryption-base/encryption.cpp src/encryption-base/il2cpp_lib_mgr.cpp src/encryption-base/ozil2_script_mgr.cpp src/encryption-base/str_encrypt_mgr.cpp src/ether_il2cpp_api.cpp src/encryption-base/static_res.h src/encrypt_config.h include/json.cpp)
+add_library(EtherIl2cpp SHARED src/main.cpp src/encryption-base/binary_encrypt_mgr.cpp src/encryption-base/utils.cpp src/ether_il2cpp_api.h src/encryption-base/cpp_mgr.cpp src/encryption-base/encryption.cpp src/encryption-base/il2cpp_lib_mgr.cpp src/encryption-base/ozil2_script_mgr.cpp src/encryption-base/str_encrypt_mgr.cpp src/ether_il2cpp_api.cpp src/encryption-base/static_res.h src/encrypt_config.h include/json.cpp src/encrypt_file_config.h)
 
 set(CMAKE_EXE_LINKER_FLAGS "-static")

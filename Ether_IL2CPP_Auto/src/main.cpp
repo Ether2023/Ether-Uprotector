@@ -12,9 +12,6 @@
 using namespace std;
 
 int main(int argc, char* const argv[]) {
-    //Enable chs output
-    setlocale(LC_ALL, "");
-    cout<<encryption::get_string_decrypt("N[J#SG^5", 852143741)<<endl;
     if (argc == 1) {
         //Welcome text
         cout << "# This program is used to add EtherEncryption in to libil2cpp and encrypt binary files." << endl;
